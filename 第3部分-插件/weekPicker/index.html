@@ -8,7 +8,8 @@
 </head>
 <body>
 <div class="input-wrap">
-    <input type="text">
+    <input type="text" id="test_multipletime">
+    <input type="hidden" id="nowDate">
 </div>
 <div class="weekpicker">
     <!--范围列表部分-->
@@ -50,7 +51,7 @@
         </div>
     </div>
     <!--右侧日历-->
-    <div class="calendar calendar-left">
+    <div class="calendar calendar-right">
         <!--顶部文本框-->
         <div class="date-input-wrap">
             <input class="date-input" type="text" name="date-start" value="25周(01日-07日)" disabled>
@@ -75,4 +76,12 @@
     </div>
 </div>
 </body>
+<script src="../public/jQuery-2.1.4.min.js"></script>
+<script src="js/weekDate.js"></script>
+<script src="js/weekPicker.js"></script>
+<script>
+    $(function () {
+        $("#test_multipletime").weekPicker();
+    })
+</script>
 </html>

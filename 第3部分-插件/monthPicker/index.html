@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="../public/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/monthPicker.css">
+</head>
+<body>
+<div class="input-wrap">
+    <input type="text" id="test_multipletime">
+    <input type="hidden" id="nowDate">
+</div>
+<div class="monthpicker">
+    <!--范围列表部分-->
+    <div class="ranges">
+        <ul>
+            <li class="ranges-item" data-range-key="thismonth">本月</li>
+            <li class="ranges-item" data-range-key="lastmonth">上月</li>
+            <li class="ranges-item" data-range-key="last3month">近3月</li>
+            <li class="ranges-item" data-range-key="last6month">近6月</li>
+            <li class="ranges-item" data-range-key="custom">自定义</li>
+        </ul>
+        <div class="range-btns">
+            <button class="ranges-btn applyBtn" type="button">确认</button>
+            <button class="ranges-btn cancelBtn" type="button">取消</button>
+        </div>
+    </div>
+    <!--右侧日期列表部分-->
+    <div class="calendar">
+        <!--左侧顶部文本框-->
+        <div class="date-input-wrap fix">
+            <!--顶部文本框-->
+            <div class="date-input-panel date-input-left">
+                <input class="date-input" type="text" name="date-start" value="2017年1月" disabled>
+                <i class="fa fa-calendar"></i>
+            </div>
+            <!--顶部文本框-->
+            <div class="date-input-panel date-input-right">
+                <input class="date-input" type="text" name="date-start" value="2017年8月" disabled>
+                <i class="fa fa-calendar"></i>
+            </div>
+        </div>
+
+        <!--日期的所属的年-->
+        <div class="date-year">
+            <!--左右箭头-->
+            <div class="arrows prev"><i class="fa fa-chevron-left"></i></div>
+            <div class="arrows next"><i class="fa fa-chevron-right"></i></div>
+            <!--年份-->
+            <p class="date-year-con">2017</p>
+        </div>
+
+        <!--日期列表项-->
+        <div class="date-lists">
+            <ul class="fix">
+                <li class="date-item select">1月</li>
+                <li class="date-item">2月</li>
+                <li class="date-item">3月</li>
+                <li class="date-item">4月</li>
+                <li class="date-item">5月</li>
+                <li class="date-item">6月</li>
+                <li class="date-item">7月</li>
+                <li class="date-item">8月（本月）</li>
+                <li class="date-item">9月</li>
+                <li class="date-item">10月</li>
+                <li class="date-item">11月</li>
+                <li class="date-item">12月</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../public/jQuery-2.1.4.min.js"></script>
+<script src="js/monthDate.js"></script>
+<script src="js/monthPicker.js"></script>
+<script>
+    $(function () {
+        $("#test_multipletime").weekPicker();
+    })
+</script>
+</html>

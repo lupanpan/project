@@ -51,7 +51,7 @@ button,input {
 }
 
 /*弹框的样式*/
-.weekpicker {
+.monthpicker {
     position: absolute;
     background-color: #fff;
     border-radius: 4px;
@@ -59,14 +59,14 @@ button,input {
     padding: 4px;
 }
 /*小三角*/
-.weekpicker:before, .weekpicker:after {
+.monthpicker:before, .monthpicker:after {
     position: absolute;
     display: inline-block;
     border-bottom-color: rgba(0, 0, 0, 0.2);
     content: '';
 }
 
-.weekpicker:before{
+.monthpicker:before{
     top: -7px;
     left: 9px;
     border-right: 7px solid transparent;
@@ -74,7 +74,7 @@ button,input {
     border-bottom: 7px solid #ccc;
 }
 
-.weekpicker:after{
+.monthpicker:after{
     top: -6px;
     left: 10px;
     border-right: 6px solid transparent;
@@ -82,21 +82,21 @@ button,input {
     border-left: 6px solid transparent;
 }
 
-.weekpicker .ranges, .weekpicker .calendar {
+.monthpicker .ranges, .monthpicker .calendar {
     float: left;
 }
 
 /*范围列表部分*/
-.weekpicker .ranges {
+.monthpicker .ranges {
     padding: 4px;
 }
 
 /*范围列表项*/
-.weekpicker .ranges ul {
+.monthpicker .ranges ul {
     height: 196px;
 }
 
-.weekpicker .ranges-item{
+.monthpicker .ranges-item{
     height: 25px;
     line-height: 25px;
     padding-left: 12px;
@@ -109,36 +109,34 @@ button,input {
     cursor: pointer;
 }
 
-.weekpicker .ranges-item:hover{
+.monthpicker .ranges-item:hover{
     background-color: #08c;
     border: 1px solid #08c;
     color: #fff;
 }
 
-.weekpicker .ranges-item.active{
+.monthpicker .ranges-item.active{
     background-color: #08c;
     border: 1px solid #08c;
     color: #fff;
 }
 
-.weekpicker .ranges-item[data-range-key="custom"] {
+.monthpicker .ranges-item[data-range-key="custom"] {
     cursor: default;
 }
-.weekpicker .ranges-item[data-range-key="custom"]:hover {
+.monthpicker .ranges-item[data-range-key="custom"]:hover {
     background-color: #f5f5f5;
     border: 1px solid #f5f5f5;
     color: #08c;
 }
-.weekpicker .ranges-item[data-range-key="custom"].active {
+.monthpicker .ranges-item[data-range-key="custom"].active {
     background-color: #08c;
     border: 1px solid #08c;
     color: #fff;
 }
 
-
-
 /*确定与取消按钮*/
-.weekpicker .ranges-btn {
+.monthpicker .ranges-btn {
     width: 60px;
     padding: 5px 10px;
     border-radius: 3px;
@@ -146,52 +144,58 @@ button,input {
     color: #fff;
     cursor: pointer;
 }
-.weekpicker .ranges-btn:active {
+.monthpicker .ranges-btn:active {
     -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 
 /*确定按钮*/
-.weekpicker .ranges .applyBtn {
+.monthpicker .ranges .applyBtn {
     background-color: #337ab7;
     border: 1px solid #2e6da4;
 }
-.weekpicker .ranges .applyBtn:hover{
+.monthpicker .ranges .applyBtn:hover{
     background-color: #286090;
     border-color: #204d74;
 }
 /*取消按钮*/
-.weekpicker .ranges .cancelBtn {
+.monthpicker .ranges .cancelBtn {
     background-color: #f4f4f4;
     color: #444;
     border: 1px solid #ddd;
     margin-left: 5px;
 }
-.weekpicker .ranges .cancelBtn:hover {
+.monthpicker .ranges .cancelBtn:hover {
     color: #333;
     background-color: #e6e6e6;
     border-color: #adadad;
 }
 
-/*日历部分 - 公共*/
-.weekpicker .calendar {
+/*日历部分*/
+.monthpicker .calendar {
     padding: 4px;
-    width: 300px;
+    width: 600px;
 }
+
 /*顶部文本框*/
-.weekpicker .date-input-wrap {
+.monthpicker .date-input-panel {
     position: relative;
+    float: left;
     margin: 0 5px;
 }
 
-.weekpicker i {
+.monthpicker .date-input-right {
+    float: right;
+}
+
+.monthpicker i {
     position: absolute;
     top: 7px;
     left: 8px;
 }
 
-.weekpicker .date-input {
+.monthpicker .date-input {
     border: 1px solid #ccc;
     border-radius: 4px;
     color: #555;
@@ -201,55 +205,55 @@ button,input {
     vertical-align: middle;
     margin: 0 0 5px 0;
     padding: 0 6px 0 28px;
-    width: 100%;
+    width: 280px;
     box-sizing: border-box;
     background: #fff;
     font-size: 14px;
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
-.weekpicker .date-input.active {
+.monthpicker .date-input.active {
     border: 1px solid #08c;
 }
+
 /*日期的所属的年月*/
-.weekpicker .date-year {
+.monthpicker .date-year {
     position: relative;
+    width: 200px;
     height: 35px;
     line-height: 35px;
-    margin-top: 8px;
+    margin: 8px auto 0;
 }
 /*箭头*/
-.weekpicker .arrows {
+.monthpicker .arrows {
     position: absolute;
     top: 3px;
     width: 30px;
     height: 35px;
     cursor: pointer;
 }
-.weekpicker .arrows.hide {
-    display: none;
-}
 /*左箭头*/
-.weekpicker .arrows.prev {
+.monthpicker .arrows.prev {
     left: 0;
 }
 /*右箭头*/
-.weekpicker .arrows.next {
+.monthpicker .arrows.next {
     right: 0;
 }
+
 /*年月内容*/
-.weekpicker .date-year-con {
+.monthpicker .date-year-con {
     text-align: center;
     font-size: 14px;
     font-weight: 700;
 }
 
 /*日期列表项*/
-.weekpicker .calendar .date-lists {
+.monthpicker .calendar .date-lists {
     margin-top: 5px;
 }
 
-.weekpicker .calendar .date-item {
+.monthpicker .calendar .date-item {
     float: left;
     width: 102px;
     height: 30px;
@@ -260,13 +264,14 @@ button,input {
     padding: 0 18px;
     margin: 3px 5px;
     cursor: pointer;
+    text-align: center;
 }
 
-.weekpicker .calendar .date-item:hover {
+.monthpicker .calendar .date-item:hover {
     background: #eee;
 }
 
-.weekpicker .calendar .date-item.select {
+.monthpicker .calendar .date-item.select {
     background: #357ebd;
     border: 1px solid #357ebd;
     color: #fff;
