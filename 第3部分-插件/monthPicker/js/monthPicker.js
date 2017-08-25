@@ -3,8 +3,8 @@
         // options 参数的结构
         options = {
             ranges: "thismonth",
-            startDate: "2017-08-31",
-            endDate: "2017-08-01"
+            startDate: "2017-08-01",
+            endDate: "2017-08-31"
         };
 
         // 设置当前日期控件的代码
@@ -22,8 +22,8 @@
         // 初始化控件内容
         var startcon = "", endcon = "", input_val = "";
         if (options.startDate && options.endDate) {
-            startcon = getWeekRangeCon(monthDate.getWeekNumByDay(new Date(options.startDate)));
-            endcon = getWeekRangeCon(monthDate.getWeekNumByDay(new Date(options.endDate)));
+            startcon = getMonthInputCon(options.startDate);
+            endcon = getMonthInputCon(options.endDate);
             input_val = startcon + "-" + endcon;
         }
         $(this).val(input_val).attr({
@@ -111,51 +111,29 @@
                         $(".monthpicker .date-end").removeClass("active");
                         $(".monthpicker .date-start").addClass("active");
 
-                        // 计算日期间隔，如果为特定周范围，则选中对应的周范围
+                        // 计算日期间隔，如果为特定月范围，则选中对应的月范围
                         var datestart = $(".monthpicker .date-start").attr("startdate");
                         var dateend = $(".monthpicker .date-end").attr("enddate");
+                        // 获取上个月的月底时间
+                        var prevMonthEndDate = monthDate.getMonthNumByDay(monthDate.getPrevMonth(nowDate,1)).endDay;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        // 获取上周范围的最后一天
-                        var endDateObj_endday = monthDate.getWeekNumByDay(new Date(monthDate.getBeforeDate(nowMonthEndDate, 7))).endDay;
-
-                        // 判断时间范围
-                        if (monthDate.GetDateDiff(datestart, nowMonthEndDate) == 6 && dateend == nowMonthEndDate) {
-                            // 本周
-                            $('.ranges-item[data-range-key="thisweek"]').addClass("active");
+                        if(monthDate.GetDateMonthNum(datestart,dateend) == 0 && dateend == nowMonthEndDate){
+                            // 本月
+                            $('.ranges-item[data-range-key="thismonth"]').addClass("active");
                         }
-                        else if (monthDate.GetDateDiff(datestart, nowMonthEndDate) == 13 && endDateObj_endday == dateend) {
-                            // 上周
-                            $('.ranges-item[data-range-key="lastweek"]').addClass("active");
+                        else if(monthDate.GetDateMonthNum(datestart,dateend) == 0 && dateend == prevMonthEndDate){
+                            // 上月
+                            $('.ranges-item[data-range-key="lastmonth"]').addClass("active");
                         }
-                        else if (monthDate.GetDateDiff(datestart, nowMonthEndDate) == 27 && dateend == nowMonthEndDate) {
-                            // 近4周
-                            $('.ranges-item[data-range-key="last4week"]').addClass("active");
+                        else if(monthDate.GetDateMonthNum(datestart,dateend) == 2){
+                            // 近3月
+                            $('.ranges-item[data-range-key="last3month"]').addClass("active");
                         }
-                        else if (monthDate.GetDateDiff(datestart, nowMonthEndDate) == 55 && dateend == nowMonthEndDate) {
-                            // 近8周
-                            $('.ranges-item[data-range-key="last8week"]').addClass("active");
+                        else if(monthDate.GetDateMonthNum(datestart,dateend) == 5){
+                            // 近6月
+                            $('.ranges-item[data-range-key="last6month"]').addClass("active");
                         }
-                        else {
+                        else{
                             // 自定义
                             $('.ranges-item[data-range-key="custom"]').addClass("active");
                         }
@@ -214,21 +192,21 @@
                 }
                 else if (rangeKey == "last3month") {
                     // 根据当前时间，获取本周的最后一天时间
-                    startDate = monthDate.getPrevMonth(nowDate,3);
+                    startDate = monthDate.getPrevMonth(nowDate,2);
                 }
                 else if (rangeKey == "last6month") {
                     // 根据当前时间，获取本周的最后一天时间
-                    startDate = monthDate.getPrevMonth(nowDate,3);
+                    startDate = monthDate.getPrevMonth(nowDate,5);
                 }
 
                 // 设置左右文本框
                 $(".monthpicker .date-start").val(getMonthInputCon(startDate));
                 $(".monthpicker .date-start").attr("startdate", startDate).attr("con", getMonthInputCon(startDate));
                 $(".monthpicker .date-end").val(getMonthInputCon(endDate));
-                $(".monthpicker .date-end").attr("enddate", endDay).attr("con", getMonthInputCon(endDate));
+                $(".monthpicker .date-end").attr("enddate", endDate).attr("con", getMonthInputCon(endDate));
 
                 // 需要重新渲染月列表
-                setDateListPlate(new Date(startDay).getFullYear());
+                setDateListPlate(new Date(startDate).getFullYear());
 
                 // 判断是否隐藏左右箭头按钮
                 setPrevNextBtnShow();
@@ -275,7 +253,7 @@
                 // 获取日期标题的元素
                 var yearCon = $('.monthpicker .date-year-con').html();
                 // 根据当前年，获取上年
-                var prevYear = monthDate.getPrevMonth(yearCon);
+                var prevYear = monthDate.getPrevYear(yearCon);
                 // 设置周列表
                 setDateListPlate(prevYear);
 
@@ -304,7 +282,7 @@
                     return false;
                 }
                 if (clickName) {
-                    if (clickName == 'monthpicker' || clickName.indexOf("ranges-item") >= 0 || clickName.indexOf("date-item") >= 0 || clickName.indexOf("arrows") >= 0 || clickName.indexOf("ranges-btn") >= 0 || clickName.indexOf("date-year-con") >= 0 || clickName.indexOf("fa") >= 0 || clickName.indexOf("date-input") >= 0) {
+                    if (clickName == 'monthpicker' || clickName.indexOf("ranges-item") >= 0 || clickName.indexOf("date-item") >= 0 || clickName.indexOf("arrows") >= 0 || clickName.indexOf("ranges-btn") >= 0 || clickName.indexOf("date-year-con") >= 0 || clickName.indexOf("fa") >= 0 || clickName.indexOf("date-input") >= 0 || clickName.indexOf("calendar") >= 0 || clickName.indexOf("ranges-items") >= 0) {
                         return false;
                     }
                 }
@@ -327,8 +305,7 @@
                         "con": $(that).attr("startcon")
                     });
                     $(".monthpicker .date-end").val($(that).attr("endcon")).attr({
-                        "enddate": enddate,
-                        "con": $(that).attr("endcon")
+                        "enddate": enddate
                     });
 
                     // 设置选中左侧周列表
@@ -341,55 +318,24 @@
                     }
                     else {
                         // 如果为自定义时间，则根据自定义时间生成日期列表
-                        var leftYM = {};
-                        var rightYM = {};
-                        var startdate_date = new Date(startdate);
-                        if (startdate_date.getMonth() == nowDate.getMonth()) {
-                            // 如果起始时间与目前的当月相同，则渲染本月与上月的周列表
-                            rightYM = {
-                                year: startdate_date.getFullYear(),
-                                month: monthDate.fillZero(startdate_date.getMonth() + 1)
-                            };
-                            // 上月的年月
-                            leftYM = monthDate.getPrevMonth(rightYM.year, rightYM.month);
-                        }
-                        else {
-                            // 如果起始时间与目前的当月不同，则渲染起始时间的月与下月的周列表
-                            leftYM = {
-                                year: startdate_date.getFullYear(),
-                                month: monthDate.fillZero(startdate_date.getMonth() + 1)
-                            };
-                            // 下月的年月
-                            rightYM = monthDate.getNextMonth(leftYM.year, leftYM.month);
-                        }
-
-                        // 设置周列表
-                        setDateListPlate(leftYM.year, leftYM.month, "left");
-                        setDateListPlate(rightYM.year, rightYM.month, "right");
+                        // 设置月列表
+                        setDateListPlate(new Date(startdate).getFullYear());
                     }
                 }
                 else {
-                    // 如果没有起始时间则生成本月与上月时间
-                    // 上月的年月
-                    var prevYM = monthDate.getPrevMonth(nowYM.year, nowYM.month);
-                    // 设置周列表
-                    setDateListPlate(prevYM.year, prevYM.month, "left");
-                    setDateListPlate(nowYM.year, nowYM.month, "right");
+                    // 如果没有起始时间则生成本月时间
+                    // 设置月列表
+                    setDateListPlate(nowDate.getFullYear());
                 }
 
                 // 判断是否隐藏左右箭头按钮
                 setPrevNextBtnShow();
             }
 
-            // 获取拼接文本框的内容
-            function getMonthInputCon(date) {
-                return new Date(date).getFullYear()+"年"+(new Date(date).getMonth()+1)+"月";
-            }
-
             // 判断是否隐藏左右箭头按钮
             function setPrevNextBtnShow() {
                 // 获取年月标题元素
-                var yearCon = $(".calendar-left .date-year-con").html();
+                var yearCon = $(".monthpicker .date-year-con").html();
 
                 // 判断年与当前相同
                 if (yearCon == nowYM.year) {
@@ -397,6 +343,10 @@
                 }
                 else if (yearCon == '2013') {
                     $(".monthpicker .arrows.prev").hide();
+                }
+                else {
+                    $(".monthpicker .arrows.next").show();
+                    $(".monthpicker .arrows.prev").show();
                 }
             }
 
@@ -416,7 +366,7 @@
                 htmlArr.push('<div class="monthpicker" id="' + id + '_monthpicker">');
                 <!--范围列表部分-->
                 htmlArr.push('<div class="ranges">');
-                htmlArr.push('<ul>');
+                htmlArr.push('<ul class="ranges-items">');
                 htmlArr.push('<li class="ranges-item" data-range-key="thismonth">本月</li>');
                 htmlArr.push('<li class="ranges-item" data-range-key="lastmonth">上月</li>');
                 htmlArr.push('<li class="ranges-item" data-range-key="last3month">近3月</li>');
@@ -434,12 +384,12 @@
                 htmlArr.push('<div class="date-input-wrap fix">');
                 <!--顶部文本框-->
                 htmlArr.push('<div class="date-input-panel date-input-left">');
-                htmlArr.push('<input class="date-input" type="text" name="date-start" value="2017年1月" disabled>');
+                htmlArr.push('<input class="date-input date-start" type="text" name="date-start" value="" disabled>');
                 htmlArr.push('<i class="fa fa-calendar"></i>');
                 htmlArr.push('</div>');
                 <!--顶部文本框-->
                 htmlArr.push('<div class="date-input-panel date-input-right">');
-                htmlArr.push('<input class="date-input" type="text" name="date-start" value="2017年8月" disabled>');
+                htmlArr.push('<input class="date-input date-end" type="text" name="date-end" value="" disabled>');
                 htmlArr.push('<i class="fa fa-calendar"></i>');
                 htmlArr.push('</div>');
                 htmlArr.push('</div>');
@@ -484,7 +434,7 @@
                     }
 
                     // 判断月的最后一天是否与本月的最后一天相同，即为本月
-                    if(nowMonthEndDate = dateArr[i].endDay){
+                    if(nowMonthEndDate == dateArr[i].endDay){
                         nowMonth = "（本月）";
                     }
                     else {
@@ -492,6 +442,11 @@
                     }
 
                     htmlArr.push('<li class="date-item' + selectClass + '" monthNo="' + dateArr[i].monthNo + '" startDay="' + dateArr[i].startDay + '" endDay="' + dateArr[i].endDay + '">' + dateArr[i].monthNo + '月' + nowMonth + '</li>');
+
+                    // 判断月的最后一天是否与本月的最后一天相同，不生成当前月后边的月数据
+                    if(nowMonthEndDate == dateArr[i].endDay){
+                        break;
+                    }
                 }
                 htmlArr.push('</ul>');
                 return htmlArr.join('');
@@ -510,5 +465,10 @@
             // 初始化生成弹出框后的数据绑定
             loadmonthpicker();
         })
+
+        // 获取拼接文本框的内容
+        function getMonthInputCon(date) {
+            return new Date(date).getFullYear()+"年"+(new Date(date).getMonth()+1)+"月";
+        }
     };
 })(jQuery);

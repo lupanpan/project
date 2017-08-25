@@ -11,8 +11,8 @@
     <input type="text" id="test_multipletime">
     <input type="hidden" id="nowDate">
 </div>
-<div class="monthpicker">
-    <!--范围列表部分-->
+<!--<div class="monthpicker">
+    &lt;!&ndash;范围列表部分&ndash;&gt;
     <div class="ranges">
         <ul>
             <li class="ranges-item" data-range-key="thismonth">本月</li>
@@ -26,32 +26,32 @@
             <button class="ranges-btn cancelBtn" type="button">取消</button>
         </div>
     </div>
-    <!--右侧日期列表部分-->
+    &lt;!&ndash;右侧日期列表部分&ndash;&gt;
     <div class="calendar">
-        <!--左侧顶部文本框-->
+        &lt;!&ndash;左侧顶部文本框&ndash;&gt;
         <div class="date-input-wrap fix">
-            <!--顶部文本框-->
+            &lt;!&ndash;顶部文本框&ndash;&gt;
             <div class="date-input-panel date-input-left">
-                <input class="date-input" type="text" name="date-start" value="2017年1月" disabled>
+                <input class="date-input date-start" type="text" name="date-start" value="2017年1月" disabled>
                 <i class="fa fa-calendar"></i>
             </div>
-            <!--顶部文本框-->
+            &lt;!&ndash;顶部文本框&ndash;&gt;
             <div class="date-input-panel date-input-right">
-                <input class="date-input" type="text" name="date-start" value="2017年8月" disabled>
+                <input class="date-input date-end" type="text" name="date-end" value="2017年8月" disabled>
                 <i class="fa fa-calendar"></i>
             </div>
         </div>
 
-        <!--日期的所属的年-->
+        &lt;!&ndash;日期的所属的年&ndash;&gt;
         <div class="date-year">
-            <!--左右箭头-->
+            &lt;!&ndash;左右箭头&ndash;&gt;
             <div class="arrows prev"><i class="fa fa-chevron-left"></i></div>
             <div class="arrows next"><i class="fa fa-chevron-right"></i></div>
-            <!--年份-->
+            &lt;!&ndash;年份&ndash;&gt;
             <p class="date-year-con">2017</p>
         </div>
 
-        <!--日期列表项-->
+        &lt;!&ndash;日期列表项&ndash;&gt;
         <div class="date-lists">
             <ul class="fix">
                 <li class="date-item select">1月</li>
@@ -69,14 +69,14 @@
             </ul>
         </div>
     </div>
-</div>
+</div>-->
 </body>
 <script src="../public/jQuery-2.1.4.min.js"></script>
 <script src="js/monthDate.js"></script>
 <script src="js/monthPicker.js"></script>
 <script>
     $(function () {
-        $("#test_multipletime").weekPicker();
+        $("#test_multipletime").monthpicker();
     })
 </script>
 </html>

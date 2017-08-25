@@ -332,7 +332,7 @@
                     return false;
                 }
                 if(clickName){
-                    if(clickName == 'weekpicker' || clickName.indexOf("ranges-item") >= 0 || clickName.indexOf("date-item") >= 0 || clickName.indexOf("arrows") >= 0 || clickName.indexOf("ranges-btn") >= 0 || clickName.indexOf("date-year-con") >= 0 || clickName.indexOf("fa") >= 0 || clickName.indexOf("date-input") >= 0){
+                    if(clickName == 'weekpicker' || clickName.indexOf("ranges-item") >= 0 || clickName.indexOf("date-item") >= 0 || clickName.indexOf("arrows") >= 0 || clickName.indexOf("ranges-btn") >= 0 || clickName.indexOf("date-year-con") >= 0 || clickName.indexOf("fa") >= 0 || clickName.indexOf("date-input") >= 0 || clickName.indexOf("ranges-items") >= 0){
                         return false;
                     }
                 }
@@ -448,7 +448,7 @@
                 htmlArr.push('<div class="weekpicker" id="' + id + '_weekpicker">');
                 // <!--范围列表部分-->;
                 htmlArr.push('<div class="ranges">');
-                htmlArr.push('<ul>');
+                htmlArr.push('<ul class="ranges-items">');
                 htmlArr.push('<li class="ranges-item" data-range-key="thisweek">本周</li>');
                 htmlArr.push('<li class="ranges-item" data-range-key="lastweek">上周</li>');
                 htmlArr.push('<li class="ranges-item" data-range-key="last4week">近4周</li>');

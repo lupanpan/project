@@ -21,12 +21,12 @@ var monthDate = {
     },
     /*根据年月获取月数组的对象*/
     getMonthNumByDay: function (date) {
-        if (date) {
+        if (!date) {
             return null;
         }
         date = new Date(date);
         var year = date.getFullYear();
-        var month = parseInt(monthdate.getMonth());
+        var month = date.getMonth()+1;
         var monthObj = {
             "monthNo": month,
             "startDay": year + "-" + monthDate.fillZero(month) + "-01",
@@ -115,5 +115,20 @@ var monthDate = {
         var endTime = new Date(Date.parse(endDate.replace(/-/g, "/"))).getTime();
         var dates = Math.abs((startTime - endTime)) / (1000 * 60 * 60 * 24);
         return dates;
+    },
+    // 获取时间的间隔月数
+    GetDateMonthNum: function (startDate, endDate) {
+        var monthNum = 0;
+        startDate = new Date(startDate);
+        endDate = new Date(endDate);
+
+        if(endDate.getMonth() >= startDate.getMonth() && endDate.getFullYear() == startDate.getFullYear()) {
+            monthNum = endDate.getMonth() - startDate.getMonth();
+        }
+        else {
+            monthNum = endDate.getMonth() + (((endDate.getFullYear() - startDate.getFullYear())*12) - startDate.getMonth());
+        }
+
+        return monthNum;
     }
 };
