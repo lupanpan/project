@@ -20,15 +20,27 @@
         var nowWeekEndDate = weekDate.getWeekNumByDay(nowDate).endDay;
 
         // 初始化控件内容
-        var startcon = "",endcon = "",input_val = "";
-        if(options.startDate && options.endDate){
-            startcon = getWeekRangeCon(weekDate.getWeekNumByDay(new Date(options.startDate)));
-            endcon = getWeekRangeCon(weekDate.getWeekNumByDay(new Date(options.endDate)));
-            input_val = startcon + "-" + endcon;
+        var startdate, enddate, startEndDate, startcon = "", endcon = "", input_val = "";
+        if (options.ranges == "custom") {
+            // 如果为自定义时间，则直接获取参数的起始与结束日期
+            startdate = options.startDate;
+            enddate = options.endDate;
         }
+        else {
+            // 如果为周范围时间，则根据周范围获取起始与结束时间
+            startEndDate = getStartEndDateByRanges(options.ranges);
+            startdate = startEndDate.startDateObj.startDay;
+            enddate = startEndDate.endDateObj.endDay;
+        }
+
+        // 根据起始与结束日期，获取拼接的起始与结束时间的周文字
+        startcon = getWeekRangeCon(startEndDate.startDateObj);
+        endcon = getWeekRangeCon(startEndDate.endDateObj);
+        input_val = startcon + "-" + endcon;
+
         $(this).val(input_val).attr({
-            startdate: options.startDate,
-            enddate: options.endDate,
+            startdate: startdate,
+            enddate: enddate,
             ranges: options.ranges,
             startcon: startcon,
             endcon: endcon,
@@ -64,7 +76,7 @@
                 console.log('click');
                 // 移除所有周范围选中状态
                 $('.ranges-item').removeClass("active");
-                
+
                 // 如果为第一次点击
                 if (clickStart == 0) {
                     // 设置起始日期
@@ -184,30 +196,10 @@
                 // 选中的当前点击的，并且取消其他的选中状态
                 $(this).addClass("active").siblings(".ranges-item").removeClass("active");
 
-                // 获取起始与结束日期
-                var startDateObj = null;
-                var endDateObj = null;
-                if (rangeKey == "thisweek") {
-                    // 根据当前时间，获取本周的最后一天时间
-                    endDateObj = weekDate.getWeekNumByDay(nowDate);
-                    startDateObj = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(endDateObj.endDay, 6)));
-                }
-                else if (rangeKey == "lastweek") {
-                    // 根据当前时间获取本周最后一天时间，在获取上周最后一天时间
-                    var lastDate = weekDate.getWeekNumByDay(nowDate).endDay;
-                    endDateObj = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(lastDate, 7)));
-                    startDateObj = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(endDateObj.endDay, 6)));
-                }
-                else if (rangeKey == "last4week") {
-                    // 根据当前时间，获取本周的最后一天时间
-                    endDateObj = weekDate.getWeekNumByDay(nowDate);
-                    startDateObj = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(endDateObj.endDay, 27)));
-                }
-                else if (rangeKey == "last8week") {
-                    // 根据当前时间，获取本周的最后一天时间
-                    endDateObj = weekDate.getWeekNumByDay(nowDate);
-                    startDateObj = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(endDateObj.endDay, 55)));
-                }
+                // 根据周范围获取起始与结束时间
+                var startEndDate = getStartEndDateByRanges(rangeKey);
+                var startDateObj = startEndDate.startDateObj;
+                var endDateObj = startEndDate.endDateObj;
 
                 // 设置左右文本框
                 $(".weekpicker .date-start").val(getWeekRangeCon(startDateObj));
@@ -248,28 +240,30 @@
 
             // 确定按钮点击事件
             $(".weekpicker .applyBtn").on("click", function () {
-                if($(".weekpicker .date-end").val().length > 0){
-                    var val = $(".weekpicker .date-start").val() + "-" + $(".weekpicker .date-end").val();
-                    $(that).val(val);
-                    $(that).attr({
-                        "startdate": $(".weekpicker .date-start").attr("startdate"),
-                        "enddate": $(".weekpicker .date-end").attr("enddate"),
-                        "ranges": $(".ranges-item.active").attr("data-range-key"),
-                        "title": val,
-                        "startcon": $(".weekpicker .date-start").val(),
-                        "endcon": $(".weekpicker .date-end").val()
-                    });
-                }
-                else {
-                    $(that).val("");
-                    $(that).attr({
-                        "startdate": "",
-                        "enddate": "",
-                        "ranges": "",
-                        "title": "",
-                        "startcon": "",
-                        "endcon": ""
-                    });
+                if (clickStart == 0) {
+                    if ($(".weekpicker .date-end").val().length > 0) {
+                        var val = $(".weekpicker .date-start").val() + "-" + $(".weekpicker .date-end").val();
+                        $(that).val(val);
+                        $(that).attr({
+                            "startdate": $(".weekpicker .date-start").attr("startdate"),
+                            "enddate": $(".weekpicker .date-end").attr("enddate"),
+                            "ranges": $(".ranges-item.active").attr("data-range-key"),
+                            "title": val,
+                            "startcon": $(".weekpicker .date-start").val(),
+                            "endcon": $(".weekpicker .date-end").val()
+                        });
+                    }
+                    else {
+                        $(that).val("");
+                        $(that).attr({
+                            "startdate": "",
+                            "enddate": "",
+                            "ranges": "",
+                            "title": "",
+                            "startcon": "",
+                            "endcon": ""
+                        });
+                    }
                 }
 
                 // 移除弹框
@@ -326,19 +320,21 @@
 
             // 点击空白选择框消失
             $(document).click(function (e) {
-                var clickEle = $(e.target).attr('id');
-                var clickName = $(e.target).attr('class');
-                if (clickEle == id) {
-                    return false;
-                }
-                if(clickName){
-                    if(clickName == 'weekpicker' || clickName.indexOf("ranges-item") >= 0 || clickName.indexOf("date-item") >= 0 || clickName.indexOf("arrows") >= 0 || clickName.indexOf("ranges-btn") >= 0 || clickName.indexOf("date-year-con") >= 0 || clickName.indexOf("fa") >= 0 || clickName.indexOf("date-input") >= 0 || clickName.indexOf("ranges-items") >= 0){
+                if ($('#' + id + "_weekpicker")) {
+                    var clickEle = $(e.target).attr('id');
+                    var clickName = $(e.target).attr('class');
+                    if (clickEle == id) {
                         return false;
                     }
-                }
+                    if (clickName) {
+                        if (clickName == 'weekpicker' || clickName.indexOf("ranges-item") >= 0 || clickName.indexOf("date-item") >= 0 || clickName.indexOf("arrows") >= 0 || clickName.indexOf("ranges-btn") >= 0 || clickName.indexOf("date-year-con") >= 0 || clickName.indexOf("fa") >= 0 || clickName.indexOf("date-input") >= 0 || clickName.indexOf("ranges-items") >= 0) {
+                            return false;
+                        }
+                    }
 
-                // 触发一下确定按钮点击事件
-                $(".weekpicker .applyBtn").trigger("click");
+                    // 触发一下确定按钮点击事件
+                    $(".weekpicker .applyBtn").trigger("click");
+                }
             });
 
             // 生成弹框时绑定的数据
@@ -570,6 +566,39 @@
         // 获取拼接的范围周内容
         function getWeekRangeCon(weekObj) {
             return weekObj.weekNo + '周(' + weekObj.startDay.substring(weekObj.startDay.lastIndexOf("-") + 1) + '日-' + weekObj.endDay.substring(weekObj.endDay.lastIndexOf("-") + 1) + '日)';
+        }
+
+        // 根据周范围获取起始与结束时间
+        function getStartEndDateByRanges(rangeKey) {
+            // 获取起始与结束日期
+            var startDateObj = null;
+            var endDateObj = null;
+            if (rangeKey == "thisweek") {
+                // 根据当前时间，获取本周的最后一天时间
+                endDateObj = weekDate.getWeekNumByDay(nowDate);
+                startDateObj = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(endDateObj.endDay, 6)));
+            }
+            else if (rangeKey == "lastweek") {
+                // 根据当前时间获取本周最后一天时间，在获取上周最后一天时间
+                var lastDate = weekDate.getWeekNumByDay(nowDate).endDay;
+                endDateObj = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(lastDate, 7)));
+                startDateObj = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(endDateObj.endDay, 6)));
+            }
+            else if (rangeKey == "last4week") {
+                // 根据当前时间，获取本周的最后一天时间
+                endDateObj = weekDate.getWeekNumByDay(nowDate);
+                startDateObj = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(endDateObj.endDay, 27)));
+            }
+            else if (rangeKey == "last8week") {
+                // 根据当前时间，获取本周的最后一天时间
+                endDateObj = weekDate.getWeekNumByDay(nowDate);
+                startDateObj = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(endDateObj.endDay, 55)));
+            }
+
+            return {
+                "startDateObj": startDateObj,
+                "endDateObj": endDateObj
+            }
         }
     };
 })(jQuery);
