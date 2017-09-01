@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .chart {
+            width: 400px;
+            height: 300px;
+            margin: 50px auto 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="chart" id="chart"></div>
+</body>
+
+<script src="../public/jQuery-2.1.4.min.js"></script>
+<script src="echars/echarts.min.js"></script>
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chart'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        legend: {
+            orient: 'vertical',
+            top: 'middle',
+            right: 'left',
+            data: ['娱票儿', '猫眼', '淘票票']
+        },
+        series: [
+            {
+                name: '感兴趣用户分布',
+                type: 'pie',
+                radius: ['50%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        formatter: function (params, callback) {
+                            return params.value + '\n' + params.name
+                        },
+                        textStyle: {
+                            fontSize: '15',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        //好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
+                        color: function (params) {
+                            //查询数值范围，一共9种取色，数值越大，颜色偏向于前面序列
+                            var colorList = [
+                                '#7fbf40', '#f2a00c', '#1e7dd7', '#ebd230', '#808080',
+                                '#1e7dd7', '#f2a00c', '#4bc3be', '#f67c4f'
+                            ];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                },
+                data: [
+                    {
+                        name: '娱票儿',
+                        value: 50
+                    },
+                    {
+                        name: '猫眼',
+                        value: 30
+                    },
+                    {
+                        name: '淘票票',
+                        value: 60
+                    }
+                ]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+    myChart.on('mouseover', function (params) {
+        this.dispatchAction({
+            type: 'highlight',
+            // 图例名称
+            name: params.name
+        });
+    });
+
+    myChart.on('highlight', function (params) {
+        console.log("aa");
+        console.log(params);
+    });
+
+
+</script>
+</html>

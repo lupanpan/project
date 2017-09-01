@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .chart {
+            width: 310px;
+            height: 130px;
+            margin: 50px auto 0 auto;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+<div class="chart" id="chart"></div>
+</body>
+
+<script src="../public/jQuery-2.1.4.min.js"></script>
+<script src="echars/echarts.min.js"></script>
+<script>
+    // 色值
+    var colorArr = ["#1e7dd7", "#e55068"];
+    // 图片对象
+    var charsImgObj = {
+        'male': './images/usermale.png',
+        'famale': './images/userfemale.png'
+    };
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chart'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        grid: {
+            left: '0',
+            right: '0',
+            bottom: '0',
+            top: '0',
+            containLabel: true
+        },
+        xAxis: {
+            show: false,
+            type: 'value',
+            max: 'dataMax',
+            axisTick: {
+                inside: true
+            },
+            axisLabel: {
+                inside: true
+            }
+        },
+        yAxis: {
+            show: false,
+            type: 'category',
+            axisLabel: {
+                inside: true
+            },
+            data: ['']
+        },
+        series: [
+            {
+                name: '男',
+                type: 'bar',
+                barWidth: '56px',
+                silent: true,
+                itemStyle: {
+                    normal: {
+                        color: colorArr[0]
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideLeft',
+                        distance: 10,
+                        formatter: '{img|}{text|{a}：{c}%}',
+                        rich: {
+                            img: {
+                                width: 28,
+                                height: 28,
+                                backgroundColor: {
+                                    image: charsImgObj.male
+                                }
+                            },
+                            text: {
+                                padding: [0, 0, 0, 10],
+                                color: '#fff'
+                            }
+                        }
+                    }
+                },
+                data: [62.8]
+            },
+            {
+                name: '女',
+                type: 'bar',
+                barWidth: '56px',
+                silent: true,
+                itemStyle: {
+                    normal: {
+                        color: colorArr[1]
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideLeft',
+                        distance: 10,
+                        formatter: '{img|}{text|{a}：{c}%}',
+                        rich: {
+                            img: {
+                                width: 28,
+                                height: 28,
+                                backgroundColor: {
+                                    image: charsImgObj.famale
+                                }
+                            },
+                            text: {
+                                padding: [0, 0, 0, 10],
+                                color: '#fff'
+                            }
+                        }
+                    }
+                },
+                data: [37.2]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</html>

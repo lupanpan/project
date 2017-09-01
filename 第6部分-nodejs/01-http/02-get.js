@@ -8,7 +8,7 @@ var fs = require('fs');
 
 http.createServer(function(requese, response){
     // 读取数据，并且写出来
-    /*fs.readFile('file/index.html', function readData(err, data) {
+    /*fs.readFile('file/01-横向柱状图-百分比相同.html', function readData(err, data) {
         response.writeHead(200, {'Content-Type': 'text/plain'});
         response.end(data);
     })*/
