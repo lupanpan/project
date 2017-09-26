@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>语法和应用</title>
+    <link rel="stylesheet" href="css/01-grammar.css">
+</head>
+<body>
+<div class="con">
+    <h2>基本概念</h2>
+    <p class="text">
+        采用 Flex 布局的元素，称为 Flex 容器（flex container），它的所有字元素自动成为容器成员，称为 Flex 项目（flex item）<br>
+        注意：设为 Flex 布局以后，子元素的 float、clear 和 vertical-align 属性将失效。<br>
+
+        容器默认存在两根轴：水平的主轴（main axis）和垂直的交叉轴（cross axis）。<br>
+        主轴的开始位置（与边框的交叉点）叫做 main start，结束位置叫做 main end；<br>
+        交叉轴的开始位置叫做 cross start，结束位置叫做 cross end。<br>
+        项目默认沿主轴排列，单个项目占据的主轴空间叫做 main size，占据的交叉轴空间叫做 cross size。
+    </p>
+
+    <h2>容器的属性</h2>
+    <p class="text">
+        以下6个属性设置在容器上。<br>
+        flex-direction <br>
+        flex-wrap <br>
+        flex-flow <br>
+        justify-content <br>
+        align-items <br>
+        align-content <br>
+    </p>
+
+    <h3>flex-direction属性</h3>
+    <p class="text">
+        flex-direction 属性决定主轴的方向（即项目的排列方向）。<br>
+    <pre>
+        .box {
+            flex-direction: row | row-reverse | column | column-reverse;
+        }
+    </pre>
+    <ul>
+        <li>row（默认值）：主轴为水平方向，起点在左端。</li>
+        <li>row-reverse：主轴为水平方向，起点在右端。</li>
+        <li>column：主轴为垂直方向，起点在上沿。</li>
+        <li>column-reverse：主轴为垂直方向，起点在下沿。</li>
+    </ul>
+    </p>
+    <h4>row（默认值）：主轴为水平方向，起点在左端。</h4>
+    <div class="flex" style="flex-direction: row">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+    </div>
+
+    <h4>row-reverse：主轴为水平方向，起点在右端。</h4>
+    <div class="flex" style="flex-direction: row-reverse;">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+    </div>
+
+    <h4>column：主轴为垂直方向，起点在上沿。</h4>
+    <div class="flex flex-column" style="flex-direction: column">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+    </div>
+
+    <h4>column-reverse：主轴为垂直方向，起点在下沿。</h4>
+    <div class="flex flex-column" style="flex-direction: column-reverse">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+    </div>
+
+    <div style="height: 200px;">
+        <h4>如果主轴为水平方向，为flex设置一个偏小的高度和宽度，不影响内部盒子的高度变化，而是外部盒子的高度变小了，并且会影响后续布局，但是会影响内部盒子的宽度变化</h4>
+        <div class="flex flex-column" style="flex-direction: row;height: 60px;width: 60px;border: 1px solid red;">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+        </div>
+        <p class="des">会影响后续布局</p>
+    </div>
+
+    <div style="height: 640px;">
+        <h4>如果主轴为垂直方向，为flex设置一个偏小的高度和宽度，不影响内部盒子的高度变化，而是外部盒子的高度变小了，并且会影响后续布局</h4>
+        <div class="flex flex-column" style="flex-direction: column;height: 60px;width: 60px;border: 1px solid red;">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+        </div>
+        <p class="des">会影响后续布局</p>
+    </div>
+
+
+</div>
+
+
+
+
+
+</body>
+</html>
