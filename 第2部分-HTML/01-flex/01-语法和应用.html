@@ -31,7 +31,8 @@
 
     <h3>flex-direction属性</h3>
     <p class="text">
-        flex-direction 属性决定主轴的方向（即项目的排列方向）。<br>
+        flex-direction 属性决定主轴的方向（即项目的排列方向）。
+    </p>
     <pre>
         .box {
             flex-direction: row | row-reverse | column | column-reverse;
@@ -43,7 +44,7 @@
         <li>column：主轴为垂直方向，起点在上沿。</li>
         <li>column-reverse：主轴为垂直方向，起点在下沿。</li>
     </ul>
-    </p>
+
     <h4>row（默认值）：主轴为水平方向，起点在左端。</h4>
     <div class="flex" style="flex-direction: row">
         <div class="item">1</div>
@@ -90,7 +91,7 @@
         <p class="des">会影响后续布局</p>
     </div>
 
-    <div style="height: 640px;">
+    <div style="height: 500px;">
         <h4>如果主轴为垂直方向，为flex设置一个偏小的高度和宽度，不影响内部盒子的高度变化，而是外部盒子的高度变小了，并且会影响后续布局</h4>
         <div class="flex flex-column" style="flex-direction: column;height: 60px;width: 60px;border: 1px solid red;">
             <div class="item">1</div>
@@ -100,12 +101,344 @@
         <p class="des">会影响后续布局</p>
     </div>
 
+    <h3>flex-wrap属性</h3>
+    <p class="text">
+        默认情况下，项目都排在一条线（又称“轴线”上）。flex-wrap属性定义，如果一条轴线排不下，如何换行。
+    </p>
+    <pre>
+        .box {
+            flex-wrap: nowrap | wrap | wrap-reverse;
+        }
+    </pre>
+    <ul>
+        <li>nowrap（默认）：不换行</li>
+        <li>wrap：换行，第一行在上方</li>
+        <li>wrap-reverse：换行，第一行在下方</li>
+    </ul>
 
+    <h4>nowrap（默认）：不换行。</h4>
+    <div class="flex" style="flex-wrap:nowrap">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+    </div>
+
+    <h4>wrap：换行，第一行在上方。</h4>
+    <div class="flex" style="flex-wrap:wrap">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+    </div>
+
+    <h4>wrap-reverse：换行，第一行在下方</h4>
+    <div class="flex" style="flex-wrap:wrap-reverse">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+    </div>
+
+    <h3>flex-flow</h3>
+    <p>
+        flex-flow 属性是 flex-direction 属性和 flex-wrap 属性的简写形式，默认值为 row nowrap.
+    </p>
+    <pre>
+        .box {
+            flex-flow: "flex-direction" || "flex-wrap";
+        }
+    </pre>
+
+    <h4>flex-flow 属性的连写形式，默认值：row nowrap</h4>
+    <div class="flex" style="flex-flow: row nowrap">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+    </div>
+
+    <h4>flex-flow 属性的连写形式，默认值：column nowrap</h4>
+    <div class="flex flex-column" style="flex-flow: column nowrap">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+    </div>
+
+    <h4>flex-flow 属性的连写形式，默认值：column wrap</h4>
+    <div class="flex flex-column" style="flex-flow: column wrap;width: 50px;height: 50px;border: 1px  solid red;">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+    </div>
+
+    <h3>justify-content 属性</h3>
+    <p>
+        justify-content 属性定义了项目在主轴的对齐方式
+    </p>
+    <pre>
+        .box {
+            justify-content: flex-start | flex-end | center | space-between;
+        }
+    </pre>
+    <ul>
+        <li>flex-start（默认值）：左对齐</li>
+        <li>flex-end：右对齐</li>
+        <li>center：居中</li>
+        <li>space-between：两端对齐，项目之间的间隔都相等</li>
+        <li>space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目的边框的间隔大一倍</li>
+    </ul>
+
+    <h4>flex-start（默认值）：左对齐</h4>
+    <div class="flex" style="flex-flow: row nowrap;justify-content: flex-start">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+    </div>
+
+    <h4>flex-end：右对齐</h4>
+    <div class="flex" style="flex-flow: row nowrap;justify-content: flex-end">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+    </div>
+
+    <h4>center：居中</h4>
+    <div class="flex" style="flex-flow: row nowrap;justify-content: center">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+    </div>
+
+    <h4>space-between：两端对齐，项目之间的间隔都相等</h4>
+    <div class="flex" style="flex-flow: row nowrap;justify-content: space-between">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+    </div>
+
+    <h4>space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目的边框的间隔大一倍</h4>
+    <div class="flex" style="flex-flow: row nowrap;justify-content: space-around">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+    </div>
+
+    <h3>align-items 属性</h3>
+    <p class="text">
+        align-items 属性定义项目在交叉轴上如何对齐。
+    </p>
+    <pre>
+        .box {
+            align-items: flex-start | flex-end | center | baseline | stretch;
+        }
+    </pre>
+    <ul>
+        <li>flex-start：交叉轴的起点对齐</li>
+        <li>flex-end：交叉轴的终点对齐</li>
+        <li>center：交叉轴的中点对齐</li>
+        <li>baseline：项目的第一行文字的基线对齐</li>
+        <li>stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度</li>
+    </ul>
+
+    <h4>flex-start：交叉轴的起点对齐</h4>
+    <div class="flex" style="flex-flow: row nowrap;align-items: flex-start;">
+        <div class="item" style="height:100px">1</div>
+        <div class="item" style="height:120px">2</div>
+        <div class="item" style="height:80px">3</div>
+        <div class="item" style="height:60px">4</div>
+        <div class="item" style="height:200px">5</div>
+        <div class="item" style="height:150px">6</div>
+        <div class="item" style="height:100px">7</div>
+    </div>
+
+    <h4>flex-end：交叉轴的终点对齐</h4>
+    <div class="flex" style="flex-flow: row nowrap;align-items: flex-end;">
+        <div class="item" style="height:100px">1</div>
+        <div class="item" style="height:120px">2</div>
+        <div class="item" style="height:80px">3</div>
+        <div class="item" style="height:60px">4</div>
+        <div class="item" style="height:200px">5</div>
+        <div class="item" style="height:150px">6</div>
+        <div class="item" style="height:100px">7</div>
+    </div>
+
+    <h4>center：交叉轴的中点对齐</h4>
+    <div class="flex" style="flex-flow: row nowrap;align-items: center;">
+        <div class="item" style="height:100px">1</div>
+        <div class="item" style="height:120px">2</div>
+        <div class="item" style="height:80px">3</div>
+        <div class="item" style="height:60px">4</div>
+        <div class="item" style="height:200px">5</div>
+        <div class="item" style="height:150px">6</div>
+        <div class="item" style="height:100px">7</div>
+    </div>
+
+    <h4>baseline：项目的第一行文字的基线对齐</h4>
+    <div class="flex" style="flex-flow: row nowrap;align-items: baseline;">
+        <div class="item" style="height:100px">1</div>
+        <div class="item" style="height:120px">2</div>
+        <div class="item" style="height:80px">3</div>
+        <div class="item" style="height:60px">4</div>
+        <div class="item" style="height:200px">5</div>
+        <div class="item" style="height:150px">6</div>
+        <div class="item" style="height:100px">7</div>
+    </div>
+
+    <h4>stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度</h4>
+    <div class="flex" style="flex-flow: row nowrap;align-items: baseline;">
+        <div class="item" style="height:auto">1</div>
+        <div class="item" style="height:auto">2</div>
+        <div class="item" style="height:auto">3</div>
+        <div class="item" style="height:100px">4</div>
+        <div class="item" style="height:auto">5</div>
+        <div class="item" style="height:auto">6</div>
+        <div class="item" style="height:auto">7</div>
+    </div>
+
+    <h3>align-content属性</h3>
+    <p class="text">
+        align-content 属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。
+    </p>
+    <pre>
+        .box {
+            align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+        }
+    </pre>
+    <ul>
+        <li>flex-start：与交叉轴的起点对齐</li>
+        <li>flex-end：与交叉轴的终点对齐</li>
+        <li>center：与交叉轴的中点对齐</li>
+        <li>space-between：与交叉轴两端对齐，轴线之间的间隔平均分布</li>
+        <li>space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍</li>
+        <li>stretch（默认值）：轴线占满整个交叉轴</li>
+    </ul>
+
+    <h4>flex-start：与交叉轴的起点对齐</h4>
+    <div class="flex" style="flex-flow: row wrap;align-content: flex-start;height: 600px;background: lightskyblue;">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+    </div>
+
+    <h4>flex-end：与交叉轴的终点对齐</h4>
+    <div class="flex" style="flex-flow: row wrap;align-content: flex-end;height: 600px;background: lightskyblue;">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+    </div>
+
+    <h4>center：与交叉轴的中点对齐</h4>
+    <div class="flex" style="flex-flow: row wrap;align-content: center;height: 600px;background: lightskyblue;">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+    </div>
+
+    <h4>space-between：与交叉轴两端对齐，轴线之间的间隔平均分布</h4>
+    <div class="flex" style="flex-flow: row wrap;align-content: space-between;height: 600px;background: lightskyblue;">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+    </div>
+
+    <h4>space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍</h4>
+    <div class="flex" style="flex-flow: row wrap;align-content: space-around;height: 600px;background: lightskyblue;">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+    </div>
+
+    <h4>stretch（默认值）：轴线占满整个交叉轴</h4>
+    <div class="flex" style="flex-flow: row wrap;align-content: stretch;height: 600px;background: lightskyblue;">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+    </div>
+
+    <h2>项目的属性</h2>
+    <p class="text">
+        以下6个属性设置在项目上。
+    </p>
+    <ul>
+        <li>order</li>
+        <li>flex-grow</li>
+        <li>flex-shrink</li>
+        <li>flex-basis</li>
+        <li>flex</li>
+        <li>align-self</li>
+    </ul>
+
+    <br>
+    <br>
+
+    <h4>order属性</h4>
+    <p class="text">
+        order 属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。
+    </p>
+    <pre>
+        .item {
+            order: "integer"
+        }
+    </pre>
+
+    <h4>stretch（默认值）：轴线占满整个交叉轴</h4>
+    <div class="flex" style="flex-flow: row wrap;align-content: stretch;height: 600px;background: lightskyblue;">
+        <div class="item" style="order:1;">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item" style="order:-1;">6</div>
+        <div class="item">7</div>
+    </div>
 </div>
 
-
-
-
+<h4>flex-grow属性</h4>
+<p class="text">
+    flex-grow 属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。
+</p>
 
 </body>
 </html>
