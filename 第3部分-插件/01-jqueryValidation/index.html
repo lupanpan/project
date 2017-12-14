@@ -10,12 +10,13 @@
 </head>
 <body>
     <form id="myForm">
-        <p><label>用户：<input type="text" name="username" id="username"></label></p>
+        <p style="display: none"><label>用户：<input type="text" name="username" id="username"></label></p>
         <p><label>密码：<input type="text" name="password" id="password"></label></p>
         <p><label>密码：<input type="text" name="password1" id="password2"></label></p>
         <p><label>年龄：<input type="text" name="age" id=""></label></p>
         <!--<input type="submit">-->
         <a id="abtn">a标签提交按钮</a>
+        <a id="areset">重置</a>
     </form>
 </body>
 
@@ -50,7 +51,7 @@
    }
 
     $( document ).ready( function () {
-        $( "#myForm" ).validate( {
+        var validator = $( "#myForm" ).validate( {
             rules: getRules(),
             messages: getMessages(),
 
@@ -73,6 +74,10 @@
                 $( element ).parent().addClass( "has-success" ).removeClass( "has-error" );
             }*/
         } );
+
+        $("#areset").click(function () {
+            validator.resetForm();
+        })
     } );
 </script>
 </html>
