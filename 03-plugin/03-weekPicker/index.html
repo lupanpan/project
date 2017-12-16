@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="../public/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/weekPicker.css">
+</head>
+<body>
+<div class="input-wrap">
+    <input type="text" id="test_multipletime">
+    <input type="hidden" id="nowDate">
+</div>
+<!--<div class="weekpicker">
+    &lt;!&ndash;范围列表部分&ndash;&gt;
+    <div class="weekpicker-ranges">
+        <ul>
+            <li class="ranges-item" data-range-key="thisweek">本周</li>
+            <li class="ranges-item" data-range-key="lastweek">上周</li>
+            <li class="ranges-item" data-range-key="last4week">近4周</li>
+            <li class="ranges-item" data-range-key="last8week">近8周</li>
+            <li class="ranges-item" data-range-key="custom">自定义</li>
+        </ul>
+        <div class="range-btns">
+            <button class="ranges-btn applyBtn" type="button">确认</button>
+            <button class="ranges-btn cancelBtn" type="button">取消</button>
+        </div>
+    </div>
+    &lt;!&ndash;左侧日历&ndash;&gt;
+    <div class="calendar calendar-left">
+        &lt;!&ndash;顶部文本框&ndash;&gt;
+        <div class="date-input-wrap">
+            <input class="date-input" type="text" name="date-start" value="25周(01日-07日)" disabled>
+            <i class="fa fa-calendar"></i>
+        </div>
+        &lt;!&ndash;日期的所属的年月&ndash;&gt;
+        <div class="date-year">
+            <div class="arrows prev"><i class="fa fa-chevron-left"></i></div>
+            <p class="date-year-con">八月 2017</p>
+        </div>
+        &lt;!&ndash;日期列表项&ndash;&gt;
+        <div class="date-lists">
+            <ul class="fix">
+                <li class="date-item select">25周(01日-07日)</li>
+                <li class="date-item">26周(07日-13日)</li>
+                <li class="date-item">27周(14日-21日)</li>
+                <li class="date-item">28周(22日-29日)</li>
+                <li class="date-item">29周(31日-06日)</li>
+                <li class="date-item">30周(06日-13日)</li>
+            </ul>
+        </div>
+    </div>
+    &lt;!&ndash;右侧日历&ndash;&gt;
+    <div class="calendar calendar-right">
+        &lt;!&ndash;顶部文本框&ndash;&gt;
+        <div class="date-input-wrap">
+            <input class="date-input" type="text" name="date-start" value="25周(01日-07日)" disabled>
+            <i class="fa fa-calendar"></i>
+        </div>
+        &lt;!&ndash;日期的所属的年月&ndash;&gt;
+        <div class="date-year">
+            <div class="arrows next"><i class="fa fa-chevron-right"></i></div>
+            <p class="date-year-con">八月 2017</p>
+        </div>
+        &lt;!&ndash;日期列表项&ndash;&gt;
+        <div class="date-lists">
+            <ul class="fix">
+                <li class="date-item select">25周(01日-07日)</li>
+                <li class="date-item">26周(07日-13日)</li>
+                <li class="date-item">27周(14日-21日)</li>
+                <li class="date-item">28周(22日-29日)</li>
+                <li class="date-item">29周(31日-06日)</li>
+                <li class="date-item">30周(06日-13日)</li>
+            </ul>
+        </div>
+    </div>
+</div>-->
+</body>
+<script src="../public/jQuery-2.1.4.min.js"></script>
+<script src="js/weekDate.js"></script>
+<script src="js/weekPicker.js"></script>
+<script>
+    $(function () {
+        $("#test_multipletime").weekPicker();
+    })
+</script>
+</html>
