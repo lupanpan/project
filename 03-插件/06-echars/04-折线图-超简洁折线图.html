@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .chart {
+            width: 500px;
+            height: 300px;
+            margin: 50px auto 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="chart" id="chart"></div>
+</body>
+
+<script src="../public/jQuery-2.1.4.min.js"></script>
+<script src="echars/echarts.min.js"></script>
+<script>
+    // 色值
+    var colorArr = ["#1e7dd7", "#e55068"];
+    // 图片对象
+    var charsImgObj = {
+        'male': './images/usermale.png',
+        'famale': './images/userfemale.png'
+    };
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chart'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        tooltip : {
+            trigger: 'axis'
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                show: false,
+                type : 'category',
+                boundaryGap : false,
+                data : ['周一','周二','周三','周四','周五','周六','周日']
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    show: false
+                }
+            }
+        ],
+        series : [
+            {
+                name:'邮件营销',
+                type:'line',
+                smooth: true,
+                data:[120, 132, 101, 134, 90, 230, 210]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</html>

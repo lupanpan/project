@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/yearPicker.css">
+</head>
+<body>
+<input type="hidden" id="nowDate">
+<div class="input-group">
+    <div id="rq_mtime_year" ename="rq" style="display: -webkit-box;">
+        <div class="mtime-year-left"><select class="form-control" id="rq_mtime_year_start"></select></div>
+        <span class="mtime-year-split"></span>
+        <div class="mtime-year-right"><select class="form-control" id="rq_mtime_year_end"></select></div>
+    </div>
+</div>
+</body>
+<script src="../public/jQuery-2.1.4.min.js"></script>
+<script src="js/yearPicker.js"></script>
+<script>
+    $("#rq_mtime_year").yearPicker();
+</script>
+</html>

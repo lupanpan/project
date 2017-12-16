@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .chart {
+            width: 500px;
+            height: 220px;
+            margin: 50px auto 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="chart" id="chart"></div>
+</body>
+<script src="../public/jQuery-2.1.4.min.js"></script>
+<script src="echars/echarts.min.js"></script>
+<script>
+    // 色值
+    var colorArr = ["#7fbf40", "#1e7dd7", "#ebd230", "#f67c4f", "#e55068", "#808080"];
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chart'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        tooltip: {
+            trigger: 'item',
+            confine: true,
+            // 设置内容格式
+            formatter: function (params, ticket, callback) {
+                // 拼接顶部显示的时间
+                var res = '<span style="color:#a8abae;font-size:12px;">' + params.name + '</span>';
+                res += '<br/><span style="color:#fff;font-size:12px;">' + params.seriesName + '占比： ' + params.value + '%</span>';
+                return res;
+            }
+        },
+        legend: {
+            left: 'right',
+            top: 'bottom',
+            itemWidth: 10,
+            itemHeight: 10,
+            // 图例不可点击
+            selectedMode: false,
+            data: ['20岁以下', '20~25岁', '26~30岁', '31~35岁', '36~40岁', '40岁以上']
+//            data: [{name:'20岁以下',icon:"rect"}, {name:'20~25岁',icon:"rect"}, {name:'26~30岁',icon:"rect"}, {name:'31~35岁',icon:"rect"}, {name:'36~40岁',icon:"rect"}, {name:'40岁以上',icon:"rect"}]
+        },
+        grid: {
+            left: '0',
+            right: '0',
+            bottom: '10px',
+            top: '0',
+            containLabel: true
+        },
+        xAxis: {
+            show: false,
+            type: 'value'
+        },
+        yAxis: {
+            show: false,
+            type: 'category',
+            axisLabel: {
+                inside: true
+            },
+            data: ['记忆大师', '雄狮', '拆弹专家', '春娇救志明']
+        },
+        series: [
+            {
+                name: '20岁以下',
+                type: 'bar',
+                stack: '总量',
+                barWidth: '36px',
+                itemStyle: {
+                    normal: {
+                        color: colorArr[0]
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'inside',
+                        formatter: '{c}%'
+                    }
+                },
+                data: [5, 5, 5, 5]
+            },
+            {
+                name: '20~25岁',
+                type: 'bar',
+                stack: '总量',
+                barWidth: '36px',
+                itemStyle: {
+                    normal: {
+                        color: colorArr[1]
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'inside',
+                        formatter: '{c}%'
+                    }
+                },
+                data: [15, 15, 15, 15]
+            },
+            {
+                name: '26~30岁',
+                type: 'bar',
+                stack: '总量',
+                barWidth: '36px',
+                itemStyle: {
+                    normal: {
+                        color: colorArr[2]
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'inside',
+                        formatter: '{c}%'
+                    }
+                },
+                data: [20, 20, 20, 20]
+            },
+            {
+                name: '31~35岁',
+                type: 'bar',
+                stack: '总量',
+                barWidth: '36px',
+                itemStyle: {
+                    normal: {
+                        color: colorArr[3]
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'inside',
+                        formatter: '{c}%'
+                    }
+                },
+                data: [20, 20, 20, 20]
+            },
+            {
+                name: '36~40岁',
+                type: 'bar',
+                stack: '总量',
+                barWidth: '36px',
+                itemStyle: {
+                    normal: {
+                        color: colorArr[4]
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'inside',
+                        formatter: '{c}%'
+                    }
+                },
+                data: [30, 30, 30, 30]
+            },
+            {
+                name: '40岁以上',
+                type: 'bar',
+                stack: '总量',
+                barWidth: '36px',
+                itemStyle: {
+                    normal: {
+                        color: colorArr[5]
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'inside',
+                        formatter: '{c}%'
+                    }
+                },
+                data: [10, 10, 10, 10]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</html>
