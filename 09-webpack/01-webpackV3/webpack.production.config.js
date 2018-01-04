@@ -1,15 +1,12 @@
 /**
- * Created by Mtime on 2018/1/3.
+ * Created by Mtime on 2018/1/4.
  */
 
-// __dirname 是 node.js 中的一个全局变量，它指向当前执行脚本所在的目录。
-
-// 在 window 下不加这句话会报错，需要引入一下webpack
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    devtool: "eval-source-map",
+    devtool: "null", //注意修改了这里，这能大大压缩我们的打包代码
 
     entry: __dirname + "/app/main.js", //已多次提及的唯一入口文件
     output: {
@@ -40,19 +37,17 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [
-                    {
-                        loader: "style-loader"
-                    }, {
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: [{
                         loader: "css-loader",
                         options: {
-                            modules: true // 指定启用css modules
-                            // localIdentName: '[name]__[local]--[hash:base64:5]' //指定css的类名格式
+                            modules: true
                         }
                     }, {
                         loader: "postcss-loader"
-                    }
-                ]
+                    }]
+                })
             }
         ]
     },
