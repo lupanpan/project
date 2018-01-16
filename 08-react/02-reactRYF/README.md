@@ -9,12 +9,12 @@
 1. `$ babel src --out-dir build` 命令将src子目录的js文件进行语法转换，转码后的文件全部放在build子目录。
 2. Browser.js 的作用是将 JSX 语法转换为 JavaScript 语法，这一步很消耗时间，实际上线的时候，应该将它放到服务器完成。
 
-#### JSX语法：
+### JSX语法：
 - HTML语言直接在 JavaScript 语言中，不加任何引号，允许 HTML 与 JavaScript 混写（查看demo1）。
 - 遇到 HTML 标签(以 < 开头)，就用 HTML 规则解析；遇到代码块(以 { 开头)，就用 JavaScript 规则解析（查看demo2）。
 - JSX 允许直接在模板中插入 JavaScript 变量，如果这个变量是一个数组，则会展开这个数组的所有成员（查看demo3）。
 
-#### 组件：
+### 组件：
 - React 允许将代码封装成组件(component)，然后像插入普通 HTML 标签一样，在网页中插入这个组件。
 - React.createClass 方法就用于生成一个组件类（查看demo4）。
 - 所有的组件类都必须有自己的 render 方法，用于输出组件。
@@ -26,7 +26,7 @@
 2. 组件类只能包含一个顶层标签，否则也会报错。
 3. 组件添加熟悉性时， class 属性要写成 className，for 属性要写成 htmlFor，因为 class 和 for 是 JavaScript 的保留字。
 
-#### this.props.children
+### this.props.children
 - 表示组件的所有子节点（查看demo5）。
 - this.props.children 的值有三种可能：
     1.如果当前组件没有子节点，它就是 undefined；
@@ -40,3 +40,7 @@
 
 ### getDefaultProps
 - getDefaultProps 方法可以用来设置属性的默认值。
+
+### 获取真实的 DOM 节点，ref 属性
+- 组件不是真实的 DOM 节点，是存在于内存之中的一种数据结构，叫做虚拟 DOM（virtual DOM）。只有当它插入文档以后，才会变成真实的 DOM。 根据 react 的设计，所有的 DOM 变动，都先在虚拟 DOM 上发生，然后再将实际发生变动的部分，反映在真实 DOM 上，这种算法叫做 DOM diff，它3可以极大提高网页的性能表现。
+- 有时需要从组件获取真实 DOM 的节点，这时要用到 ref 属性。
