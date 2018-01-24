@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>中国</title>
+    <script src="../public/jQuery-2.1.4.min.js"></script>
+    <script src="echars/echarts4.0.2.js"></script>
+    <script src="echars/map/js/china.js"></script>
+    <style>
+        .chinaMap {
+            width: 1000px;
+            height: 800px;
+            margin: auto auto;
+        }
+    </style>
+</head>
+<body>
+<div id="chinaMap" class="chinaMap"></div>
+<script>
+    var provinceZE = {
+        "北京": "beijing",
+        "天津": "tianjin",
+        "上海": "shanghai",
+        "重庆": "chongqing",
+        "河北": "hebei",
+        "河南": "henan",
+        "云南": "yunnan",
+        "辽宁": "liaoning",
+        "黑龙江": "heilongjiang",
+        "湖南": "hunan",
+        "安徽": "anhui",
+        "山东": "shandong",
+        "新疆": "xinjiang",
+        "江苏": "jiangsu",
+        "浙江": "zhejiang",
+        "江西": "jiangxi",
+        "湖北": "hubei",
+        "广西": "guangxi",
+        "甘肃": "gansu",
+        "山西": "shanxi",
+        "内蒙古": "neimenggu",
+        "陕西": "shanxi",
+        "吉林": "jilin",
+        "福建": "fujian",
+        "贵州": "guizhou",
+        "广东": "guangdong",
+        "青海": "qinghai",
+        "西藏": "xizang",
+        "四川": "sichuan",
+        "宁夏": "ningxia",
+        "海南": "hainan",
+        "台湾": "taiwan",
+        "香港": "xianggang",
+        "澳门": "aomen"
+    }
+
+    function randomData() {
+        return Math.round(Math.random()*2500);
+    }
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chinaMap'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '中国',
+            left: 'center',
+            top: 'top'
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        visualMap: {
+            min: 0,
+            max: 2500,
+            text:['高','低'],
+            calculable: true,
+            realtime: false,
+            inRange: {
+                color: ['lightskyblue','yellow', 'orangered']
+            }
+        },
+        toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center',
+            feature: {
+                dataView: {readOnly: false},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        series: [
+            {
+                name: '中国',
+                type: 'map',
+                mapType: 'china',
+                roam: true,
+                label: {
+                    normal: {
+                        show: true
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data:[
+                    {name: '北京',value: randomData() },
+                    {name: '天津',value: randomData() },
+                    {name: '上海',value: randomData() },
+                    {name: '重庆',value: randomData() },
+                    {name: '河北',value: randomData() },
+                    {name: '河南',value: randomData() },
+                    {name: '云南',value: randomData() },
+                    {name: '辽宁',value: randomData() },
+                    {name: '黑龙江',value: randomData() },
+                    {name: '湖南',value: randomData() },
+                    {name: '安徽',value: randomData() },
+                    {name: '山东',value: randomData() },
+                    {name: '新疆',value: randomData() },
+                    {name: '江苏',value: randomData() },
+                    {name: '浙江',value: randomData() },
+                    {name: '江西',value: randomData() },
+                    {name: '湖北',value: randomData() },
+                    {name: '广西',value: randomData() },
+                    {name: '甘肃',value: randomData() },
+                    {name: '山西',value: randomData() },
+                    {name: '内蒙古',value: randomData() },
+                    {name: '陕西',value: randomData() },
+                    {name: '吉林',value: randomData() },
+                    {name: '福建',value: randomData() },
+                    {name: '贵州',value: randomData() },
+                    {name: '广东',value: randomData() },
+                    {name: '青海',value: randomData() },
+                    {name: '西藏',value: randomData() },
+                    {name: '四川',value: randomData() },
+                    {name: '宁夏',value: randomData() },
+                    {name: '海南',value: randomData() },
+                    {name: '台湾',value: randomData() },
+                    {name: '香港',value: randomData() },
+                    {name: '澳门',value: randomData() }
+                ]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+    // 绑定点击事件
+    myChart.on("click", function(param) {
+        window.open(location.origin + "/project/03-plugin/06-echars/08-地图省.html?provinceName=" + provinceZE[param.name]);
+    });
+</script>
+</body>
+</html>

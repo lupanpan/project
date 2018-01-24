@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>省</title>
+    <script src="../public/jQuery-2.1.4.min.js"></script>
+    <script src="echars/echarts4.0.2.js"></script>
+    <script src="echars/map/js/china.js"></script>
+    <style>
+        .chinaMap {
+            width: 1000px;
+            height: 800px;
+            margin: auto auto;
+        }
+    </style>
+</head>
+<body>
+<div id="chinaMap" class="chinaMap"></div>
+<script>
+    var provinceEZ = {
+        "beijing": "北京",
+        "tianjin": "天津",
+        "shanghai": "上海",
+        "chongqing": "重庆",
+        "hebei": "河北",
+        "henan": "河南",
+        "yunnan": "云南",
+        "liaoning": "辽宁",
+        "heilongjiang": "黑龙江",
+        "hunan": "湖南",
+        "anhui": "安徽",
+        "shandong": "山东",
+        "xinjiang": "新疆",
+        "jiangsu": "江苏",
+        "zhejiang": "浙江",
+        "jiangxi": "江西",
+        "hubei": "湖北",
+        "guangxi": "广西",
+        "gansu": "甘肃",
+        "shanxi": "山西",
+        "neimenggu": "内蒙古",
+        "shanxi": "陕西",
+        "jilin": "吉林",
+        "fujian": "福建",
+        "guizhou": "贵州",
+        "guangdong": "广东",
+        "qinghai": "青海",
+        "xizang": "西藏",
+        "sichuan": "四川",
+        "ningxia": "宁夏",
+        "hainan": "海南",
+        "taiwan": "台湾",
+        "xianggang": "香港",
+        "aomen": "澳门"
+    };
+
+    function randomData() {
+        return Math.round(Math.random()*2500);
+    }
+
+    // 获取参数
+    function getUrlParam(paramName){
+        var hrefParamArr = [];
+        var hrefParamStr = window.location.href.split("?")[1];
+        if(hrefParamStr) {
+            (hrefParamStr.split["&"] || [hrefParamStr]).forEach(function(element){
+                hrefParamArr[element.split("=")[0]] = element.split("=")[1];
+            })
+        }
+        return hrefParamArr[paramName];
+    }
+
+    // 获取省参数
+    var provinceNameE = getUrlParam("provinceName");
+    // 获取省参数对应的中文
+    var provinceNameZ = provinceEZ[provinceNameE]
+    // 设置标题
+    $("title").text(provinceNameZ);
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chinaMap'));
+    // 获取对应json数据
+    $.get('echars/map/json/province/'+provinceNameE+'.json', function (geoJson) {
+        console.log(geoJson);
+        echarts.registerMap(provinceNameE, geoJson);
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: provinceNameZ,
+                left: 'center',
+                top: 'top'
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            visualMap: {
+                min: 0,
+                max: 2500,
+                text:['高','低'],
+                calculable: true,
+                realtime: false,
+                inRange: {
+                    color: ['lightskyblue','yellow', 'orangered']
+                }
+            },
+            toolbox: {
+                show: true,
+                orient: 'vertical',
+                left: 'right',
+                top: 'center',
+                feature: {
+                    dataView: {readOnly: false},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            series: [
+                {
+                    name: provinceNameZ,
+                    type: 'map',
+                    mapType: provinceNameE,
+                    roam: true,
+                    label: {
+                        normal: {
+                            show: true
+                        },
+                        emphasis: {
+                            show: true
+                        }
+                    },
+                    data: (function() {
+                        var dataArr = [];
+                        geoJson.features.forEach(function(element){
+                            dataArr.push({
+                                "name": element.properties.name,
+                                "value": randomData()
+                            })
+                        })
+                        return dataArr;
+                    })()
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    });
+
+
+
+
+</script>
+</body>
+</html>
