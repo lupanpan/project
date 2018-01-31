@@ -7,11 +7,90 @@
     <script src="echars/echarts4.0.2.js"></script>
     <script src="echars/map/js/china.js"></script>
     <style>
+        div, h5, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        /*清除浮动*/
+        .fix:after {
+            content: ".";
+            height: 0;
+            visibility: hidden;
+            display: block;
+            clear: both
+        }
+
         .chinaMap {
             width: 1000px;
             height: 800px;
             margin: auto auto;
         }
+
+        .chart-format h5 {
+            font-size: 16px;
+        }
+
+        .chart-format .format-list {
+            padding-top: 10px;
+        }
+
+        .chart-format .format-list ul {
+            float: left;
+        }
+
+        .chart-format .format-list ul:first-of-type {
+            border-right: 1px solid #fff;
+            padding-right: 30px;
+        }
+
+        .chart-format .format-list ul:last-of-type {
+            padding-left: 30px;
+        }
+
+        .chart-format .format-list ul li {
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .chart-format .format-list ul li span {
+            float: left;
+        }
+
+        .chart-format .format-list .list-name {
+            width: 90px;
+        }
+
+        .chart-format .format-list .list-value {
+            width: 50px;
+        }
+
+        .chart-format .format-btn {
+            padding-top: 30px;
+        }
+
+        .chart-format .format-btn a {
+            float: right;
+            height: 30px;
+            line-height: 30px;
+            background: #fff;
+            font-color: #ccc;
+            font-size: 13px;
+            text-align: center;
+            border-radius: 30px;
+            padding: 0 20px;
+            margin-left: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -69,7 +148,77 @@
             top: 'top'
         },
         tooltip: {
-            trigger: 'item'
+            trigger: 'item',
+            //隐藏延时
+            hideDelay: 100,
+            //背景颜色
+            backgroundColor : 'rgba(68,77,85,0.8)',
+            //边框圆角
+            borderRadius : 8,
+            //内边距
+            padding: [10, 30],
+            //鼠标是否可以进入提示框
+            enterable: true,
+            //限制在图表的区域内
+            confine: true,
+            //位置回调
+            position: function (point, params, dom, rect, size) {
+                // 定义偏移距离
+                var offsetDistance = 2;
+                /*// "视频平台-1"与"微博转发-5"
+                 if(!(hotIndexType=="1" || hotIndexType=="5")){
+                 offsetDistance = 2;
+                 }*/
+
+                // 定义新位置对象
+                var newPos = {};
+                // 获取统计图的宽度
+                var chartWidth = size.viewSize[0];
+                // 获取统计图的高度
+                var chartHeight = size.viewSize[1];
+
+                // 设置横向定位
+                if(point[0] <= chartWidth / 2) {
+                    newPos['left'] = point[0] + offsetDistance;
+                }
+                else {
+                    newPos['right'] = (chartWidth - point[0]) + offsetDistance;
+                }
+
+                // 设置纵向定位
+                if(point[1] <= chartHeight / 2) {
+                    newPos['top'] = point[1] + offsetDistance;
+                }
+                else {
+                    newPos['bottom'] = (chartHeight - point[1]) + offsetDistance;
+                }
+
+                return newPos;
+            },
+            //设置内容格式
+            formatter: function (params) {
+                var formatStr = "";
+                formatStr += "<div class='chart-format'>";
+                formatStr += "<h5>"+params.name+"</h5>";
+                formatStr += "<div class='format-list fix'>";
+                formatStr += "<ul>";
+                formatStr += "<li><span class='list-name'>万达银幕数：</span><span class='list-value'>100</span></li>";
+                formatStr += "<li><span class='list-name'>总银幕数：</span><span class='list-value'>300</span></li>";
+                formatStr += "<li><span class='list-name'>银幕份额：</span><span class='list-value'>30%</span></li>";
+                formatStr += "</ul>";
+                formatStr += "<ul>";
+                formatStr += "<li><span class='list-name'>万达票房：</span><span class='list-value'>100</span></li>";
+                formatStr += "<li><span class='list-name'>总票房：</span><span class='list-value'>300</span></li>";
+                formatStr += "<li><span class='list-name'>票房份额：</span><span class='list-value'>30%</span></li>";
+                formatStr += "</ul>";
+                formatStr += "</div>";
+                formatStr += "<div class='format-btn fix'>";
+                formatStr += "<a href='javascript:;'>查看下属市/县信息</a>";
+                formatStr += "<a href='javascript:;'>加入对比</a>";
+                formatStr += "</div>";
+                formatStr += "</div>";
+                return formatStr;
+            }
         },
         visualMap: {
             min: 0,
