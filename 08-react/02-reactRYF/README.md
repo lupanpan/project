@@ -13,6 +13,7 @@
 - HTML语言直接在 JavaScript 语言中，不加任何引号，允许 HTML 与 JavaScript 混写（查看demo1）。
 - 遇到 HTML 标签(以 < 开头)，就用 HTML 规则解析；遇到代码块(以 { 开头)，就用 JavaScript 规则解析（查看demo2）。
 - JSX 允许直接在模板中插入 JavaScript 变量，如果这个变量是一个数组，则会展开这个数组的所有成员（查看demo3）。
+- 样式语法：style={{opacity: this.state.opacity}}，React 组件样式是一个对象，所以第一重大括号表示这是 JavaScript 语法，第二重大括号表示样式对象。
 
 ### 组件：
 - React 允许将代码封装成组件(component)，然后像插入普通 HTML 标签一样，在网页中插入这个组件。
@@ -29,9 +30,9 @@
 ### this.props.children
 - 表示组件的所有子节点（查看demo5）。
 - this.props.children 的值有三种可能：
-    1.如果当前组件没有子节点，它就是 undefined；
-    2.如果有一个子节点，数据类型是 object；
-    3.如果有多个子节点，数据类型是 array；
+    1. 如果当前组件没有子节点，它就是 undefined；
+    2. 如果有一个子节点，数据类型是 object；
+    3. 如果有多个子节点，数据类型是 array；
 - React 提供一个工具方法 React.Children 来处理 this.props.children，可以用 React.Children.map 来遍历子节点，不用担心 this.props.children 的数据类型问题。
 
 ### PropTypes
@@ -46,4 +47,39 @@
   只有当它插入文档以后，才会变成真实的 DOM。
   根据 react 的设计，所有的 DOM 变动，都先在虚拟 DOM 上发生，然后再将实际发生变动的部分，反映在真实 DOM 上，
   这种算法叫做 DOM diff，它可以极大提高网页的性能表现。
-- 有时需要从组件获取真实 DOM 的节点，这时要用到 ref 属性。
+- 有时需要从组件获取真实 DOM 的节点，这时要用到 ref 属性。（查看demo7）。
+
+### this.state
+- 组件免不了与用户互动，将组件看成一个状态机，一开始有一个初始状态，然后用户互动，导致状态变化，从而触发重新渲染 UI（查看demo8）。
+- getInitialState 方法用于定义初始状态，也就是一个对象，这个对象可以通过 this.state 属性读取。
+- this.setState 方法就修改状态值，每次修改后，自动调用this.render 方法，再次渲染组件。
+- this.props 和 this.state 都用于描述组件的特性，可能产生混淆。
+  一个简单的区分方法是：
+  this.props 表示那些一旦定义，就不再改变的特性；
+  this.state 是会随着用户互动而产生变化的特性。
+
+### 表单
+- 用户在表单填入的内容，属于用户跟组件的互动，所以不能用 this.props 读取（查看demo9）。
+- 在事件中，使用 event.target.value 读取用户输入的值。
+
+### 组件的生命周期
+- 组件的生命周期分成三个状态：
+  1. Mounting：已插入真实 DOM
+  2. Updating：正在被重新渲染
+  3. Unmounting：已移除真实 DOM
+- React 为每个状态都提供了两种处理函数，will 函数在进入状态之前调用，did 函数在进入状态之后调用，三种状态共计五种处理函数。
+  1. componentWillMount()
+  2. componentDidMount()
+  3. componentWillUpdate(object nextProps, object nextState)
+  4. componentDidUpdate(object prevProps, object prevState)
+  5. componentWillUnmount()
+- 此外，react 还提供了两种特殊状态的处理函数。
+  1. componentWillReceiveProps(object nextProps)：已加载组件收到新的参数时调用
+  2. shouldComponentUpdate(object nextProps, object nextState)：组件判断是否重新时调用
+- 具体用法查看（查看demo10）
+
+### Ajax
+- 组件的数据来源，通常是通过 Ajax 请求从服务器获取，可以使用 componentDidMount 方法设置 Ajax 请求，
+  等到请求成功，再用 this.setState 方法重新渲染 UI（查看demo11）
+- 甚至可以把一个 Promise 对象传入组件（查看demo12）
+
