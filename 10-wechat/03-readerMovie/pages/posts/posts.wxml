@@ -1,0 +1,26 @@
+<view>
+  <swiper indicator-dots='true' autoplay='true' interval='5000'>
+    <swiper-item>
+      <image src='/images/wx.png'></image>
+    </swiper-item>
+    <swiper-item>
+      <image src='/images/vr.png'></image>
+    </swiper-item>
+    <swiper-item>
+      <image src='/images/iqiyi.png'></image>
+    </swiper-item>
+  </swiper>
+
+  <block wx:for='{{postList}}'>
+    <view class='post-container'>
+      <view class='post-author-date'>
+        <image class='post-author' src='{{item.avatar}}'></image>
+        <text class='post-date'>{{item.date}}</text>
+      </view>
+      <text class='post-title'></text>
+
+    </view>
+  </block>
+
+  
+</view>

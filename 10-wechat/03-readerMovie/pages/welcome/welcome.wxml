@@ -1,0 +1,7 @@
+<view class='container'>
+  <image class='user-avatar' src='/images/zhizunbao.png'></image>
+  <text class='user-name'>hello，至尊宝</text>
+  <view class='journey-container' bindtap="onTap">
+    <text class='journey'>开启小程序之旅</text>
+  </view>
+</view>
