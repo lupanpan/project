@@ -34,9 +34,11 @@
 
 
 
+# 项目启动命令
+1. 启动MongoDB：`net start MongoDB`
+2. 启动博客：`supervisor index`
+
+
 
 学习到的位置：
-4.4.1 功能与路由设计
-代码已经编写完，index.js 已经写完，在启动时，因为 mongodb 无法启动问题，导致无法运行项目
-暂时因为要学 react，公司可能要裁员，这个 react 属于比较着急的
-https://github.com/nswbmw/N-blog/blob/master/book/4.4%20功能设计.md#442-会话
+
