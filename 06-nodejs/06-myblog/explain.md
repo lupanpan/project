@@ -37,6 +37,7 @@
 # 项目启动命令
 1. 启动MongoDB：`net start MongoDB`
 2. 启动博客：`supervisor index`
+3. 查看端口占用情况：`netstat -ano | grep 8083`
 
 
 
