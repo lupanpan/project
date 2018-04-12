@@ -30,7 +30,12 @@
 1. 使用 2 个空格缩进
 2. tab 长度也是 2 个空格
 3. trim_trailing_whitespace 用来删除每一行最后多余的空格
-4. insert_final_newline 用来在代码最后插入一个空的换行
+4. insert_final_newline 用来在代码最后插入一个空的换行 
+
+
+
+# Mongolass的schema用法
+1. 查阅 another-json-schema https://github.com/nswbmw/another-json-schema
 
 
 
