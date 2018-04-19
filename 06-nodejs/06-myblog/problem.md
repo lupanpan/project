@@ -24,3 +24,6 @@ module.exports = {
   }
 }
 
+
+2. routes/signup.js文件
+const avatar = req.files.avatar.path.split(path.sep).pop()
