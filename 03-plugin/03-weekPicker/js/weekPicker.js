@@ -1,11 +1,11 @@
 (function ($) {
     $.fn.weekPicker = function (options) {
         // options 参数的结构
-        options = {
+        /*options = {
             ranges: "thisweek",
             startDate: "2017-08-21",
             endDate: "2017-08-27"
-        };
+        };*/
 
         // 设置当前代码
         $("#nowDate").val(new Date());

@@ -81,7 +81,12 @@
 <script src="js/weekPicker.js"></script>
 <script>
     $(function () {
-        $("#test_multipletime").weekPicker();
+        var option = {
+            ranges: "custom",
+            startDate: "2018-03-26",
+            endDate: "2018-04-22"
+        }
+        $("#test_multipletime").weekPicker(option);
     })
 </script>
 </html>
