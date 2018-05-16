@@ -32,7 +32,7 @@ exports.Comment = mongolass.model('Comment', {
   postId: { type: Mongolass.Types.ObjectId, required: true }
 })
 // 通过文章 id 获取该文章下所有留言，按留言创建时间升序
-exports.Comment.index({ postId: 1, _id: 1 })
+exports.Comment.index({ postId: 1, _id: 1 }).exec()
 
 // 因为使用了 addCreatedAt 自定义插件（通过 _id 生成时间戳），所以修改 lib/mongod.js，添加如下代码：
 // 根据 id 生成创建时间 create_at

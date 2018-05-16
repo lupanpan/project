@@ -22,7 +22,21 @@ Post.plugin('contentToHtml', {
 // 给 post 添加留言数 commentsCount
 Post.plugin('addCommentsCount', {
   afterFind: function (posts) {
-    return Promise.all()
+    return Promise.all(posts.map(function (post) {
+      return CommentModel.getCommentsCount(post._id).then(function (commentsCount) {
+        post.commentsCount = commentsCount
+        return post
+      })
+    }))
+  },
+  afterFindOne: function (post) {
+    if (post) {
+      return CommentModel.getCommentsCount(post._id).then(function (count) {
+        post.commentsCount = count
+        return post
+      })
+    }
+    return post
   }
 })
 
@@ -38,6 +52,7 @@ module.exports = {
       .findOne({ _id: postId })
       .populate({ path: 'author', model: 'User' })
       .addCreatedAt()
+      .addCommentsCount()
       .contentToHtml()
       .exec()
   },
@@ -53,6 +68,7 @@ module.exports = {
       .populate({ path: 'author', model: 'User' })
       .sort({ _id: -1 })
       .addCreatedAt()
+      .addCommentsCount()
       .contentToHtml()
       .exec()
   },
@@ -78,11 +94,23 @@ module.exports = {
   },
 
   // 通过文章 id 删除一篇文章
-  delPostById: function delPostById (postId) {
-    return Post.remove({ _id: postId }).exec()
+  delPostById: function delPostById (postId, author) {
+    return Post.remove({ author: author, _id: postId })
+      .exec()
+      .then(function (res) {
+        // 文章删除后，再删除该文章下的所有留言
+        if (res.result.ok && res.result.n > 0) {
+          return CommentModel.delCommentById(postId)
+        }
+      })
   }
 }
 
 // 注意：
 // 1. 我们使用了 markdown 解析文章的内容，所以在发表文章的时候可使用 markdown 语法（如插入链接、图片等等）
 // 2. 我们在 PostModel 上注册了 contentToHtml，而 addCreatedAt 是在 lib/mongo.js 中 mongolass 上注册。也就是说 contentHtml 只针对 PostModel 有效，而 addCreatedAt 对所有 Model 都有效。
+
+// 小提示：
+// 虽然目前看起来使用 Mongolass 自定义插件并不能节省代码，反而使代码变多了。Mongolass 插件真正的优势在于：在项目非常庞大时，
+// 可以通过自定义的插件随意组合（及顺序）实现不同的输出，如上面 getPostById 需要将取出的 markdown 转换成 html，则使用 .contentToHtml(),
+// 否则像 getRawPostById 则不必使用。
