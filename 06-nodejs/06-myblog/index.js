@@ -61,10 +61,10 @@ app.use(function (req, res, next) {
 // 正常请求的日志
 app.use(expressWinston.logger({
   transports: [
-    new (winston.transports.Console)({
-      json: true,
-      colorize: true
-    }),
+    // new (winston.transports.Console)({
+    //   json: true,
+    //   colorize: true
+    // }),
     new winston.transports.File({
       filename: 'logs/success.log'
     })
@@ -87,10 +87,16 @@ app.use(expressWinston.errorLogger({
   ]
 }))
 
-// 监听端口，启动程序
-app.listen(config.port, function () {
-  console.log(`${pkg.name} listening on port ${config.port}`)
-})
+// 这样做可以实现：直接启动 index.js 则会监听端口启动程序，如果 index.js 被 require 了，则会导出 app，通常用于测试。
+if (module.parent) {
+  // 被 require，则导出 app
+  module.exports = app
+} else {
+  // 监听端口，启动程序
+  app.listen(config.port, function () {
+    console.log(`${pkg.name} listening on port ${config.port}`)
+  })
+}
 
 app.use(function (err, req, res, next) {
   console.log(err)

@@ -39,6 +39,11 @@
 
 
 
+# mocha 和 supertest
+mocha 和 suptertest 是常用的测试组合，通常用来测试 restful 的 api 接口，这里我们也可以用来测试我们的博客应用。
+
+
+
 # 项目启动命令
 1. 启动MongoDB：`net start MongoDB`
 2. 启动博客：`supervisor index`
