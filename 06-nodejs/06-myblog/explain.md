@@ -62,3 +62,23 @@
 
 学习到的位置：
 
+
+
+# window系统与其他系统不同之处：
+1. pm2配置部分（4.15.2章节）
+   ### window系统
+   ```
+   npm install --save-dev cross-env
+   "start": "cross-env NODE_ENV=production pm2 start index.js --name 'myblog'"
+   ```
+
+   ### 其他系统
+   ```
+   "scripts": {
+      "test": "istanbul cover _mocha",
+      "start": "NODE_ENV=production pm2 start index.js --name 'myblog'"
+    }
+   ```
+
+
+
