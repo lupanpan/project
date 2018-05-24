@@ -60,8 +60,12 @@
 
 
 
-学习到的位置：
-
+# 阿里云服务器 PM2 启动
+```
+npm i pm2 -g
+ln -s ~/nodejs/bin/* /usr/local/bin/
+pm2 start index.js --name="myblog"
+```
 
 
 # window系统与其他系统不同之处：
@@ -79,6 +83,3 @@
       "start": "NODE_ENV=production pm2 start index.js --name 'myblog'"
     }
    ```
-
-
-
