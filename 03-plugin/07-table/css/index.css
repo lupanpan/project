@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    padding: 0;
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: '微软雅黑', 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+}
+
+.table-wrap {
+    position: relative;
+    width: 802px;
+    margin: 50px auto;
+    overflow-x: hidden;
+}
+
+.cut {
+    position: absolute;
+    top: 0;
+    z-index: 9;
+    width: 100%;
+}
+
+.cut .left, .cut .right {
+    position: absolute;
+    width: 15px;
+    height: 53px;
+    line-height: 53px;
+    text-align: center;
+    color: #fff;
+    background: #535353;
+    background: rgba(83,83,83,0.7);
+    cursor: pointer;
+}
+
+.cut .left {
+    left: 345px;
+}
+
+.cut .right {
+    right: 0;
+}
+
+.row-piece {
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 13px;
+    width: 1180px;
+}
+
+.row-piece th, .row-piece td{
+    border: 1px solid #737373;
+}
+
+.row-piece th {
+    height: 50px;
+    font-weight: 400;
+    background: #c1c1c1;
+}
+
+.row-piece td {
+    height: 30px;
+    text-align: center;
+}
+
+.row-piece .province {
+    width: 60px;
+}
+
+.row-piece .film {
+    width: 150px;
+}
+
+.row-piece .city {
+    width: 60px;
+}
+
+.row-piece .total {
+    width: 80px;
+}
+
+.row-piece .day {
+    width: 60px;
+}
+
+.row-piece .fixation {
+    position: relative;
+}

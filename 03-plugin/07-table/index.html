@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script src="js/index.js"></script>
+</head>
+<body>
+<div class="table-wrap">
+    <div class="cut" id="tableCut">
+        <span class="left">&lt;</span>
+        <span class="right">&gt;</span>
+    </div>
+    <table class="row-piece" id="rowPiece">
+        <thead>
+            <tr>
+                <th class="film fixation">影城名称</th>
+                <th class="province fixation">省</th>
+                <th class="city fixation">市</th>
+                <th class="total fixation">总<br>排片占比</th>
+                <th class="day">7月28日<br>排片占比</th>
+                <th class="day">7月29日<br>排片占比</th>
+                <th class="day">7月30日<br>排片占比</th>
+                <th class="day">7月31日<br>排片占比</th>
+                <th class="day">8月1日<br>排片占比</th>
+                <th class="day">8月2日<br>排片占比</th>
+                <th class="day">8月3日<br>排片占比</th>
+                <th class="day">8月4日<br>排片占比</th>
+                <th class="day">8月5日<br>排片占比</th>
+                <th class="day">8月6日<br>排片占比</th>
+                <th class="day">8月7日<br>排片占比</th>
+                <th class="day">8月8日<br>排片占比</th>
+                <th class="day">8月9日<br>排片占比</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="film"><b>每日达标影城数</b></td>
+                <td class="province">-</td>
+                <td class="city">-</td>
+                <td class="total">-</td>
+                <td class="day">100</td>
+                <td class="day">80</td>
+                <td class="day">80</td>
+                <td class="day">80</td>
+                <td class="day">80</td>
+                <td class="day">80</td>
+                <td class="day">80</td>
+                <td class="day">80</td>
+                <td class="day">80</td>
+                <td class="day">80</td>
+                <td class="day">80</td>
+                <td class="day">80</td>
+                <td class="day">80</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    $('#rowPiece').tableListSlide();
+</script>
+
+</body>
+</html>
