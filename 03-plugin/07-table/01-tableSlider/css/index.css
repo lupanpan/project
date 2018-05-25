@@ -22,7 +22,7 @@ body {
     width: 100%;
 }
 
-.cut .left, .cut .right {
+.cut .cut-btn {
     position: absolute;
     width: 15px;
     height: 53px;
@@ -43,14 +43,22 @@ body {
 }
 
 .row-piece {
+    position: relative;
     border-spacing: 0;
-    border-collapse: collapse;
+    /*border-collapse: collapse;*/
     font-size: 13px;
     width: 1180px;
+    border-right: 1px solid #737373;
+    border-bottom: 1px solid #737373;
 }
 
 .row-piece th, .row-piece td{
-    border: 1px solid #737373;
+    border-left: 1px solid #737373;
+    border-top: 1px solid #737373;
+}
+
+.row-piece td:last-of-type {
+
 }
 
 .row-piece th {
@@ -62,6 +70,7 @@ body {
 .row-piece td {
     height: 30px;
     text-align: center;
+    background: #fff;
 }
 
 .row-piece .province {
