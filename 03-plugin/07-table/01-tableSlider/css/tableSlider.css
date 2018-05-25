@@ -10,7 +10,7 @@ body {
 
 .table-wrap {
     position: relative;
-    width: 802px;
+    width: 804px;
     margin: 50px auto;
     overflow-x: hidden;
 }
@@ -35,7 +35,7 @@ body {
 }
 
 .cut .left {
-    left: 345px;
+    left: 348px;
 }
 
 .cut .right {
@@ -50,15 +50,13 @@ body {
     width: 1180px;
     border-right: 1px solid #737373;
     border-bottom: 1px solid #737373;
+    table-layout: fixed;
+    width: 100%;
 }
 
 .row-piece th, .row-piece td{
     border-left: 1px solid #737373;
     border-top: 1px solid #737373;
-}
-
-.row-piece td:last-of-type {
-
 }
 
 .row-piece th {

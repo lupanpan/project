@@ -87,7 +87,7 @@ app.use(expressWinston.errorLogger({
   ]
 }))
 
-// 这样做可以实现：直接启动 index.js 则会监听端口启动程序，如果 index.js 被 require 了，则会导出 app，通常用于测试。
+// 这样做可以实现：直接启动 tableSlider.js 则会监听端口启动程序，如果 tableSlider.js 被 require 了，则会导出 app，通常用于测试。
 if (module.parent) {
   // 被 require，则导出 app
   module.exports = app
