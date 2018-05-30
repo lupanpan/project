@@ -33,6 +33,7 @@ App({
       }
     })
   },
+  // 全局数据对象（整个应用程序共享）
   globalData: {
     userInfo: null
   }
