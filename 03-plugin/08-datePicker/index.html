@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="js/jQuery-2.1.4.min.js"></script>
+
+    <link rel="stylesheet" href="datePicker/css/daterangepicker.css">
+    <script src="datePicker/js/moment.js"></script>
+    <script src="datePicker/js/daterangepicker.js"></script>
+    <!--<script src="datePicker/js/options.js"></script>
+    <script src="datePicker/js/defaultTime.js"></script>-->
+</head>
+<body>
+    <input type="text" id="dateInput">
+</body>
+<script>
+    $(function () {
+        var options = {};
+        options.locale = {
+            applyLabel: '确认',
+                    cancelLabel: '取消',
+                    fromLabel: '从',
+                    toLabel: '到',
+                    weekLabel: 'W',
+                    daysOfWeek:["日","一","二","三","四","五","六"],
+                    monthNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+        };
+        options.startDate = "2018-06-01";
+        options.endDate = "2018-06-30";
+
+        $("#dateInput").daterangepicker(options, function(start, end, label){});
+    })
+</script>
+</html>
