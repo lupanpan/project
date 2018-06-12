@@ -124,6 +124,9 @@ function parseStoryContent($story, isDecode) {
         if (!em.isEmpty())
           content.push({ index: i, type: 'pem', value: em });
       }
+      else if (isOnly(p, blockquote)) { // 获取引用块<p><blockquote>...</blockquote></p>
+        blockquote = decodeHtml(blockquote, isDecode);
+      }
     }
   }
 }
@@ -131,6 +134,45 @@ function parseStoryContent($story, isDecode) {
 /**
  * 取出多余或者难以解析的html并且替换转义符号
  */
+function decodeHtml(value, isDecode) {
+  if (!value) return '';
+  value = value.replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&ldquo;/g, '"')
+    .replace(/&rdquo;/g, '"')
+    .replace(/&middot;/g, '.');
+  if (isDecode)
+   return decodeUnicode(value.replace(/&#/g, '\\u'));
+  return value;
+}
+
+/**
+ * 解析段落的unicode字符，主题日报中的内容有很多是编码过的
+ */
+function decodeUnicode(str) {
+  var ret = '';
+  var splits = str.split(';');
+  for (let i = 0; i < splits.length; i++) {
+    ret += spliteDecode(splits[i]);
+  }
+  return ret;
+}
+
+/**
+ * 解析单个unidecode字符
+ */
+function spliteDecode(value) {
+  var target = value.match(/\\u\d+/g);
+  if (target && target.length > 0) { // 解析类似 "7.1 \u20998" 参杂其他字符
+    target = target[0];
+    var temp = value.repalce(target, '{{@}}');
+    target = target.replace('\\u', '');
+    target = String.fromCharCode(parseInt(target));
+    return temp.replace("{{@}}", target);
+  } else {
+    return value;
+  }
+}
 
 /**
  * 获取数组中的内容（一般为第一个元素）
@@ -144,6 +186,40 @@ function getArrayContent(arr) {
 
 function isOnly(src, target) {
   return src.trim() == target;
+}
+
+/**
+ * 判断目标是否是函数
+ * @param {mixed} val
+ * @returns {boolean}
+ */
+function isFunction(val) {
+  return typeof val === 'function';
+}
+
+/**
+ * 修正图片url，将pic1和pic2改为pic4
+ */
+function correctData(data) {
+  if (("top_stories" in data)) {
+    var top_stories = data.top_stories;
+    for (var i = 0; i < top_stories.length; i++) {
+      top_stories[i].image = fixImgPrefix(top_stories[i].image);
+    }
+    data.top_stories = top_stories;
+  }
+
+  var stories = data.stories;
+  for (var i = 0; i < stories.length; i++) {
+    if (("images" in stories[i])) {
+      var s = stories[i].images[0];
+      s = fixImgPrefix(s);
+      stories[i].images[0] = s;
+    }
+  }
+
+  data.stories = stories;
+  return data;
 }
 
 /**
@@ -174,4 +250,14 @@ function fixImgPrefix(imgUrl) {
   //     .replace("pic2", "pic")
   //     .replace("pic3", "pic")
   //     .replace("pic4", "pic");
+}
+
+module.exports = {
+  formatTime: formatTime,
+  getCurrentData: getCurrentData,
+  isFunction: isFunction,
+  parseStory: parseStory,
+  correctData: correctData,
+  transferSign: transferSign,
+  fixImgPrefix: fixImgPrefix
 }

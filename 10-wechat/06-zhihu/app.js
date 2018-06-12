@@ -35,5 +35,6 @@ App({
   },
   globalData: {
     userInfo: null
-  }
+  },
+  debug: false // 调试程序
 })

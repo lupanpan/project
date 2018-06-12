@@ -1,66 +1,44 @@
-// pages/splash/splash.js
+var requests = require('../../requests/request.js');
+var util = require('../../utils/util.js');
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-  
+    splash: {},
+    screenHeight: 0,
+    screenWidth: 0
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-  
-  },
+    var _this = this;
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
+    // 获取系统数据中的屏幕宽高
+    wx.getSystemInfo({
+      success: function (res) {
+        _this.setData({
+          screenHeight: res.windowHeight,
+          screenWidth: res.windowWidth
+        });
+      }
+    })
+  },
   onReady: function () {
-  
-  },
+    var _this = this;
+    // 设置size参数
+    var size = this.data.screenWidth + '*' + this.data.screenHeight;
+    // 请求封面图，但是现在不可用了
+    requests.getSplashCover(size, 
+      function(data){
+        _this.setData({ splash: data });
+      }, 
+      null, 
+      function(){
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
+      }
+    );
   },
-
   /**
-   * 生命周期函数--监听页面隐藏
+   * 跳转到首页
    */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+  toIndexPaga: function() {
+    
   }
 })

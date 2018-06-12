@@ -1,1 +1,11 @@
-/* pages/splash/splash.wxss */
+page {
+  background: #ddd;
+}
+
+.cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+}

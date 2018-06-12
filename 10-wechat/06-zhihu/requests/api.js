@@ -9,7 +9,7 @@ const API_STORY = API_V4 + "story";
  * 获取最新日报
  * @return {string}
  */
-function getLatesNews() {
+function getLatestNews() {
   return API_NEWS + "/latest";
 }
 
@@ -55,7 +55,7 @@ function getStoryLongComments(storyId) {
  * @param {int} storyId 新闻id
  * @return {string}
  */
-function getStoryShorComments(storyId) {
+function getStoryShortComments(storyId) {
   return API_STORY + "/" + storyId + "/short-comments";
 }
 
@@ -73,7 +73,7 @@ function getThemeStories(themeId) {
  * @return {string}
  */
 function getSplashCover(size) {
-  return API_V4 + "/start-image" + size;
+  return API_V4 + "/start-image/" + size;
 }
 
 module.exports = {
