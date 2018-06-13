@@ -9,3 +9,39 @@ page {
   width: 100%;
   bottom: 0;
 }
+
+.mask {
+  position: absolute;
+  left: 0;
+  bottom: 100rpx;
+  height: 150rpx;
+  width: 100%;
+  background: rgba(0,0,0,0.3); 
+}
+
+.mask .logo {
+  margin-left: 120rpx;
+  margin-top: 15rpx;
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.mask .title, .mask .desc {
+  position: absolute;
+  left: 280rpx;
+}
+
+.mask .title {
+  top: 20rpx;
+  font-size: 40rpx;
+  color: #eee;
+  font-weight: 700;
+}
+
+.mask .desc {
+  position: absolute;
+  left: 280rpx;
+  bottom: 20rpx;
+  font-size: 30rpx;
+  color: #eee;
+}

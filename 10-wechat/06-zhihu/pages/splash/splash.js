@@ -27,11 +27,18 @@ Page({
     // 请求封面图，但是现在不可用了
     requests.getSplashCover(size, 
       function(data){
+        // 判断data是否有数据，如果无数据，则随机使用本地图片
+        if(!data) {
+          // 生成1-6随机数
+          var randomNum = Math.ceil(Math.random() * 6);
+          data = {};
+          data.img = "../../images/cover/cover" + randomNum + ".jpg";
+        }
         _this.setData({ splash: data });
       }, 
       null, 
       function(){
-
+        _this.toIndexPaga();
       }
     );
   },
@@ -39,6 +46,10 @@ Page({
    * 跳转到首页
    */
   toIndexPaga: function() {
-    
+    setTimeout(function(){
+      wx.redirectTo({
+        url: '../index/index'
+      })
+    },2000)
   }
 })
