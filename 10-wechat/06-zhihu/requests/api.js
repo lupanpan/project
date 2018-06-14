@@ -38,7 +38,7 @@ function getBeforeNews(date) {
  * @return {string}
  */
 function getStoryExtraInfo(storyId) {
-  return API_STORY + "-extra" + storyId;
+  return API_STORY + "-extra/" + storyId;
 }
 
 /**
@@ -59,12 +59,16 @@ function getStoryShortComments(storyId) {
   return API_STORY + "/" + storyId + "/short-comments";
 }
 
+/**
+ * 获取左侧主题菜单列表
+ * @return {string}
+ */
 function getTheme() {
-  return API_V4 + "themes";
+  return API_V4 + "/themes";
 }
 
 function getThemeStories(themeId) {
-  return API_V4 + "themes" + themeId;
+  return API_V4 + "/theme/" + themeId;
 }
 
 /**

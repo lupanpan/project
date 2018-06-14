@@ -254,6 +254,7 @@ function fixImgPrefix(imgUrl) {
 
 module.exports = {
   formatTime: formatTime,
+  formatNumber: formatNumber,
   getCurrentData: getCurrentData,
   isFunction: isFunction,
   parseStory: parseStory,

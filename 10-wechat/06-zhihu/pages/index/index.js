@@ -7,8 +7,7 @@ Page({
 
     pageData: {}, // 列表数据
     sliderData: {}, // 轮播图数据
-    themeData: {}, // 主题菜单数据
-
+    themeData: {}, // 左侧主题菜单数据
     currentDataStr: '',// 当前时间字符串显示
 
 
@@ -18,9 +17,10 @@ Page({
 
     loading: false,
     loadingMsg: '加载中...',
-    pageShow: 'none'
+    pageShow: 'none',
 
 
+    themeId: 0 // 当前选择主题的id
   },
 
   onLoad: function (options) {
@@ -42,18 +42,32 @@ Page({
 
     // 获取当前日期
     const date = utils.getCurrentData();
-    this.setData({ currentDataStr: date.year + '.' + date.month + '.' + date.day + '  ' + '星期' + this.data.weekdayStr[date.weekday]});
+    this.setData({ currentDataStr: utils.formatNumber(date.month) + '月' + utils.formatNumber(date.day) + '日  ' + '星期' + this.data.weekdayStr[date.weekday]});
 
     // 设置为等待状态
     this.setData({ loading: true });
     
-    // 获取日报详情数据
+    // 获取最新日报
     requests.getNewsLatest((data) => {
+      // 设置返回数据
       _this.setData({
         sliderData: data.top_stories,
         pageData: data.stories
-      })
+      });
+
+      // 设置pageShow
+      _this.setData({ pageShow: 'block' });
+    },
+    null
+    ,() => {
+      // 设置取消等待状态
+      this.setData({ loading: false });
     });
+
+    // 获取左侧主题菜单列表
+    requests.getTheme((data) => {
+      _this.setData({ themeData: data.others });
+    })
   },
 
   /**

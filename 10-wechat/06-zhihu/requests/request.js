@@ -38,6 +38,9 @@ function requestData(url, data, successCallback, errorCallback, completeCallback
   });
 }
 
+/**
+ * 获取最新日报
+ */
 function getNewsLatest(successCallback, errorCallback, completeCallback) {
   requestData(api.getLatestNews(), {}, successCallback, errorCallback, completeCallback);
 }
@@ -50,6 +53,9 @@ function getNewsDetail(newsId, successCallback, errorCallback, completeCallback)
   requestData(api.getNewsDetail(newsId), {}, successCallback, errorCallback, completeCallback);
 }
 
+/**
+ * 获取左侧主题菜单列表
+ */
 function getTheme(successCallback, errorCallback, completeCallback) {
   requestData(api.getTheme(), {}, successCallback, errorCallback, completeCallback);
 }

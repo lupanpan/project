@@ -1,2 +1,41 @@
-<!--pages/index/index.wxml-->
-<text>pages/index/index.wxml</text>
+
+<!-- 页面显示主体部分 -->
+<!-- 首页显示部分 -->
+<scroll-view class='main' wx:if='{{themeId==0}}' scroll-y='true' style='display:{{pageShow}}'>
+  <!-- 滑动面板部分 -->
+  <swiper class='index-swiper' indicator-dots='true' interval='5000' autoplay='true' indicator-color='rgba(255,255,255,0.3)' indicator-active-color='rgba(255,255,255,1)'>
+    <block wx:key='id' wx:for='{{sliderData}}'>
+      <swiper-item data-id='{{item.id}}'>
+        <image class='index-swiper-img' mode='aspectFill' src='{{item.image}}' />
+        <view class='mask'></view>
+        <view class='desc'>
+          <text class='index-swiper-desc'>{{item.title}}</text>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+  
+  <!-- 今日热文模块 -->
+  <view class='main-list-header'>
+    <view class='title'>
+      <text>今日热文</text>
+    </view>
+    <view class='date'>
+      <text>{{currentDataStr}}</text>
+    </view>
+  </view>
+
+  <!-- 内容列表模块 -->
+  <view class='common-list'>
+    <block wx:key='id' wx:for='{{pageData}}'>
+      <view class='list-item {{item.images[0] ? "has-img": ""}}' wx:if='{{item.type != 3}}' data-id='{{item.id}}'></view>
+    </block>
+  </view>
+
+</scroll-view>
+
+
+<!-- 其他主题菜单显示部分 -->
+<scroll-view class='main' wx:else scroll-y='true' style='display:{{pageShow}}'>
+
+</scroll-view>
