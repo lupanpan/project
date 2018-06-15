@@ -9,7 +9,9 @@ Page({
     sliderData: {}, // 轮播图数据
     themeData: {}, // 左侧主题菜单数据
     currentDataStr: '',// 当前时间字符串显示
-
+    currentData: new Date(),
+    refreshAnimation: {}, // 加载更多旋转动画数据
+    loadingMore: true, // 是否正在加载
 
     avatarUrl: '', // 当前用户头像
     nickName: '', // 当前用户名字
@@ -68,6 +70,8 @@ Page({
     requests.getTheme((data) => {
       _this.setData({ themeData: data.others });
     })
+
+    this.updateRefreshIcon();
   },
 
   /**
@@ -103,5 +107,31 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+
+  /**
+   * 旋转上拉加载图标
+   */
+  updateRefreshIcon: function () {
+    var deg = 360;
+    var _this = this;
+
+    var animation = wx.createAnimation({
+      duration: 1000
+    });
+
+    var timer = setInterval(function () {
+      if (!_this.data.loadingMore) {
+        clearInterval(timer);
+      }
+
+      animation.rotateZ(deg).step();
+      deg += 360;
+
+      _this.setData({
+        refreshAnimation: animation.export()
+      })
+
+    }, 1000);
   }
 })

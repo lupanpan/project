@@ -28,8 +28,23 @@
   <!-- 内容列表模块 -->
   <view class='common-list'>
     <block wx:key='id' wx:for='{{pageData}}'>
-      <view class='list-item {{item.images[0] ? "has-img": ""}}' wx:if='{{item.type != 3}}' data-id='{{item.id}}'></view>
+      <!-- 内容条 -->
+      <view class='list-item {{item.images[0] ? "has-img": ""}}' wx:if='{{item.type != 3}}' data-id='{{item.id}}'>
+        <view class='content'>
+          <text>{{item.title}}</text>
+        </view>
+        <image wx:if='{{item.images[0]}}' src='{{item.images[0]}}' mode='aspectFill' class='cover'></image>
+      </view>
+      <!-- 日期条 -->
+      <view class='list-spliter' wx:else>
+        <text>{{item.title}}</text>
+      </view>
     </block>
+  </view>
+
+  <!-- 加载更多图标 -->
+  <view class='refresh-block' wx:if='{{loadingMore}}'>
+    <image animation='{{refreshAnimation}}' src='../../images/refresh.png'></image>
   </view>
 
 </scroll-view>

@@ -1,0 +1,9 @@
+.refresh-block {
+  padding: 20rpx;
+  text-align: center;
+}
+
+.refresh-block image {
+  width: 50rpx;
+  height: 50rpx;
+}

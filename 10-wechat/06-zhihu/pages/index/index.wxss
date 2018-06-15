@@ -44,8 +44,8 @@
 
 /* 今日热文模块 */
 .main-list-header {
-  height: 60rpx;
-  line-height: 50rpx;
+  height: 80rpx;
+  line-height: 80rpx;
   background: #019DD6;
   text-align: center;
 }
@@ -59,3 +59,29 @@
 .main-list-header .title {
   margin-right: 30rpx;
 }
+
+/* 内容列表模块 */
+.common-list {
+  padding: 0 30rpx;
+}
+
+.list-item {
+  box-sizing: border-box;
+  height: 180rpx;
+  border-bottom: 1px solid #eee;
+  padding-top: 25rpx;
+}
+
+.list-item .content {
+  float: left;
+  width: 520rpx;
+  vertical-align: middle;
+  font-size: 15px;
+}
+
+.list-item image {
+  width: 150rpx;
+  height: 130rpx;
+}
+
+/* 加载更多图标 */
