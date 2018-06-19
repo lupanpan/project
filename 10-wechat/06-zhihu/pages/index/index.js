@@ -8,18 +8,19 @@ Page({
     pageData: {}, // 列表数据
     sliderData: {}, // 轮播图数据
     themeData: {}, // 左侧主题菜单数据
-    currentDataStr: '',// 当前时间字符串显示
-    currentData: new Date(),
+    currentDateStr: '',// 当前时间字符串显示
+    currentDate: new Date(), // 标记下拉数据获取到的时间，默认当前时间
     refreshAnimation: {}, // 加载更多旋转动画数据
-    loadingMore: true, // 是否正在加载
+    loadingMore: false, // 是否正在加载
 
     avatarUrl: '', // 当前用户头像
     nickName: '', // 当前用户名字
 
+    screenHeight: 0, // 屏幕高度
 
     loading: false,
     loadingMsg: '加载中...',
-    pageShow: 'none',
+    pageShow: 'none', // scroll-view的display属性值
 
 
     themeId: 0 // 当前选择主题的id
@@ -27,6 +28,15 @@ Page({
 
   onLoad: function (options) {
     var _this = this;
+
+    // 获取屏幕宽高信息
+    wx.getSystemInfo({
+      success: function(res) {
+        _this.setData({
+          screenHeight: res.windowHeight
+        })
+      },
+    })
 
     var app = getApp();
     // 获取用户名与用户头像
@@ -44,7 +54,7 @@ Page({
 
     // 获取当前日期
     const date = utils.getCurrentData();
-    this.setData({ currentDataStr: utils.formatNumber(date.month) + '月' + utils.formatNumber(date.day) + '日  ' + '星期' + this.data.weekdayStr[date.weekday]});
+    this.setData({ currentDateStr: utils.formatNumber(date.month) + '月' + utils.formatNumber(date.day) + '日  ' + '星期' + this.data.weekdayStr[date.weekday]});
 
     // 设置为等待状态
     this.setData({ loading: true });
@@ -60,8 +70,8 @@ Page({
       // 设置pageShow
       _this.setData({ pageShow: 'block' });
     },
-    null
-    ,() => {
+    null,
+    () => {
       // 设置取消等待状态
       this.setData({ loading: false });
     });
@@ -69,44 +79,54 @@ Page({
     // 获取左侧主题菜单列表
     requests.getTheme((data) => {
       _this.setData({ themeData: data.others });
-    })
+    });
+  },
 
+  /**
+   * 列表加载更多数据
+   */
+  loadingMoreEvent: function (e) {
+    var _this = this;
+
+    // 判断如果正在记载则不再执行该事件
+    if (this.data.loadingMore) return;
+
+    console.log(this.data.currentDate);
+
+    // 获取前一天的时间
+    var date = new Date(Date.parse(this.data.currentDate) - 24*60*60*1000);
+
+    // 设置加载更多状态为true
+    this.setData({ loadingMore: true });
+    // 旋转上拉加载图标
     this.updateRefreshIcon();
-  },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-    
-  },
+    // 设置要获取日期的参数格式
+    var dateStr = date.getFullYear() + utils.formatNumber(date.getMonth() + 1) + utils.formatNumber(date.getDate());
+    console.log(dateStr);
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
+    // 获取以往日报
+    requests.getBeforeNews(dateStr, 
+      (data) => {
+        console.log(data);
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
+        // 获取已经存在的pageData
+        let pageData = this.data.pageData;
+        // 追加日期数据
+        pageData.push({ type: '3', title: (utils.formatNumber(date.getMonth() + 1) + '月' + utils.formatNumber(date.getDate()) + '日  ' + '星期' + this.data.weekdayStr[date.getDay()])});
+        // 合并获取的前一天日期数据
+        pageData = pageData.concat(data.stories);
+        // 设置回pageData数据中
+        _this.setData({ currentDate: date, pageData: pageData });
+      },
+      null,
+      () => {
+        // 设置加载更多状态为false
+        _this.setData({ loadingMore: false });
+      })
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+
   },
 
   /**
@@ -133,5 +153,17 @@ Page({
       })
 
     }, 1000);
+  },
+
+  /**
+   * 跳转到详情页
+   */
+  toDetailPage: function (e) {
+    // 获取data-id
+    var id = e.currentTarget.dataset.id;
+    // 跳转到详情页
+    wx.navigateTo({
+      url: '../detail/detail?id=' + id,
+    })
   }
 })

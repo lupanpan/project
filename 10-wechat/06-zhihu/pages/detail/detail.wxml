@@ -1,0 +1,16 @@
+<view style='display:{{pageShow}}'>
+  <!-- 封面部分 -->
+  <view class='header-cover' wx:if='{{news.image}}'>
+    <image mode='aspectFill' src='{{news.image}}'></image>
+    <view class='mask'></view>
+    <view class='desc'>
+      <text>{{news.title}}</text>
+    </view>
+    <text class='cover-source'>{{news.image_source}}</text>
+  </view>
+
+  <!-- 如果没有封面则只显示标题 -->
+  <view class='black-desc' wx:else>
+    <text>{{news.title}}</text>
+  </view>
+</view>

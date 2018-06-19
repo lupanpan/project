@@ -1,11 +1,11 @@
 
 <!-- 页面显示主体部分 -->
 <!-- 首页显示部分 -->
-<scroll-view class='main' wx:if='{{themeId==0}}' scroll-y='true' style='display:{{pageShow}}'>
+<scroll-view class='main' wx:if='{{themeId==0}}' scroll-y='true' style='height:{{screenHeight}}px;display:{{pageShow}}' bindscrolltolower='loadingMoreEvent'>
   <!-- 滑动面板部分 -->
   <swiper class='index-swiper' indicator-dots='true' interval='5000' autoplay='true' indicator-color='rgba(255,255,255,0.3)' indicator-active-color='rgba(255,255,255,1)'>
     <block wx:key='id' wx:for='{{sliderData}}'>
-      <swiper-item data-id='{{item.id}}'>
+      <swiper-item data-id='{{item.id}}' bindtap='toDetailPage'>
         <image class='index-swiper-img' mode='aspectFill' src='{{item.image}}' />
         <view class='mask'></view>
         <view class='desc'>
@@ -21,7 +21,7 @@
       <text>今日热文</text>
     </view>
     <view class='date'>
-      <text>{{currentDataStr}}</text>
+      <text>{{currentDateStr}}</text>
     </view>
   </view>
 
@@ -29,7 +29,7 @@
   <view class='common-list'>
     <block wx:key='id' wx:for='{{pageData}}'>
       <!-- 内容条 -->
-      <view class='list-item {{item.images[0] ? "has-img": ""}}' wx:if='{{item.type != 3}}' data-id='{{item.id}}'>
+      <view class='list-item {{item.images[0] ? "has-img": ""}}' wx:if='{{item.type != 3}}' data-id='{{item.id}}' bindtap='toDetailPage'>
         <view class='content'>
           <text>{{item.title}}</text>
         </view>

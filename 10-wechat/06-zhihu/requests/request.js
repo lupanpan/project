@@ -45,10 +45,18 @@ function getNewsLatest(successCallback, errorCallback, completeCallback) {
   requestData(api.getLatestNews(), {}, successCallback, errorCallback, completeCallback);
 }
 
+/**
+ * 获取以往日报
+ * 知乎日报最早 20130519
+ */
 function getBeforeNews(date, successCallback, errorCallback, completeCallback) {
   requestData(api.getBeforeNews(date), {}, successCallback, errorCallback, completeCallback);
 }
 
+/**
+ * 获取日报详情
+ * @param {int} newsId 日报id
+ */
 function getNewsDetail(newsId, successCallback, errorCallback, completeCallback) {
   requestData(api.getNewsDetail(newsId), {}, successCallback, errorCallback, completeCallback);
 }
@@ -72,6 +80,10 @@ function getStoryLongComments(storyId, successCallback, errorCallback, completeC
   requestData(api.getStoryLongComments(storyId), {}, successCallback, errorCallback, completeCallback);
 }
 
+/**
+ * 获取新闻额外的评论数量和点赞数量等信息
+ * @param {int} newsId 日报id
+ */
 function getStoryExtraInfo(storyId, successCallback, errorCallback, completeCallback) {
   requestData(api.getStoryExtraInfo(storyId), {}, successCallback, errorCallback, completeCallback);
 }
