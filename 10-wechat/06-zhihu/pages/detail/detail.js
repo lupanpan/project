@@ -7,7 +7,9 @@ Page({
     isTheme: false, // 是否是主题日报
     loading: false, // 是否加载中
     news: [], // 日报详情
+    modalHidden: true, // 分享模态框是否显示
     extraInfo: {}, // 日报扩展信息
+    modalMsgHidden: true,
     pageShow: 'none', // 模块是否显示
     isCollect: false // 是否被收藏
   },
@@ -54,9 +56,9 @@ Page({
     // 获取日报详情
     requests.getNewsDetail(this.data.id,
       (data) => {
-        // 解析story对象的body部分
-        data.body = utils.parseStory(data.body, this.data.isTheme);
         console.log(data);
+        // 解析story对象的body部分
+        data.body = utils.parseStory(data.body, _this.data.isTheme);
         // 设置标题
         wx.setNavigationBarTitle({ title: data.title });
         // 设置数据

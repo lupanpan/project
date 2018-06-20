@@ -6,11 +6,118 @@
     <view class='desc'>
       <text>{{news.title}}</text>
     </view>
-    <text class='cover-source'>{{news.image_source}}</text>
+    <text class='cover-source'>图片： {{news.image_source}}</text>
   </view>
 
   <!-- 如果没有封面则只显示标题 -->
   <view class='black-desc' wx:else>
     <text>{{news.title}}</text>
   </view>
+
+  <!-- 文章主体部分 -->
+  <view class='main'>
+    <!-- 遍历文章 -->
+    <block wx:for='{{news.body}}' wx:key='index'>
+      <!-- 每一篇文章 -->
+      <view class='article'>
+        <!-- 标题 -->
+        <view class='title' wx:if='{{item.title && item.title != ""}}'>
+          <text>{{item.title}}</text>
+        </view>
+        <!-- 作者简介部分 -->
+        <view class='author-info' wx:if='{{(item.avatar && item.avatar != "") || (item.author && item.author != "") || (item.bio && item.bio != "")}}'>
+          <image wx:if='{{item.avatar && item.avatar != ""}}' class="avatar" src="{{item.avatar}}"></image>
+          <text wx:if='{{item.author && item.author != ""}}' class='author-name'>{{item.author}}</text>
+          <text wx:if='{{item.bio && item.bio != ""}}' class='author-mark'>{{item.bio}}</text>
+        </view>
+        <!-- 内容部分 -->
+        <view class='content' wx:if='{{item.content && item.content.length > 0}}'>
+          <block wx:for='{{item.content}}' wx:key='index' wx:for-item="it">
+            <block wx:if='{{it.type == "p"}}'>
+              <text>{{it.value}}</text>
+            </block>
+            <block wx:if='{{it.type == "img"}}'>
+              <image mode='aspectFill' src='{{it.value}}' data-src='{{it.value}}' bindtap='previewImgEvent'></image>
+            </block>
+            <block wx:elif="{{it.type == 'pstrong'}}">
+              <text class="strong">{{it.value}}</text>
+            </block>
+            <block wx:elif="{{it.type == 'pem'}}">
+              <text class="em">{{it.value}}</text>
+            </block>
+            <block wx:elif="{{it.type == 'blockquote'}}">
+              <text class="qoute">{{it.value}}</text>
+            </block>
+            <block wx:else>
+              <text>{{it.value}}</text>
+            </block>
+          </block>
+        </view>
+
+        <!-- 查看知乎讨论 -->
+        <view class='discuss' wx:if='{{item.more && item.more != ""}}'>
+          <navigator url='{{item.more}}'>查看知乎讨论</navigator>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 底部工具栏 -->
+  <view class='toolbar'>
+    <view class='inner'>
+      <view class='item' bindtap='showModalEvent'>
+        <image src='../../images/share.png'></image>
+      </view>
+      <view class='item' bindtap='reloadEvent'>
+        <image src='../../images/refresh.png'></image>
+      </view>
+      <view class='item' bindtap='collectOrNot' wx:if='{{isCollect}}'>
+        <image src="../../images/star_yellow.png" />
+      </view>
+      <view class='item' bind='collectOrNot' wx:else>
+        <image src="../../images/star.png" />
+      </view>
+      <view class='item' data-id='{{id}}' bindtap='toCommentPage'>
+        <image src="../../images/insert_comment.png" />
+        <view class="tip"></view>
+      </view>
+      <view class='item'>
+        <image src='../../images/thumb_up.png'></image>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分享弹出模块 -->
+  <modal class='modal' comfirm-text='取消' no-cancal hidden='{{modalHidden}}' bindconfirm='hideModalEvent'>
+    <view class='share-list'>
+      <view class="item">
+        <image src="../../images/share_qq.png" />
+      </view>
+      <view class="item">
+        <image src="../../images/share_pengyouquan.png" />
+      </view>
+      <view class="item">
+        <image src="../../images/share_qzone.png" />
+      </view>
+    </view>
+    <view class='share-list' style='margin-top: 20rpx'>
+      <view class="item">
+        <image src="../../images/share_weibo.png" />
+      </view>
+      <view class="item">
+        <image src="../../images/share_alipay.png" />
+      </view>
+      <view class="item">
+        <image src="../../images/share_plus.png" />
+      </view>
+    </view>
+  </modal>
 </view>
+
+<loading hidden='{{!loading}}'>
+  加载中...
+</loading>
+
+<modal class='modal' hidden='{{modalMsgHidden}}' no-cancel bindconfirm='modalMsgHiddenEvent'>
+  <view> {{modalMsg}} </view>
+</modal>

@@ -126,9 +126,17 @@ function parseStoryContent($story, isDecode) {
       }
       else if (isOnly(p, blockquote)) { // 获取引用块<p><blockquote>...</blockquote></p>
         blockquote = decodeHtml(blockquote, isDecode);
+        if (!blockquote.isEmpty())
+          content.push({ index: i, type: 'blockquote', value: blockquote });
+      }
+      else { // 其他类型，归类为普通段落
+        p = decodeHtml(p, isDecode);
+        if (!p.isEmpty())
+          content.push({ index: i, type: 'p', value: p });
       }
     }
   }
+  return content;
 }
 
 /**
