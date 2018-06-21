@@ -27,7 +27,7 @@ page {
   position: absolute;
   left: 0;
   bottom: 0;
-  padding: 0 20rpx 60rpx 20px;
+  padding: 0 20rpx 40rpx 20px;
   font-size: 38rpx;
   font-weight: 600;
   color: #fff;
@@ -49,20 +49,23 @@ page {
 
 /* 文章部分 */
 .main {
-  padding-bottom: 150rpx;
+  padding-bottom: 100rpx;
 }
 
 /* 每一篇文章 */
 .article {
   padding: 40rpx;
-  margin-bottom: 20rpx;
   background: #fff;
+}
+
+.article.interval {
+  margin-bottom: 20rpx;
 }
 
 /* 标题 */
 .article .title {
   padding-bottom: 40rpx;
-  font-size: 40rpx;
+  font-size: 35rpx;
   font-weight: 700;
 }
 
@@ -71,7 +74,7 @@ page {
   overflow: hidden;
   height: 60rpx;
   line-height: 60rpx;
-  font-size: 35rpx;
+  font-size: 30rpx;
   white-space: nowrap;
   text-overflow: ellipsis;
   margin-bottom: 20rpx;
@@ -92,11 +95,125 @@ page {
 
 .article .author-info .author-mark {
   float: left;
-  font-size: 13px;
+  /* font-size: 13px; */
   color: #999;
-
   overflow: hidden; /*自动隐藏文字*/
   text-overflow: ellipsis; /*文字隐藏后添加省略号*/
   white-space: nowrap; /*强制不换行*/
-  width: 300rpx;
+  width: 360rpx;
+  /* padding-top: 5rpx; */
+  margin-left: 20rpx;
+}
+
+/* 内容部分 */
+.article .content text {
+  display: block;
+  font-size: 30rpx;
+  color: #616466;
+  line-height: 60rpx;
+  margin-bottom: 40rpx;
+  text-align: justify;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.article .content .em {
+  font-style: italic;
+}
+
+.article .content .strong {
+  font-weight: 700;
+}
+
+.article .content text.qoute {
+  border-left: 2px solid #cde3f1;
+  padding-left: 20rpx;
+}
+
+.article .content image {
+  display: block;
+  width: 100%;
+  margin-bottom: 40rpx;
+}
+
+/* 查看知乎讨论 */
+.article .discuss {
+  margin: 40rpx;
+  text-align: center;
+}
+
+.article .discuss navigator {
+  font-size: 30rpx;
+  background: #eee;
+  color: #666;
+  padding: 10rpx;
+  border-radius: 4rpx;
+}
+
+.article .discuss navigator:active {
+  background-color: #cde3f1;
+}
+
+/* 底部工具栏 */
+.toolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100rpx;
+  border-top: 1px solid #ddd;
+  background: #fff;
+}
+
+.toolbar .inner {
+   padding: 0 20rpx; 
+}
+
+.toolbar .item {
+  padding-top: 25rpx;
+  position: relative;
+  text-align: center;
+  width: 20%;
+  display: inline-block;
+}
+
+.toolbar .item image {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+/* 底部工具栏中的小标记 --暂时改为了下边的数量显示 */
+.toolbar .item .tip {
+  position: absolute;
+  top: 20rpx;
+  right: 38rpx;
+  display: block;
+  background: #019dd6;
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 20rpx;
+}
+
+/* 评论数的小标记 */
+.toolbar .item .comment_num {
+  position: absolute;
+  top: 20rpx;
+  left: 78rpx;
+  display: block;
+  height: 20rpx;
+  padding: 0 6rpx;
+  font-size: 8px;
+  color: #fff;
+  text-align: center;
+  background: #019dd6;
+  
+}
+
+/* 点赞数的小标记 */
+.toolbar .item .thumb_up_num {
+  position: absolute;
+  top: 20rpx;
+  left: 86rpx;
+  font-size: 8px;
+  color: #999;
 }

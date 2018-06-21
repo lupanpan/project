@@ -1,3 +1,10 @@
+page {
+  position: relative;
+  height: 100%;
+  font-family: 'microsoft yahei ui';
+}
+
+/* 底部加载更多图标 */
 .refresh-block {
   padding: 20rpx;
   text-align: center;
@@ -6,4 +13,16 @@
 .refresh-block image {
   width: 50rpx;
   height: 50rpx;
+}
+
+/* 分享模态框 */
+.share-list .item {
+  display: inline-block;
+  width: 33.333333%;
+  text-align: center;
+}
+
+.share-list .item image {
+  width: 120rpx;
+  height: 120rpx;
 }

@@ -19,7 +19,7 @@
     <!-- 遍历文章 -->
     <block wx:for='{{news.body}}' wx:key='index'>
       <!-- 每一篇文章 -->
-      <view class='article'>
+      <view class='article {{(index == news.body.length-1) ? "" : "interval"}}'>
         <!-- 标题 -->
         <view class='title' wx:if='{{item.title && item.title != ""}}'>
           <text>{{item.title}}</text>
@@ -36,8 +36,8 @@
             <block wx:if='{{it.type == "p"}}'>
               <text>{{it.value}}</text>
             </block>
-            <block wx:if='{{it.type == "img"}}'>
-              <image mode='aspectFill' src='{{it.value}}' data-src='{{it.value}}' bindtap='previewImgEvent'></image>
+            <block wx:elif='{{it.type == "img"}}'>
+              <image mode='aspectFit' src='{{it.value}}' data-src='{{it.value}}' bindtap='previewImgEvent'></image>
             </block>
             <block wx:elif="{{it.type == 'pstrong'}}">
               <text class="strong">{{it.value}}</text>
@@ -57,7 +57,7 @@
         <!-- 查看知乎讨论 -->
         <view class='discuss' wx:if='{{item.more && item.more != ""}}'>
           <navigator url='{{item.more}}'>查看知乎讨论</navigator>
-        </view>
+        </view> 
       </view>
     </block>
   </view>
@@ -74,21 +74,22 @@
       <view class='item' bindtap='collectOrNot' wx:if='{{isCollect}}'>
         <image src="../../images/star_yellow.png" />
       </view>
-      <view class='item' bind='collectOrNot' wx:else>
+      <view class='item' bindtap='collectOrNot' wx:else>
         <image src="../../images/star.png" />
       </view>
       <view class='item' data-id='{{id}}' bindtap='toCommentPage'>
         <image src="../../images/insert_comment.png" />
-        <view class="tip"></view>
+        <view class="comment_num">{{extraInfo.comments}}</view>
       </view>
       <view class='item'>
         <image src='../../images/thumb_up.png'></image>
+        <view class='thumb_up_num'>{{extraInfo.dispose_popularity}}</view>
       </view>
     </view>
   </view>
 
   <!-- 分享弹出模块 -->
-  <modal class='modal' comfirm-text='取消' no-cancal hidden='{{modalHidden}}' bindconfirm='hideModalEvent'>
+  <modal class='modal' confirm-text='取消' no-cancel hidden='{{modalHidden}}' bindconfirm='hideModalEvent'>
     <view class='share-list'>
       <view class="item">
         <image src="../../images/share_qq.png" />

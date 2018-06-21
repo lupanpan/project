@@ -81,11 +81,13 @@
 .list-item .content {
   float: left;
   width: 520rpx;
+  padding-right: 20rpx;
   vertical-align: middle;
   font-size: 15px;
 }
 
 .list-item image {
+  float: right; 
   width: 150rpx;
   height: 130rpx;
 }
