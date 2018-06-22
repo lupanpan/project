@@ -16,13 +16,16 @@ Page({
     avatarUrl: '', // 当前用户头像
     nickName: '', // 当前用户名字
 
+    screenWidth: 0, // 屏幕宽度
     screenHeight: 0, // 屏幕高度
+    ballBottom: 30, // 小球的位置
+    ballRight: 30, // 小球的位置
 
     loading: false,
     loadingMsg: '加载中...',
     pageShow: 'none', // scroll-view的display属性值
 
-
+    maskDisplay: 'none', // 遮罩层的显示
     themeId: 0 // 当前选择主题的id
   },
 
@@ -33,20 +36,22 @@ Page({
     wx.getSystemInfo({
       success: function(res) {
         _this.setData({
+          screenWidth: res.windowWidth,
           screenHeight: res.windowHeight
         })
       },
     })
-
-    var app = getApp();
-    // 获取用户名与用户头像
-    app.getUserInfo(function (data) {
-      _this.setData({ avatarUrl: data.avatarUrl, nickName: data.nickName });
-    })
   },
 
   onShow: function () {
-    // 从详细页面返回时会刷新
+    // 从详细页面返回时会刷新收藏列表
+    if (this.data.themeId == -1) {
+      // 获取本地缓存数据
+      var pageData = wx.getStorageSync("pageData") || [];
+      this.setData({
+        pageData: pageData
+      })
+    }
   },
 
   onReady: function () {
@@ -78,6 +83,7 @@ Page({
 
     // 获取左侧主题菜单列表
     requests.getTheme((data) => {
+      console.log(data);
       _this.setData({ themeData: data.others });
     });
   },
@@ -124,9 +130,6 @@ Page({
         // 设置加载更多状态为false
         _this.setData({ loadingMore: false });
       })
-
-
-
   },
 
   /**
@@ -164,6 +167,30 @@ Page({
     // 跳转到详情页
     wx.navigateTo({
       url: '../detail/detail?id=' + id,
+    })
+  },
+
+  /**
+   * 浮动球移动事件
+   */
+  ballMoveEvent: function (e) {
+    // 获取浮动球的位置
+    var touchs = e.touches[0];
+    var pageX = touchs.pageX;
+    var pageY = touchs.pageY;
+
+    // 定义小球的半径
+    var floatRadius = 25;
+
+    // 判断移动范围不让小球超出屏幕外部
+    if (pageX <= floatRadius || pageY <= floatRadius || (this.data.screenWidth - pageX)  <=25 || (this.data.screenHeight - pageY) <= 25) {
+      return;
+    }
+    
+    // 设置小球的位置
+    this.setData({
+      ballRight: this.data.screenWidth - pageX - floatRadius,
+      ballBottom: this.data.screenHeight - pageY - floatRadius
     })
   }
 })

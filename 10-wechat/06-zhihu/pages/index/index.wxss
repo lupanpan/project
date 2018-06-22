@@ -1,47 +1,10 @@
 /* 页面显示主体部分 */
 .main {
   width: 100%;
-  /* height: 100%; */
+   height: 100%; 
 }
 
 /* 首页显示部分 */
-/* 滑动面板部分 */
-.index-swiper {
-  position: relative;
-  height: 430rpx;
-}
-
-.index-swiper-img {
-  width: 100%;
-}
-
-/* 图片阴影遮罩 */
-.index-swiper .mask {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0,0,0,0.3);
-}
-
-/* 文字描述 */
-.index-swiper-desc {
-  box-sizing: border-box;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  background: rgba(0,0,0,0.3);
-  padding: 25rpx 80rpx;
-  color: #fff;
-  font-size: 15px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
 /* 今日热文模块 与 每日日期条模块 */
 .main-list-header, .list-spliter {
   height: 80rpx;
@@ -92,4 +55,89 @@
   height: 130rpx;
 }
 
-/* 加载更多图标 */
+/* 浮球 */
+.float-action {
+  position: absolute;
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50%;
+  text-align: center;
+  background: rgba(24, 145, 212, .7);
+  background: rgba(0, 0, 0, .6);
+  z-index: 100;
+}
+
+.float-action image {
+  width: 50rpx;
+  height: 50rpx;
+  margin-top: 20rpx;
+}
+
+/* 左侧边栏 */
+.slide-menu {
+  position: absolute;
+  top: 0;
+  right: 250rpx;
+  width: 500rpx;
+  border: 1px solid red;
+  height: 100%;
+  background: #fff;
+}
+
+/* 头部内容 */
+.slide-menu .header {
+  position: relative;
+  background: #019DD6;
+  height: 300rpx;
+}
+
+/* 关闭按钮 */
+.slide-menu .clost-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* 用户信息部分 */
+.slide-menu .userinfo {
+  border: 1px solid pink;
+}
+
+/* 头像 */
+.slide-menu .userinfo .user-avatar-wrap {
+  position: relative;
+  display: inline-block;
+  width: 70rpx;
+  height: 70rpx;
+  vertical-align: middle;
+  overflow: hidden;
+  margin: 0 20rpx;
+}
+
+.slide-menu .userinfo .user-avatar-url {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.slide-menu .userinfo .user-avatar-mask  {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 50px 50px #019DD6;
+}
+
+/* 昵称 */
+.slide-menu .userinfo .user-nick-name {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #fff;
+  margin-left: 10rpx;
+}

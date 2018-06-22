@@ -1,7 +1,7 @@
 
 <!-- 页面显示主体部分 -->
 <!-- 首页显示部分 -->
-<scroll-view class='main' wx:if='{{themeId==0}}' scroll-y='true' style='height:{{screenHeight}}px;display:{{pageShow}}' bindscrolltolower='loadingMoreEvent'>
+<scroll-view class='main' wx:if='{{themeId==0}}' scroll-y='true' style='display:{{pageShow}}' bindscrolltolower='loadingMoreEvent'>
   <!-- 滑动面板部分 -->
   <swiper class='index-swiper' indicator-dots='true' interval='5000' autoplay='true' indicator-color='rgba(255,255,255,0.3)' indicator-active-color='rgba(255,255,255,1)'>
     <block wx:key='id' wx:for='{{sliderData}}'>
@@ -54,3 +54,42 @@
 <scroll-view class='main' wx:else scroll-y='true' style='display:{{pageShow}}'>
 
 </scroll-view>
+
+
+<!-- 浮球 -->
+<view class='float-action' bindtap='ballClickEvent' catchtouchmove='ballMoveEvent' style='bottom:{{ballBottom}}px;right:{{ballRight}}px;'>
+  <image mode='aspectFill' src='../../images/float_list.png'></image>
+</view>
+
+<!-- 遮罩层 -->
+<view class='slide-mask' style='display:{{maskDisplay}}' bindtap='slideCloseEvent'></view>
+
+<!-- 左侧边栏 -->
+<view class='slide-menu'>
+  <!-- 头部内容 -->
+  <view class='header'>
+    <!-- 关闭按钮 -->
+    <icon type='cancel' class='clost-btn' size='30' color='#fff' bindtap='slideCloseEvent'></icon>
+    <!-- 用户信息部分 -->
+    <view class='userinfo' bindtap='authorShowEvent'>
+      <view class='user-avatar-wrap'>
+        <open-data type='userAvatarUrl' class='user-avatar-url'></open-data>
+        <view class='user-avatar-mask'></view>
+      </view>
+      <open-data type='userNickName' class='user-nick-name'></open-data>
+    </view>
+    <!-- 设置部分 -->
+    <view class='toolbar'>
+      <view class='item' bindtap='toCollectPage'>
+        <image src='../../images/star_white.png'></image>
+        <text>我的收藏</text>
+      </view>
+      <view class='item' bindtap='toSettingPage'>
+        <image src='../../images/setting.png'></image>
+        <text>设置</text>
+      </view>
+    </view>
+
+
+  </view>
+</view>
