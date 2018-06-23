@@ -68,6 +68,9 @@ function getTheme(successCallback, errorCallback, completeCallback) {
   requestData(api.getTheme(), {}, successCallback, errorCallback, completeCallback);
 }
 
+/**
+ * 获取对应栏目的数据
+ */
 function getThemeStories(themeId, successCallback, errorCallback, completeCallback) {
   requestData(api.getThemeStories(themeId), {}, successCallback, errorCallback, completeCallback);
 }

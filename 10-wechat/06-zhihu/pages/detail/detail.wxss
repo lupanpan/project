@@ -2,51 +2,6 @@ page {
   background: #fafafa;
 }
 
-/* 封面部分 */
-.header-cover {
-  position: relative;
-  height: 500rpx;
-  overflow: hidden;
-}
-
-.header-cover image {
-  width: 100%;
-  height: 100%;
-}
-
-.header-cover .mask {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, .3);
-}
-
-.header-cover .desc {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  padding: 0 20rpx 40rpx 20px;
-  font-size: 38rpx;
-  font-weight: 600;
-  color: #fff;
-  z-index: 0;
-}
-
-.header-cover .cover-source {
-  position: absolute;
-  right: 20rpx;
-  bottom: 20rpx;
-  color: #ccc;
-  font-size: 8px;
-}
-
-.black-desc {
-  padding: 50rpx;
-  font-weight: 700;
-}
-
 /* 文章部分 */
 .main {
   padding-bottom: 100rpx;

@@ -67,6 +67,10 @@ function getTheme() {
   return API_V4 + "/themes";
 }
 
+/**
+ * 获取对应栏目的数据
+ * @param {string} themeId 导航栏目id
+ */
 function getThemeStories(themeId) {
   return API_V4 + "/theme/" + themeId;
 }

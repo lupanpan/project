@@ -6,15 +6,14 @@ Page({
     weekdayStr: ['日', ' 一', '二', '三', '四', '五', '六'],
 
     pageData: {}, // 列表数据
+    themePageData: {}, // 其他导航栏目列表数据
     sliderData: {}, // 轮播图数据
+    themeId: 0, // 当前选择主题的id
     themeData: {}, // 左侧主题菜单数据
     currentDateStr: '',// 当前时间字符串显示
     currentDate: new Date(), // 标记下拉数据获取到的时间，默认当前时间
     refreshAnimation: {}, // 加载更多旋转动画数据
     loadingMore: false, // 是否正在加载
-
-    avatarUrl: '', // 当前用户头像
-    nickName: '', // 当前用户名字
 
     screenWidth: 0, // 屏幕宽度
     screenHeight: 0, // 屏幕高度
@@ -26,7 +25,7 @@ Page({
     pageShow: 'none', // scroll-view的display属性值
 
     maskDisplay: 'none', // 遮罩层的显示
-    themeId: 0 // 当前选择主题的id
+    slideAnimation: {} // 侧边栏滑动动画
   },
 
   onLoad: function (options) {
@@ -61,9 +60,27 @@ Page({
     const date = utils.getCurrentData();
     this.setData({ currentDateStr: utils.formatNumber(date.month) + '月' + utils.formatNumber(date.day) + '日  ' + '星期' + this.data.weekdayStr[date.weekday]});
 
+    // 获取最新日报
+    this.getNewsLatest();
+
+    // 获取左侧主题菜单列表
+    requests.getTheme((data) => {
+      _this.setData({ themeData: data.others });
+    });
+
+    // 其他导航点击事件
+    // this.toThemePage();
+  },
+
+  /**
+   * 获取最新日报
+   */
+  getNewsLatest: function () {
+    var _this = this;
+
     // 设置为等待状态
     this.setData({ loading: true });
-    
+
     // 获取最新日报
     requests.getNewsLatest((data) => {
       // 设置返回数据
@@ -80,12 +97,6 @@ Page({
       // 设置取消等待状态
       this.setData({ loading: false });
     });
-
-    // 获取左侧主题菜单列表
-    requests.getTheme((data) => {
-      console.log(data);
-      _this.setData({ themeData: data.others });
-    });
   },
 
   /**
@@ -94,10 +105,8 @@ Page({
   loadingMoreEvent: function (e) {
     var _this = this;
 
-    // 判断如果正在记载则不再执行该事件
+    // 判断如果正在加载则不再执行该事件
     if (this.data.loadingMore) return;
-
-    console.log(this.data.currentDate);
 
     // 获取前一天的时间
     var date = new Date(Date.parse(this.data.currentDate) - 24*60*60*1000);
@@ -166,8 +175,62 @@ Page({
     var id = e.currentTarget.dataset.id;
     // 跳转到详情页
     wx.navigateTo({
-      url: '../detail/detail?id=' + id,
+      url: '../detail/detail?id=' + id
     })
+  },
+  
+  /**
+   * 跳转到设置页
+   */
+  toSettingPage: function () {
+    wx.navigateTo({
+      url: '../setting/setting'
+    })
+  },
+
+  /**
+   * 首页导航点击事件
+   */
+  toHomePage: function (e) {
+    var _this = this;
+    // 设置等待层显示与设置themeId
+    this.setData({ themeId: 0 });
+    // 关闭左侧边栏
+    this.slideUpDown("down");
+    // 获取最新日报
+    this.getNewsLatest();
+  },
+
+  /**
+   * 其他导航点击事件
+   */
+  toThemePage: function (e) {
+    var _this = this;
+
+    // 关闭左侧边栏
+    this.slideUpDown("down");
+
+    // 设置当前的themeId
+    this.setData({ themeId: e.currentTarget.dataset.id });
+    // 设置等待状态
+    this.setData({ loading: true });
+
+    // 获取对应栏目的数据
+    requests.getThemeStories(_this.data.themeId,
+      (data) => {
+        console.log(data);
+        data = utils.correctData(data);
+        // 设置数据
+        _this.setData({
+          themePageData: data
+        })
+      },
+      null,
+      () => {
+        // 设置等待状态
+        this.setData({ loading: false });
+      })
+
   },
 
   /**
@@ -192,5 +255,48 @@ Page({
       ballRight: this.data.screenWidth - pageX - floatRadius,
       ballBottom: this.data.screenHeight - pageY - floatRadius
     })
+  },
+
+  /**
+   * 侧栏展开
+   */
+  ballClickEvent: function (e) {
+    this.slideUpDown("up");
+  },
+
+  /**
+   * 侧栏关闭
+   */
+  slideCloseEvent: function (e) {
+    this.slideUpDown("down");
+  },
+
+  /**
+   * 侧边栏动画
+   */
+  slideUpDown: function (type) {
+    // 创建动画
+    var animation = wx.createAnimation({
+      duration: 300
+    });
+
+    if (type == "up") {
+      // 展开侧边栏
+      // 显示遮罩层
+      this.setData({ "maskDisplay": "block" });
+      animation.translateX('100%').step();
+      this.setData({
+        slideAnimation: animation.export()
+      })
+    }
+    else {
+      // 关闭侧边栏
+      animation.translateX('0').step();
+      this.setData({
+        slideAnimation: animation.export()
+      })
+      // 隐藏遮罩层
+      this.setData({ "maskDisplay": "none" });
+    }
   }
 })

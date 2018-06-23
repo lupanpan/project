@@ -42,17 +42,41 @@
 }
 
 .list-item .content {
+  font-size: 15px;
+}
+
+/* 有图片时文本的样式 */
+.list-item.has-img .content {
   float: left;
   width: 520rpx;
   padding-right: 20rpx;
   vertical-align: middle;
-  font-size: 15px;
 }
 
-.list-item image {
+.list-item.has-img image {
   float: right; 
   width: 150rpx;
   height: 130rpx;
+}
+
+/* 其他主题菜单作者部分 */
+.editors {
+  padding: 20rpx 30rpx;
+  border-bottom:1px solid #eee;
+}
+
+.editors .editors-title {
+  font-size: 15px;
+  color: #666;
+  margin-right: 50rpx;
+  vertical-align: middle;
+}
+
+.editors .editors-avatar {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 100%;
+  vertical-align: middle;
 }
 
 /* 浮球 */
@@ -75,40 +99,40 @@
 
 /* 左侧边栏 */
 .slide-menu {
-  position: absolute;
+  position: fixed;
   top: 0;
-  right: 250rpx;
+  left: -500rpx;
   width: 500rpx;
-  border: 1px solid red;
   height: 100%;
   background: #fff;
+  z-index: 200;
 }
 
 /* 头部内容 */
 .slide-menu .header {
   position: relative;
   background: #019DD6;
-  height: 300rpx;
+  height: 180rpx;
 }
 
 /* 关闭按钮 */
 .slide-menu .clost-btn {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 20rpx;
+  right: 20rpx;
 }
 
 /* 用户信息部分 */
 .slide-menu .userinfo {
-  border: 1px solid pink;
+  padding-top: 10rpx;
 }
 
 /* 头像 */
 .slide-menu .userinfo .user-avatar-wrap {
   position: relative;
   display: inline-block;
-  width: 70rpx;
-  height: 70rpx;
+  width: 80rpx;
+  height: 80rpx;
   vertical-align: middle;
   overflow: hidden;
   margin: 0 20rpx;
@@ -137,7 +161,76 @@
 .slide-menu .userinfo .user-nick-name {
   display: inline-block;
   vertical-align: middle;
-  font-size: 14px;
+  font-size: 16px;
   color: #fff;
   margin-left: 10rpx;
+}
+
+/* 设置部分 */
+.slide-menu .toolbar {
+  position: absolute;
+  bottom: 20rpx;
+  left: 20rpx;
+}
+
+.slide-menu .toolbar .item {
+  display: inline-block;
+  margin-right: 60rpx;
+}
+
+.slide-menu .toolbar .item image {
+  width: 30rpx;
+  height: 30rpx;
+  vertical-align: middle;
+}
+
+.slide-menu .toolbar .item text {
+  font-size: 13px;
+  color: #fff;
+  margin-left: 10rpx;
+}
+
+/* 导航部分 */
+.slide-menu .slide-nav {
+  position: absolute;
+  top: 180rpx;
+  bottom: 0;
+  width: 100%;
+}
+
+.slide-nav .menu-item {
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  padding-left: 30rpx; 
+  box-sizing: border-box;
+}
+
+.slide-nav .menu-item text {
+  font-size: 15px;
+  color: #333;
+}
+
+.slide-nav .menu-item .add-attention {
+  float: right;
+  width: 40rpx;
+  height: 40rpx;
+  margin: 30rpx 50rpx 0 0;
+}
+
+/* 导航选中状态 */
+.slide-nav .menu-item.active {
+  background: rgba(0, 0, 0, .1);
+}
+
+.slide-nav .menu-item.active text {
+  color: #019DD6;
+}
+
+/* 首页导航 */
+.slide-nav .menu-item .home-icon {
+  width: 35rpx;
+  height: 35rpx;
+  margin-right: 20rpx;
+  vertical-align: middle;
 }
