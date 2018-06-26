@@ -67,9 +67,6 @@ Page({
     requests.getTheme((data) => {
       _this.setData({ themeData: data.others });
     });
-
-    // 其他导航点击事件
-    // this.toThemePage();
   },
 
   /**
@@ -177,6 +174,19 @@ Page({
     wx.navigateTo({
       url: '../detail/detail?id=' + id
     })
+  },
+
+  /**
+   * 跳转到收藏页
+   */
+  toCollectPage: function () {
+    var _this = this;
+    // 设置导航主题id
+    this.setData({ themeId: -1 });
+    // 关闭左侧边栏
+    this.slideUpDown("down");
+    // 获取本地缓存数据
+    this.setData({ pageData: wx.getStorageSync("pageData") });
   },
   
   /**

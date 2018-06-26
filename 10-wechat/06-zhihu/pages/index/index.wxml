@@ -51,7 +51,7 @@
 <!-- 其他主题菜单显示部分 -->
 <scroll-view class='main' wx:else scroll-y='true' style='display:{{pageShow}}'>
   <!-- 其他主题内容列表模块 -->
-  <view class='header-cover' wx:if='{{themeId != 1}}'>
+  <view class='header-cover' wx:if='{{themeId != -1}}'>
     <image mode='aspectFill' src='{{themePageData.background}}'></image>
     <view class='mask'></view>
     <view class='desc'>
@@ -60,7 +60,7 @@
   </view>
 
   <!-- 作者部分 -->
-  <view class='editors' wx:if='{{themeId != 1}}'>
+  <view class='editors' wx:if='{{themeId != -1}}'>
     <text class='editors-title'>主编</text>
     <block wx:for='{{themePageData.editors}}' wx:key='id'>
       <image class='editors-avatar' src='{{item.avatar}}'></image>
@@ -69,7 +69,7 @@
 
   <!-- 内容列表模块 -->
   <view class='common-list'>
-    <block wx:key='id' wx:for='{{themePageData.stories}}'>
+    <block wx:key='id' wx:for='{{ themeId != -1 ? themePageData.stories : pageData}}'>
       <!-- 内容条 -->
       <view class='list-item {{item.images[0] ? "has-img": ""}}' wx:if='{{item.type != 3}}' data-id='{{item.id}}' bindtap='toDetailPage'>
         <view class='content'>
