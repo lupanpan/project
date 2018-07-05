@@ -1,18 +1,20 @@
-// pages/comment/comment.js
-Page({
+const request = require('../../requests/request.js');
+const utils = require('../../utils/util.js');
 
-  /**
-   * 页面的初始数据
-   */
+Page({
   data: {
-  
+    storyId: null,
   },
 
   /**
-   * 生命周期函数--监听页面加载
+   * 获取传递过来的日报 id 和 评论数目
    */
   onLoad: function (options) {
-  
+    var storyId = options['id'];
+    var longCommentCount = parseInt(options['lcount']);
+    var shortCommentCount = parseInt(options['scount']);
+
+
   },
 
   /**

@@ -81,6 +81,7 @@ Page({
    * 跳转到评论页面
    */
   toCommentPage: function (e) {
+    // 获取评论按钮元素上边的 data-id 属性值
     var storyId = e.currentTarget.dataset.id;
     // 长评数目
     var longCommentCount = this.data.extraInfo ? this.data.extraInfo.long_comments : 0;
