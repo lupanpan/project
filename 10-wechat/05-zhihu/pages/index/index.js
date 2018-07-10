@@ -34,6 +34,8 @@ Page({
     // 获取屏幕宽高信息
     wx.getSystemInfo({
       success: function(res) {
+        console.log("------")
+        console.log(this);
         _this.setData({
           screenWidth: res.windowWidth,
           screenHeight: res.windowHeight
