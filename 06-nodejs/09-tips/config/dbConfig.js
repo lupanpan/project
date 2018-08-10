@@ -11,6 +11,6 @@ exports.connect = function(request, response) {
     db.on('error', console.error.bind(console, 'connection error:'))
     // 成功提示
     db.once('open', function (callback) {
-        console.log('connet success!')
+        console.log('mongodb connet success!')
     })
 }

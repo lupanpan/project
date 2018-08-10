@@ -1,5 +1,5 @@
 const path = require('path')
-const config = require('config')
+const config = require('./config')
 
 module.exports = {
     env: config.env, // 环境名称

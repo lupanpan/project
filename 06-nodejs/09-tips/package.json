@@ -4,13 +4,17 @@
   "description": "小窍门",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "./node_modules/.bin/nodemon bin/run",
+    "koa": "./node_modules/.bin/runkoa bin/www",
+    "pm2": "pm2 start bin/run",
+    "test": "./node_modules/.bin/mocha -u bdd"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "co": "^4.6.0",
     "debug": "^2.2.0",
+    "ejs": "^2.6.1",
     "jade": "~1.11.0",
     "koa": "^2.3.0",
     "koa-body": "^2.3.0",

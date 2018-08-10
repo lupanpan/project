@@ -72,6 +72,7 @@ let formatRes = function (ctx, resTime) {
 // 格式化请求日志
 let formatReqLog = function (req, resTime) {
     let logText = new String()
+    let method = req.method
 
     // 请求的方法
     logText += "request method: " + req.method + "\n"
@@ -93,3 +94,5 @@ let formatReqLog = function (req, resTime) {
 
     return logText
 }
+
+module.exports = logUtil

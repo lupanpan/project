@@ -9,6 +9,7 @@ const cors = require('koa-cors') // 跨域请求模块
 const koaStatic = require('koa-static') // 静态资源请求中间件, 静态资源例如html、js、css、jpg、png等等
 const loggers = require('./middleware/loggers')
 
+const router = require('./routes/allRoute')
 const db = require('./config/dbConfig')
 
 const app = new koa()
@@ -30,6 +31,7 @@ app.use(convert(loggers()))
 app.use(views(__dirname + '/views', { extension: 'ejs' }))
 
 // use route
+app.use(router.routes(), router.allowedMethods())
 
 // mongodb connect
 db.connect()
