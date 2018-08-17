@@ -11,6 +11,7 @@ let TipsSchema = new Schema({
     keyword: String, // 关键字
     author: Object, // 创建人昵称
     isuse: Boolean, // 是否启用
+    release: Boolean, // 是否发布
     createTime: { // 创建时间
         type: Date,
         default: Date.now()
@@ -64,6 +65,7 @@ class Tips {
                 keyword: dataArr.keyword, // 关键字
                 author: dataArr.author, // 创建人
                 isuse: dataArr.isuse, // 是否启用
+                release: dataArr.release // 是否发布
             })
 
             tips.save(function (e, data) {
@@ -90,6 +92,7 @@ class Tips {
                 keyword: dataArr.keyword, // 关键字
                 author: dataArr.author, // 创建人
                 isuse: dataArr.isuse, // 是否启用
+                release: dataArr.release // 是否发布
             }
 
             self.tips.update({ _id: dataArr.id }, updateData, function (e, data) {

@@ -1,0 +1,28 @@
+<%- include('../layout/header') %>
+<!-- DataTables -->
+<link rel="stylesheet" href="/adminlte/plugins/datatables/dataTables.bootstrap.css">
+
+<!-- 自定义内容部分开始 -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="box-header">
+                    <h3 class="box-title">Hover Data Table</h3>
+                </div>
+                <div class="box-body">
+                    <div id="tipsTable"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- 自定义内容部分结束 -->
+<%- include('../layout/footer') %>
+
+<!-- DataTables -->
+<script src="/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="/js/listTips.js"></script>
