@@ -37,13 +37,13 @@ class Tips {
         this.tips = mongoose.model('tips', TipsSchema)
     }
     // 查询
-    find(dataArr = {}) {
+    find(dataArr = {}, sort = {}) {
         const self = this
         return new Promise(function (resolve, reject) {
-            self.tips.find(dataArr, function (e, docs) {
-                if (e) {
-                    console.log('e: ', e)
-                    reject(e)
+            self.tips.find(dataArr).sort(sort).exec(function (err, docs) {
+                if (err) {
+                    console.log('err: ', err)
+                    reject(err)
                 }
                 else {
                     resolve(docs)
@@ -68,9 +68,9 @@ class Tips {
                 release: dataArr.release // 是否发布
             })
 
-            tips.save(function (e, data) {
-                if (e) {
-                    reject(e)
+            tips.save(function (err, data) {
+                if (err) {
+                    reject(err)
                 }
                 else {
                     resolve(data)
@@ -95,9 +95,9 @@ class Tips {
                 release: dataArr.release // 是否发布
             }
 
-            self.tips.update({ _id: dataArr.id }, updateData, function (e, data) {
-                if (e) {
-                    reject(e)
+            self.tips.update({ _id: dataArr.id }, updateData, function (err, data) {
+                if (err) {
+                    reject(err)
                 }
                 else {
                     resolve(data)
@@ -110,9 +110,9 @@ class Tips {
     delete(dataArr) {
         const self = this
         return new Promise(function (resolve, reject) {
-            self.tips.remove({ _id: dataArr.id }, function (e, data) {
-                if (e) {
-                    reject(e)
+            self.tips.remove({ _id: dataArr.id }, function (err, data) {
+                if (err) {
+                    reject(err)
                 }
                 else {
                     resolve(data)

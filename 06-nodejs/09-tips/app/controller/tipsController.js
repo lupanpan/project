@@ -1,11 +1,11 @@
-import {tips} from '../modal/tips'
+import {tips} from '../modal/tipsModal'
 import {resdata, errData} from '../../utils/serve'
 
-// 查询数据
+// 查询列表所有数据
 exports.getTipsList = async () => {
     try {
-        // 调用modal的tips中的find方法，查询所有小窍门数据
-        let list = await tips.find()
+        // 调用modal的tips中的find方法，查询所有小窍门数据，并且按修改时间倒叙
+        let list = await tips.find({},{"updateTime": -1})
         // 返回包装成功后的数据
         return resdata(list)
     }

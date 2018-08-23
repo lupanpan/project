@@ -1,17 +1,76 @@
 <%- include('../layout/header') %>
 <!-- DataTables -->
 <link rel="stylesheet" href="/adminlte/plugins/datatables/dataTables.bootstrap.css">
+<link rel="stylesheet" href="/css/listTips.css">
 
 <!-- 自定义内容部分开始 -->
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="row">
+            <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Hover Data Table</h3>
+                    <!-- <h3 class="box-title"></h3> -->
                 </div>
                 <div class="box-body">
-                    <div id="tipsTable"></div>
+                    <table id="tipsTable" class="table table-bordered table-hover dataTable tips-table">
+                        <thead>
+                        <tr>
+                            <th class="con">内容</th>
+                            <th class="classone">一级分类</th>
+                            <th class="classtwo">二级分类</th>
+                            <th class="rate">实用度</th>
+                            <th class="keyword">关键字</th>
+                            <th class="author">创建人昵称</th>
+                            <th class="isuse">启用</th>
+                            <th class="release">发布</th>
+                            <th class="updateTime">修改时间</th>
+                            <th class="createTime">创建时间</th>
+                            <th class="operate">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <% tipsLists.forEach(function (tipsList) { %>
+                            <tr>
+                                <!-- 内容 -->
+                                <td class="con"><%= tipsList.tipcon %></td>
+                                <td class="classone"><%= tipsList.classone %></td>
+                                <td class="classtwo"><%= tipsList.classtwo %></td>
+                                <!-- 实用度 -->
+                                <td class="rate">
+                                    <% for(var i = 0; i < tipsList.rate; i++) { %>
+                                        <i class="fa fa-fw fa-star rate-star"></i>
+                                    <% } %>
+                                </td>
+                                <td class="keyword"><%= tipsList.keyword %></td>
+                                <td class="author"><%= tipsList.author %></td>
+                                <!-- 启用 -->
+                                <td class="isuse">
+                                    <% if (tipsList.isuse) { %>
+                                    <span class="label label-success">是</span>
+                                    <% } else { %>
+                                    <span class="label label-danger">否</span>
+                                    <% } %>
+                                </td>
+                                <!-- 发布 -->
+                                <td class="release">
+                                    <% if (tipsList.release) { %>
+                                    <span class="label label-success">是</span>
+                                    <% } else { %>
+                                    <span class="label label-danger">否</span>
+                                    <% } %>
+                                </td>
+                                <td class="updateTime"><%= moment(tipsList.updateTime).format('YYYY-MM-DD') %></td>
+                                <td class="createTime"><%= moment(tipsList.createTime).format('YYYY-MM-DD') %></td>
+                                <td class="operate">
+                                    <a href="#" class="edit"><i class="fa fa-edit"></i>编辑</a>
+                                    <a href="#" class="delete"><i class="fa fa-close"></i>删除</a>
+                                </td>
+                            </tr>
+                        <% }) %>
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -23,6 +82,7 @@
 <%- include('../layout/footer') %>
 
 <!-- DataTables -->
-<script src="/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="/adminlte/plugins/datatables/jquery.dataTables.js"></script>
+<script src="/adminlte/plugins/datatables/dataTables.bootstrap.js"></script>
+<script src="/js/datatableLang.js"></script>
 <script src="/js/listTips.js"></script>

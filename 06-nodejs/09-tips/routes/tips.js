@@ -1,15 +1,18 @@
 const router = require('koa-router')()
-import {getTipsList, create} from '../app/controller/tips'
+import {getTipsList, create} from '../app/controller/tipsController'
 
+// 小窍门列表页
 router.get('/', async (ctx, next) => {
     // 查询数据
     let tipsList = await getTipsList()
+
     // 渲染列表页
     await ctx.render('tips/listTips', {
-        tipsList: tipsList
+        tipsLists: tipsList.data
     })
 })
 
+// 小窍门创建页
 router.get('/create', async (ctx, next) => {
     // 渲染创建页
     await ctx.render('tips/createTips', {
@@ -17,6 +20,7 @@ router.get('/create', async (ctx, next) => {
     })
 })
 
+// 创建小窍门数据
 router.post('/create', async (ctx, next) => {
     // 获取表单数据，插入到数据库
     let optData = await create(ctx.request.body)
@@ -29,5 +33,7 @@ router.post('/create', async (ctx, next) => {
         // 输出错误信息 怎么输出。。。
     }
 })
+
+router.get('')
 
 module.exports = router
