@@ -1,7 +1,7 @@
 const koa = require('koa')
 const views = require('koa-views') // 模板引擎
 const convert = require('koa-convert') // 兼容koa1的中间件
-const json = require('koa-json') // 从 POST 请求的数据体里边提取键值对
+const json = require('koa-json') // 自动将返回的数据转换为json格式
 const bodyParser = require('koa-bodyparser') // Http 请求解析中间件
 const koaBody = require('koa-body') // 从 POST 请求的数据体里面提取键值对
 const logger = require('koa-logger') // tj大神写的koa开发时替换console.log输出的一个插件
@@ -29,6 +29,7 @@ app.use(convert(koaStatic(__dirname + '/public')))
 // 本地log
 app.use(convert(loggers()))
 
+// 这句话的意思，以及语法不明白，只知道这是设置模板中使用moment的
 app.use(convert(function* (next){
     this.state = {
       moment: moment
@@ -42,6 +43,7 @@ app.use(views(__dirname + '/views', {
 }))
 
 // use route
+// router.routes() 添加路由中间件，router.allowedMethods() 对请求进行一些限制处理
 app.use(router.routes(), router.allowedMethods())
 
 // mongodb connect

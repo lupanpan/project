@@ -106,11 +106,26 @@ class Tips {
         })
     }
 
-    // 删除
+    // 删除(通用)
     delete(dataArr) {
         const self = this
         return new Promise(function (resolve, reject) {
-            self.tips.remove({ _id: dataArr.id }, function (err, data) {
+            self.tips.remove(dataArr, function (err, data) {
+                if (err) {
+                    reject(err)
+                }
+                else {
+                    resolve(data)
+                }
+            })
+        })
+    }
+
+    // 根据_id删除一条数据
+    deleteById(_id) {
+        const self = this
+        return new Promise((resolve, reject) => {
+            self.tips.findByIdAndRemove(_id, (err, data) => {
                 if (err) {
                     reject(err)
                 }
@@ -122,6 +137,6 @@ class Tips {
     }
 }
 
-let tips = new Tips()
+let tipsModel = new Tips()
 
-export {tips}
+export {tipsModel}

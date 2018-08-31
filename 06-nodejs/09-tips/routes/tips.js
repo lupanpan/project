@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-import {getTipsList, create} from '../app/controller/tipsController'
+import {getTipsList, create, deleteById} from '../app/controller/tipsController'
 
 // 小窍门列表页
 router.get('/', async (ctx, next) => {
@@ -15,9 +15,7 @@ router.get('/', async (ctx, next) => {
 // 小窍门创建页
 router.get('/create', async (ctx, next) => {
     // 渲染创建页
-    await ctx.render('tips/createTips', {
-
-    })
+    await ctx.render('tips/createTips')
 })
 
 // 创建小窍门数据
@@ -34,6 +32,12 @@ router.post('/create', async (ctx, next) => {
     }
 })
 
-router.get('')
+// 删除一条小窍门数据
+router.post('/del/:tipsId', async (ctx, next) => {
+    // 获取tipid
+    console.log(ctx.params.tipsId)
+    let optData = await deleteById(ctx.params.tipsId)
+    ctx.body = optData
+})
 
 module.exports = router

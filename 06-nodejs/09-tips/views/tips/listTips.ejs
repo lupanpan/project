@@ -7,10 +7,16 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
+            <!-- 添加按钮 -->
+            <div class="add-btn-wrap clearfix">
+                <button class="add-btn btn btn-success pull-right"><i class="fa fa-plus"></i>添加</button>
+            </div>
+            
+            <!-- 表格部分 -->
             <div class="box">
-                <div class="box-header">
-                    <!-- <h3 class="box-title"></h3> -->
-                </div>
+                <!-- <div class="box-header">
+                    <h3 class="box-title"></h3>
+                </div> -->
                 <div class="box-body">
                     <table id="tipsTable" class="table table-bordered table-hover dataTable tips-table">
                         <thead>
@@ -31,7 +37,7 @@
                         <tbody>
 
                         <% tipsLists.forEach(function (tipsList) { %>
-                            <tr>
+                            <tr data-id="<%= tipsList._id %>">
                                 <!-- 内容 -->
                                 <td class="con"><%= tipsList.tipcon %></td>
                                 <td class="classone"><%= tipsList.classone %></td>
@@ -63,8 +69,8 @@
                                 <td class="updateTime"><%= moment(tipsList.updateTime).format('YYYY-MM-DD') %></td>
                                 <td class="createTime"><%= moment(tipsList.createTime).format('YYYY-MM-DD') %></td>
                                 <td class="operate">
-                                    <a href="#" class="edit"><i class="fa fa-edit"></i>编辑</a>
-                                    <a href="#" class="delete"><i class="fa fa-close"></i>删除</a>
+                                    <a href="javascript:;" class="edit"><i class="fa fa-edit"></i>编辑</a>
+                                    <a href="javascript:;" class="del"><i class="fa fa-close"></i>删除</a>
                                 </td>
                             </tr>
                         <% }) %>

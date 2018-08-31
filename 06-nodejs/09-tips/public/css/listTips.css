@@ -1,3 +1,12 @@
+/* 添加按钮部分的样式 */
+.add-btn-wrap {
+    margin: 5px 20px 15px 0;
+}
+
+.add-btn-wrap button i {
+    margin-right: 5px;
+}
+
 /* 去掉dataTable中的部分默认样式 */
 table.dataTable thead > tr > th {
     padding-right: 8px;
