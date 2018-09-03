@@ -2,7 +2,7 @@ let mongoose = require('mongoose')
 let Schema = mongoose.Schema
 
 let TipsSchema = new Schema({
-    tipid: String, // 小窍门id
+    tiptitle: String, // 小窍门标题
     tipcon: String, // 内容
     tippic: String, // 图片
     classone: Object, // 一级分类（）
@@ -56,7 +56,7 @@ class Tips {
         const self = this
         return new Promise(function (resolve, reject) {
             let tips = new self.tips({
-                tipid: dataArr.tipid, // 小窍门id
+                tiptitle: dataArr.tiptitle, // 小窍门标题
                 tipcon: dataArr.tipcon, // 内容
                 tippic: dataArr.tippic, // 图片
                 classone: dataArr.classone, // 一级分类（）
@@ -84,6 +84,7 @@ class Tips {
         const self = this
         return new Promise(function (resolve, reject) {
             let updateData = {
+                tiptitle: dataArr.tiptitle, // 小窍门标题
                 tipcon: dataArr.tipcon, // 内容
                 tippic: dataArr.tippic, // 图片
                 classone: dataArr.classone, // 一级分类（）

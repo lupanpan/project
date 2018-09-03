@@ -1,4 +1,4 @@
-<%- include('../layout/header') %>
+<%- include('../layout/header.html') %>
 <link rel="stylesheet" href="/adminlte/plugins/jQueryUpload/upload.css">
 
 <!-- 自定义内容部分开始 -->
@@ -7,11 +7,19 @@
         <div class="box box-primary">
             <!-- /.box-header -->
             <div class="box-header with-border">
-                <h3 class="box-title">添加</h3>
+                <h3 class="box-title">编辑</h3>
             </div>
             <!-- form start -->
-            <form class="form-horizontal" method="post" action="/tips/create" enctype="multipart/form-data">
+            <form class="form-horizontal" method="post" action="/tips/edit" enctype="multipart/form-data">
                 <div class="box-body">
+                    <!-- 小窍门标题 -->
+                    <div class="form-group">
+                        <label for="tipTitle" class="col-sm-2 control-label">小窍门标题</label>
+                        <div class="col-sm-10">
+                            <input name="tiptitle" type="text" class="form-control" id="tipTitle">
+                        </div>
+                    </div>
+
                     <!-- 小窍门内容 -->
                     <div class="form-group">
                         <label for="tipCon" class="col-sm-2 control-label">小窍门内容</label>
@@ -90,21 +98,25 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">选择图片</label>
                         <div class="upload" id="tipImg" data-num="1" data-type="png,jpg,jpeg,gif"></div>
-
-
-                        <!-- <input type="file" id="exampleInputFile"> -->
                     </div>
                 </div><!-- /.box-body -->
 
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary pull-right">提交</button>
                 </div>
+
+                <!-- 隐藏域id -->
+                <input type="hidden" name="id" id="tipId">
             </form>
         </div>
     </div>
 </div>
 
 <!-- 自定义内容部分结束 -->
-<%- include('../layout/footer') %>
+<%- include('../layout/footer.html') %>
+<script>
+    var tipsList = JSON.parse('<%- JSON.stringify(tipsList) %>'.replace(/\r\n/g,"\\r\\n"));
+</script>
 
 <script src="/adminlte/plugins/jQueryUpload/jQuery.upload.js"></script>
+<script src="/js/editTips.js"></script>

@@ -17,9 +17,32 @@ table.dataTable thead > tr > th {
 }
 
 /* 小窍门表格样式 */
-/* 内容 */
+.tips-table tr td {
+    padding: 12px 8px!important;
+}
+/* 标题与内容公共样式 */
+.tips-table .title,
 .tips-table .con {
     width: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+/* 标题 */
+.tips-table .title {
+    max-width: 150px;
+}
+/* 内容 */
+.tips-table .con {
+    max-width: 450px;
+}
+/* 一级分类 */
+.tips-table .classone {
+    width: 80px;
+}
+/* 二级分类 */
+.tips-table .classtwo {
+    width: 80px;
 }
 /* 实用度 */
 .tips-table .rate {
@@ -33,6 +56,10 @@ table.dataTable thead > tr > th {
 .tips-table .keyword {
     width: 150px;
 }
+/* 创建人昵称 */
+.tips-table .author {
+    width: 80px;
+}
 /* 启用 */
 .tips-table .isuse {
     width: 30px;
@@ -43,11 +70,11 @@ table.dataTable thead > tr > th {
 }
 /* 修改时间 */
 .tips-table .updateTime {
-    width: 100px;
+    width: 70px;
 }
 /* 创建时间 */
 .tips-table .createTime {
-    width: 100px;
+    width: 70px;
 }
 /* 操作 */
 .tips-table .operate {

@@ -1,4 +1,4 @@
-<%- include('../layout/header') %>
+<%- include('../layout/header.html') %>
 <!-- DataTables -->
 <link rel="stylesheet" href="/adminlte/plugins/datatables/dataTables.bootstrap.css">
 <link rel="stylesheet" href="/css/listTips.css">
@@ -21,6 +21,7 @@
                     <table id="tipsTable" class="table table-bordered table-hover dataTable tips-table">
                         <thead>
                         <tr>
+                            <th class="con">标题</th>
                             <th class="con">内容</th>
                             <th class="classone">一级分类</th>
                             <th class="classtwo">二级分类</th>
@@ -38,6 +39,8 @@
 
                         <% tipsLists.forEach(function (tipsList) { %>
                             <tr data-id="<%= tipsList._id %>">
+                                <!-- 内容 -->
+                                <td class="title"><%= tipsList.tiptitle %></td>
                                 <!-- 内容 -->
                                 <td class="con"><%= tipsList.tipcon %></td>
                                 <td class="classone"><%= tipsList.classone %></td>
@@ -84,8 +87,9 @@
 </section>
 
 
+
 <!-- 自定义内容部分结束 -->
-<%- include('../layout/footer') %>
+<%- include('../layout/footer.html') %>
 
 <!-- DataTables -->
 <script src="/adminlte/plugins/datatables/jquery.dataTables.js"></script>

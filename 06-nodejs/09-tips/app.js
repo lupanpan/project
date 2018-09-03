@@ -39,7 +39,10 @@ app.use(convert(function* (next){
 
 // 设置模板引擎
 app.use(views(__dirname + '/views', {
-     extension: 'ejs'
+    map: {
+        html: 'ejs'
+    }
+    // extension: 'ejs'
 }))
 
 // use route

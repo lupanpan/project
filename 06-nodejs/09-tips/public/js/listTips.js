@@ -32,12 +32,17 @@ tipList.prototype.initEvent = function () {
 
     // 添加事件
     $(".add-btn").on("click", function () {
+        // 跳转到添加页面
         window.location = window.location.origin + "/tips/create"
     })
 
     // 编辑事件
     $("#tipsTable").on("click", ".edit", function () {
-        console.log("编辑")
+        // 获取该行数据的_id
+        var _id = $(this).parents("tr").attr("data-id");
+        // 跳转到编辑页面，并且传递该行_id的参数
+        window.location = window.location.origin + "/tips/edit/" + _id;
+
     })
 
     // 删除事件
