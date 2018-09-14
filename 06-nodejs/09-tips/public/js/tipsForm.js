@@ -1,9 +1,9 @@
-var editTip = function () {
+var tipsForm = function () {
     return this;
 }
 
 // 初始化
-editTip.prototype.init = function () {
+tipsForm.prototype.init = function () {
     // 初始化事件
     this.initEvent();
     // 设置表单数据
@@ -11,7 +11,12 @@ editTip.prototype.init = function () {
 }
 
 // 设置表单数据
-editTip.prototype.initForm = function () {
+tipsForm.prototype.initForm = function () {
+    // 如果为添加类型则返回，不操作
+    if (type === "add") {
+        return false;
+    }
+
     console.log("tipsList: ", tipsList)
 
     // 隐藏域id
@@ -37,13 +42,16 @@ editTip.prototype.initForm = function () {
 }
 
 // 初始化事件
-editTip.prototype.initEvent = function () {
+tipsForm.prototype.initEvent = function () {
     var that = this;
+
+    // 表单提交
+    
 }
 
 $(function () {
-    var editTipObj = new editTip()
-    editTipObj.init()
+    var tipsFormObj = new tipsForm()
+    tipsFormObj.init()
 });
 
 

@@ -15,7 +15,10 @@ router.get('/', async (ctx, next) => {
 // 小窍门创建页
 router.get('/create', async (ctx, next) => {
     // 渲染创建页
-    await ctx.render('tips/createTips')
+    await ctx.render('tips/tipsForm', {
+        type: "add",
+        tipsList: []
+    })
 })
 
 // 创建小窍门数据
@@ -39,7 +42,8 @@ router.get('/edit/:tipsId', async (ctx, next) => {
     // 根据_id获取一条数据
     let optData = await getTipsById(tipid)
     // 渲染创建页
-    await ctx.render('tips/editTips', {
+    await ctx.render('tips/tipsForm', {
+        type: "edit",
         tipsList: optData.data[0]
     })
 })
@@ -48,7 +52,6 @@ router.get('/edit/:tipsId', async (ctx, next) => {
 router.post('/edit', async (ctx, next) => {
 
     let optData = await updateById(ctx.request.body)
-    console.log("optData: ", optData)
 
     // 判断是否成功
     if (optData.flag) {
