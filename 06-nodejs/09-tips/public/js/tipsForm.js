@@ -17,8 +17,6 @@ tipsForm.prototype.initForm = function () {
         return false;
     }
 
-    console.log("tipsList: ", tipsList)
-
     // 隐藏域id
     $("#tipId").val(tipsList._id)
     // 小窍门标题
@@ -46,7 +44,24 @@ tipsForm.prototype.initEvent = function () {
     var that = this;
 
     // 表单提交
-    
+    $("#formSave").on("click", function () {
+        var options = {
+            url: (type === "add" ? "/tips/create" : "/tips/edit"),
+            type: 'post',
+            dataType: 'json',
+            clearForm: true,
+            resetForm: true,
+            success: function (data) {
+                // 跳转到列表页
+                window.location.href = window.location.origin + "/tips/";
+            },
+            error: function (data) {
+                console.log("失败！", data)
+            }
+        }
+
+        $("form").ajaxForm(options)
+    })
 }
 
 $(function () {
