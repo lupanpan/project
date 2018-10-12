@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>博客园webuploader</title>
+    <link rel="stylesheet" href="../plugins-webuploader/webuploader.css">
+    <link rel="stylesheet" href="css/picstyle.css">
+    <link rel="stylesheet" href="css/demo.css">
+
+</head>
+<body>
+
+<!--runat="server" 是.NET的，不知道是否会出问题-->
+<form id="frmUpload" runat="server">
+    <div class="page-container">
+        <div id="uploader" class="wu-example">
+            <div class="queueList">
+
+            </div>
+            <div class="statusBar">
+                <div class="btns">
+                    <div id="filePicker"></div>
+                    <div class="uploadBtn">开始上传</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+</body>
+<script src="../../public/jQuery-2.1.4.min.js"></script>
+<script src="../plugins-webuploader/webuploader.js"></script>
+<script src="js/demo.js"></script>
+</html>
