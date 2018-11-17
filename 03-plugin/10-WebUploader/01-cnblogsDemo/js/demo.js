@@ -12,11 +12,11 @@ jQuery(function () {
         fileCount = 0,
         fileSize = 0,
         ratio = window.devicePixelRatio || 1,
-        // 缩略图大小
+    // 缩略图大小
         thumbnailWidth = 110 * ratio,
         thumbnailHeight = 100 * ratio,
         percentages = {},
-        // 是否支持旋转，没看太明白，意思是检测浏览器是否有旋转样式属性吗？
+    // 是否支持旋转，没看太明白，意思是检测浏览器是否有旋转样式属性吗？
         supportTransition = (function () {
             var s = document.createElement('p').style,
                 r = 'transition' in s ||
@@ -28,7 +28,7 @@ jQuery(function () {
             return r;
         })(),
         state = 'pedding',
-        // 上传按钮
+    // 上传按钮
         $upload = $wrap.find('.uploadBtn'),
         errMsg = '上传失败，请重试',
         uploader;
@@ -83,6 +83,7 @@ jQuery(function () {
                 uploader.refresh();
                 break;
 
+            // 准备状态
             case 'ready':
                 // 移除"选择文件"按钮的父元素的"element-invisible"样式，
                 $('#filePicker').removeClass('element-invisible');
@@ -97,13 +98,59 @@ jQuery(function () {
 
             // 上传中
             case 'uploading':
-                // 为"选择文件"按钮
+                // 为"选择文件"按钮添加样式
                 $('#filePicker').addClass('element-invisible');
 
                 // 设置上传按钮
                 $upload.text('暂停上传');
                 break;
+
+            // 暂停状态
+            case 'paused':
+                // 设置上传按钮
+                $upload.text('继续上传');
+                break;
+
+            // 确认状态
+            case 'confirm':
+                // 设置上传按钮
+                $upload.text('开始上传').addClass('disabled');
+                // 获取上传的状态
+                stats = uploader.getStats();
+                if (stats.successNum && !stats.uploadFailNum) {
+                    setState('finish');
+                    return;
+                }
+                break;
+
+            // 完成
+            case 'finish':
+                // 获取上传的状态
+                stats = uploader.getStats();
+                if (stats.successNum) {
+                    alert('上传成功');
+                } else {
+                    // 没有成功的图片，重设
+                    state = 'done';
+                    location.reload();
+                }
+                break;
+        }
+
+        // 判断状态如果不为'ready'
+        if (state !== 'ready') {
+            // 为"选择文件"按钮移除样式
+            $('#filePicker').removeClass('element-invisible');
+            // 设置上传按钮
+            $upload.text('开始上传').removeClass('disabled');
         }
     }
 
+    function addFile(file) {
+        var $li = $('<li id="' + file.id + '">' +
+            '<p class="title">' + file.name + '</p>' +
+            '<p class="imgWrap"></p>' +
+            '<p class="progress"><span></span></p>' +
+            '</li>');
+    }
 })
