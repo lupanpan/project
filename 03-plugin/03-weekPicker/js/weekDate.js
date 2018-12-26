@@ -16,11 +16,15 @@ var weekDate = {
     },
     /*通过年月获取周*/
     getWeekByYearMonth: function (year, month) {
+//    	debugger;
         if (!year || !month) {
             return null;
         }
         var $nowDate = $("#nowDate").val();
         nowDate = new Date(Date.parse($nowDate.replace(/-/g, "/")));
+        if(year==nowDate.getFullYear()&&month>(nowDate.getMonth()+1)){
+            return [];
+        }
 
         var str = year + "-" + month + "-01 00:00:00";
         var monthStartDate = new Date(Date.parse(str.replace(/-/g, "/")));
@@ -28,24 +32,26 @@ var weekDate = {
         var weekArr = [];
         var objWeek = weekDate.getWeekNumByDay(monthStartDate);
         weekArr.push(objWeek);
-        var endDayTime = new Date(Date.parse((objWeek.endDay + " -00:00:00").replace(/-/g, "/")));
+        var endDayTime = new Date(Date.parse((objWeek.endDay + " 00:00:00").replace(/-/g, "/")));
         while (endDayTime.getTime() < monthLastDate.getTime() && endDayTime.getTime() < nowDate.getTime()) {
-            endDayTime = new Date(Date.parse((objWeek.endDay + " -00:00:00").replace(/-/g, "/")));
+            endDayTime = new Date(Date.parse((objWeek.endDay + " 00:00:00").replace(/-/g, "/")));
             endDayTime.setDate(endDayTime.getDate() + 1);
-            var endDayTimeStr = endDayTime.getFullYear() + "-" + weekDate.fillZero((endDayTime.getMonth() + 1)) + "-" + weekDate.fillZero(endDayTime.getDate()) + " -00:00:00";
-            endDayTime = new Date(Date.parse(endDayTimeStr.replace(/-/g, "/")));
+//            var endDayTimeStr = endDayTime.getFullYear() + "-" + weekDate.fillZero((endDayTime.getMonth() + 1)) + "-" + weekDate.fillZero(endDayTime.getDate()) + " -00:00:00";
+//            endDayTime = new Date(Date.parse(endDayTimeStr.replace(/-/g, "/")));
             objWeek = weekDate.getWeekNumByDay(endDayTime);
             weekArr.push(objWeek);
+            endDayTime = new Date(Date.parse((objWeek.endDay + " 00:00:00").replace(/-/g, "/")));
+//            console.log(endDayTime.getTime()+"===="+monthLastDate.getTime()+"===="+nowDate.getTime());
         }
         return weekArr;
     },
     /*获取月的最后一天*/
     getMonthLastDateNum: function (year, month) {
+//    	debugger
         var firstdate = year + '-' + month + '-01';
         var day = new Date(year, month, 0);
         var lastdate = year + '-' + month + '-' + day.getDate();
-        return new Date(Date.parse((lastdate + " -00:00:00").replace(/-/g, "/")));
-        ;
+        return new Date(Date.parse((lastdate + " 00:00:00").replace(/-/g, "/")));
     },
     /*获取某一天的周NO。*/
     getWeekNumByDay: function (date) {
@@ -62,7 +68,7 @@ var weekDate = {
 
         var week = null;
         if (yearFirstDay == 1) {
-            week = Math.ceil(days / yearFirstDay);
+            week = Math.ceil(days / 7);
         } else {
             days -= (7 - yearFirstDay + 1);
             week = Math.ceil(days / 7) + 1;
@@ -80,7 +86,7 @@ var weekDate = {
                 rtnObj.endDay = year + "-12-31";
             }
         }
-        console.log(week);
+//        console.log(JSON.stringify(rtnObj));
         return rtnObj;
     },
     isLeapYear: function (year) {
@@ -100,9 +106,13 @@ var weekDate = {
         } else {
             n = day - 1;
         }
-        var uom = date;
+//        var uom = date;
+//        uom.setTime(date.getTime());
+//        console.log(date.getTime());
+        var uom = new Date(date.getTime());
         uom.setDate(uom.getDate() - n);
-        console.log(uom.getFullYear() + "==========" + date.getFullYear());
+//        console.log(date.getTime());
+//        console.log(uom.getFullYear() + "==========" + date.getFullYear());
 //		if(uom.getFullYear()!=date.getFullYear()){
 //			uom = date.getFullYear() + "-01-01";
 //		}else{
@@ -121,9 +131,14 @@ var weekDate = {
         } else {
             n = 7 - day;
         }
-        var uom = date;
+//        var uom = date;
+//        uom.setTime(date.getTime());
+//        console.log(date.getTime());
+        var uom = new Date(date.getTime());
+//      var uom = new Date($.extend(true,{},date));
         uom.setDate(uom.getDate() + n);
-        console.log(uom.getFullYear() + "==========" + date.getFullYear());
+//        console.log(uom.getFullYear() + "==========" + date.getFullYear());
+//        console.log(date.getTime());
 //		if(uom.getFullYear()!=date.getFullYear()){
 //			uom = date.getFullYear() + "-12-31";
 //		}else{
@@ -149,7 +164,7 @@ var weekDate = {
         }
 
         year = parseInt(year);
-        month = parseInt(month);
+        month = parseFloat(month);
 
         month = month - 1;
         if (month == 0) {
@@ -169,7 +184,7 @@ var weekDate = {
         }
 
         year = parseInt(year);
-        month = parseInt(month);
+        month = parseFloat(month);
 
         month = month + 1;
         if (month == 13) {
@@ -184,8 +199,9 @@ var weekDate = {
     },
     // 获取指定日期的前几天
     getBeforeDate: function (date, n) {
+//    	console.log("date==="+date);
         var n = n;
-        var d = new Date(date);
+        var d = new Date(Date.parse(date.replace(/-/g, "/")));
         var year = d.getFullYear();
         var mon = d.getMonth() + 1;
         var day = d.getDate();
@@ -202,7 +218,9 @@ var weekDate = {
         year = d.getFullYear();
         mon = d.getMonth() + 1;
         day = d.getDate();
-        return year + "-" + (mon < 10 ? ('0' + mon) : mon) + "-" + (day < 10 ? ('0' + day) : day);
+        var rtn = year + "-" + (mon < 10 ? ('0' + mon) : mon) + "-" + (day < 10 ? ('0' + day) : day);
+//        console.log(rtn);
+        return new Date(Date.parse(rtn.replace(/-/g, "/")));
     },
     // 获取时间间隔天数
     GetDateDiff: function (startDate, endDate) {

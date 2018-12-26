@@ -50,6 +50,17 @@ button,input {
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
+
+.weekpicker * {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.weekpicker ul {
+    padding-left: 0;
+}
+
 /*弹框的样式*/
 .weekpicker {
     position: absolute;
@@ -57,16 +68,17 @@ button,input {
     border-radius: 4px;
     border: 1px solid #eee;
     padding: 4px;
+    z-index: 600;
 }
 /*小三角*/
-.weekpicker:before, .weekpicker:after {
+.weekpicker .triangle-outer, .weekpicker .triangle-inner {
     position: absolute;
     display: inline-block;
     border-bottom-color: rgba(0, 0, 0, 0.2);
     content: '';
 }
 
-.weekpicker:before{
+.weekpicker .triangle-outer{
     top: -7px;
     left: 9px;
     border-right: 7px solid transparent;
@@ -74,7 +86,7 @@ button,input {
     border-bottom: 7px solid #ccc;
 }
 
-.weekpicker:after{
+.weekpicker .triangle-inner{
     top: -6px;
     left: 10px;
     border-right: 6px solid transparent;
@@ -82,17 +94,17 @@ button,input {
     border-left: 6px solid transparent;
 }
 
-.weekpicker .ranges, .weekpicker .calendar {
+.weekpicker .weekpicker-ranges, .weekpicker .calendar {
     float: left;
 }
 
 /*范围列表部分*/
-.weekpicker .ranges {
+.weekpicker .weekpicker-ranges {
     padding: 4px;
 }
 
 /*范围列表项*/
-.weekpicker .ranges ul {
+.weekpicker .weekpicker-ranges ul {
     height: 196px;
 }
 
@@ -139,7 +151,7 @@ button,input {
 
 /*确定与取消按钮*/
 .weekpicker .ranges-btn {
-    width: 60px;
+    width: 30px;
     padding: 5px 10px;
     border-radius: 3px;
     font-size: 12px;
@@ -153,22 +165,22 @@ button,input {
 }
 
 /*确定按钮*/
-.weekpicker .ranges .applyBtn {
+.weekpicker .weekpicker-ranges .applyBtn {
     background-color: #337ab7;
     border: 1px solid #2e6da4;
 }
-.weekpicker .ranges .applyBtn:hover{
+.weekpicker .weekpicker-ranges .applyBtn:hover{
     background-color: #286090;
     border-color: #204d74;
 }
 /*取消按钮*/
-.weekpicker .ranges .cancelBtn {
+.weekpicker .weekpicker-ranges .cancelBtn {
     background-color: #f4f4f4;
     color: #444;
     border: 1px solid #ddd;
     margin-left: 5px;
 }
-.weekpicker .ranges .cancelBtn:hover {
+.weekpicker .weekpicker-ranges .cancelBtn:hover {
     color: #333;
     background-color: #e6e6e6;
     border-color: #adadad;
@@ -179,6 +191,11 @@ button,input {
     padding: 4px;
     width: 300px;
 }
+
+.weekpicker .calendar.calendar-left {
+    border-right: 1px solid #CCC;
+}
+
 /*顶部文本框*/
 .weekpicker .date-input-wrap {
     position: relative;

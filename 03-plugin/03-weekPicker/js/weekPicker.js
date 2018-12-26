@@ -7,21 +7,22 @@
             endDate: "2017-08-27"
         };*/
 
-        // 设置当前代码
-        $("#nowDate").val(new Date());
         // 获取当前时间
-        var nowDate = new Date($("#nowDate").val());
+        var weekNowDate = new Date(Date.parse($("#nowDate").val().replace(/-/g, "/")));
         // 当前年月
         var nowYM = {
-            year: nowDate.getFullYear(),
-            month: weekDate.fillZero(nowDate.getMonth() + 1)
+            year: weekNowDate.getFullYear(),
+            month: weekDate.fillZero(weekNowDate.getMonth() + 1)
         };
         // 根据当前时间所在周的最后一天时间
-        var nowWeekEndDate = weekDate.getWeekNumByDay(nowDate).endDay;
+        var nowWeekEndDate = weekDate.getWeekNumByDay(weekNowDate).endDay;
 
         // 初始化控件内容
-        var startdate, enddate, startEndDate, startcon = "", endcon = "", input_val = "";
-        if (options.ranges == "custom") {
+        var startdate, enddate, startEndDate, startcon = "",endcon = "",input_val = "";
+
+        /*
+         * 因为custom类型处理有错误，所以改为了和周范围时间一样的处理方式，所以这里的判断无效了，待会可以删除，--2018.05.09 by lupan
+         * if(options.ranges == "custom"){
             // 如果为自定义时间，则直接获取参数的起始与结束日期
             startdate = options.startDate;
             enddate = options.endDate;
@@ -32,6 +33,12 @@
             startdate = startEndDate.startDateObj.startDay;
             enddate = startEndDate.endDateObj.endDay;
         }
+        */
+
+        // 根据周范围获取起始与结束时间
+        startEndDate = getStartEndDateByRanges(options.ranges);
+        startdate = startEndDate.startDateObj.startDay;
+        enddate = startEndDate.endDateObj.endDay;
 
         // 根据起始与结束日期，获取拼接的起始与结束时间的周文字
         startcon = getWeekRangeCon(startEndDate.startDateObj);
@@ -62,9 +69,20 @@
 
             // 设置弹出下拉框
             $("body").append(getPickerHtml(id));
+            var left = $(this).offset().left;
+            // 根据文本框位置，判断应将弹框放到左侧或者右侧，判断文本框到右侧的距离是否小于弹框的宽度
+            if(($(window).width() - $(this).offset().left) <  $(".weekpicker").width()) {
+                left -= ($(".weekpicker").width() - ($(window).width() - $(this).offset().left) + 15);
+
+                // 设置箭头三角的位置
+                $(".weekpicker .triangle-outer, .weekpicker .triangle-inner").css({
+                    "left": $(this).offset().left - left
+                })
+            }
+
             $('#' + id + "_weekpicker").css({
                 "top": $(this).offset().top + 39,
-                "left": $(this).offset().left
+                "left": left
             });
 
             // 点击的状态
@@ -131,7 +149,7 @@
                         var datestart = $(".weekpicker .date-start").attr("startdate");
                         var dateend = $(".weekpicker .date-end").attr("enddate");
                         // 获取上周范围的最后一天
-                        var endDateObj_endday = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(nowWeekEndDate, 7))).endDay;
+                        var endDateObj_endday = weekDate.getWeekNumByDay(weekDate.getBeforeDate(nowWeekEndDate, 7)).endDay;
 
                         // 判断时间范围
                         if (weekDate.GetDateDiff(datestart, nowWeekEndDate) == 6 && dateend == nowWeekEndDate) {
@@ -195,53 +213,16 @@
 
                 // 选中的当前点击的，并且取消其他的选中状态
                 $(this).addClass("active").siblings(".ranges-item").removeClass("active");
-
-                // 根据周范围获取起始与结束时间
-                var startEndDate = getStartEndDateByRanges(rangeKey);
-                var startDateObj = startEndDate.startDateObj;
-                var endDateObj = startEndDate.endDateObj;
-
-                // 设置左右文本框
-                $(".weekpicker .date-start").val(getWeekRangeCon(startDateObj));
-                $(".weekpicker .date-start").attr("startdate", startDateObj.startDay).attr("con", getWeekRangeCon(startDateObj));
-                $(".weekpicker .date-end").val(getWeekRangeCon(endDateObj));
-                $(".weekpicker .date-end").attr("enddate", endDateObj.endDay).attr("con", getWeekRangeCon(endDateObj));
-
-                // 需要重新渲染左右周列表
-                var leftYM = {};
-                var rightYM = {};
-                var startDateObj_startDay = new Date(startDateObj.startDay);
-                if (startDateObj_startDay.getMonth() == nowDate.getMonth()) {
-                    // 如果起始时间与目前的当月相同，则渲染本月与上月的周列表
-                    rightYM = {
-                        year: startDateObj_startDay.getFullYear(),
-                        month: weekDate.fillZero(startDateObj_startDay.getMonth() + 1)
-                    };
-                    // 上月的年月
-                    leftYM = weekDate.getPrevMonth(rightYM.year, rightYM.month);
-                }
-                else {
-                    // 如果起始时间与目前的当月不同，则渲染起始时间的月与下月的周列表
-                    leftYM = {
-                        year: startDateObj_startDay.getFullYear(),
-                        month: weekDate.fillZero(startDateObj_startDay.getMonth() + 1)
-                    };
-                    // 下月的年月
-                    rightYM = weekDate.getNextMonth(leftYM.year, leftYM.month);
-                }
-
-                // 设置周列表
-                setDateListPlate(leftYM.year, leftYM.month, "left");
-                setDateListPlate(rightYM.year, rightYM.month, "right");
-
-                // 判断是否隐藏左右箭头按钮
-                setPrevNextBtnShow();
+                // 周范围列表按钮点击事件
+                rangesItemClick(rangeKey);
+                // 触发一下确定按钮点击事件
+                $(".weekpicker .applyBtn").trigger("click");
             });
 
             // 确定按钮点击事件
             $(".weekpicker .applyBtn").on("click", function () {
-                if (clickStart == 0) {
-                    if ($(".weekpicker .date-end").val().length > 0) {
+                if(clickStart == 0) {
+                    if($(".weekpicker .date-end").val().length > 0){
                         var val = $(".weekpicker .date-start").val() + "-" + $(".weekpicker .date-end").val();
                         $(that).val(val);
                         $(that).attr({
@@ -320,14 +301,14 @@
 
             // 点击空白选择框消失
             $(document).click(function (e) {
-                if ($('#' + id + "_weekpicker")) {
+                if($('#' + id + "_weekpicker")){
                     var clickEle = $(e.target).attr('id');
                     var clickName = $(e.target).attr('class');
                     if (clickEle == id) {
                         return false;
                     }
-                    if (clickName) {
-                        if (clickName == 'weekpicker' || clickName.indexOf("ranges-item") >= 0 || clickName.indexOf("date-item") >= 0 || clickName.indexOf("arrows") >= 0 || clickName.indexOf("ranges-btn") >= 0 || clickName.indexOf("date-year-con") >= 0 || clickName.indexOf("fa") >= 0 || clickName.indexOf("date-input") >= 0 || clickName.indexOf("ranges-items") >= 0) {
+                    if(clickName){
+                        if(clickName == 'weekpicker' || clickName.indexOf("ranges-item") >= 0 || clickName.indexOf("date-item") >= 0 || clickName.indexOf("arrows") >= 0 || clickName.indexOf("ranges-btn") >= 0 || clickName.indexOf("date-year-con") >= 0 || clickName.indexOf("fa") >= 0 || clickName.indexOf("date-input") >= 0 || clickName.indexOf("ranges-items") >= 0){
                             return false;
                         }
                     }
@@ -361,14 +342,17 @@
                     // 判断是否为非自定义时间
                     if ($(that).attr("ranges") != "custom") {
                         // 如果为非自定义时间，则根据周范围生成选中日期
-                        $(".ranges-item[data-range-key=" + $(that).attr("ranges") + "]").trigger("click");
+                        // 选中的当前点击的，并且取消其他的选中状态
+                        $(".ranges-item[data-range-key=" + $(that).attr("ranges") + "]").addClass("active");
+                        // 周范围列表按钮点击事件
+                        rangesItemClick($(that).attr("ranges"));
                     }
                     else {
                         // 如果为自定义时间，则根据自定义时间生成日期列表
                         var leftYM = {};
                         var rightYM = {};
-                        var startdate_date = new Date(startdate);
-                        if (startdate_date.getMonth() == nowDate.getMonth()) {
+                        var startdate_date = new Date(Date.parse(startdate.replace(/-/g, "/")));
+                        if (startdate_date.getMonth() == weekNowDate.getMonth()) {
                             // 如果起始时间与目前的当月相同，则渲染本月与上月的周列表
                             rightYM = {
                                 year: startdate_date.getFullYear(),
@@ -400,6 +384,53 @@
                     setDateListPlate(prevYM.year, prevYM.month, "left");
                     setDateListPlate(nowYM.year, nowYM.month, "right");
                 }
+
+                // 判断是否隐藏左右箭头按钮
+                setPrevNextBtnShow();
+            }
+
+            // 周范围列表按钮点击事件
+            function rangesItemClick(rangeKey) {
+
+                // 根据周范围获取起始与结束时间
+                var startEndDate = getStartEndDateByRanges(rangeKey);
+                var startDateObj = startEndDate.startDateObj;
+                var endDateObj = startEndDate.endDateObj;
+
+                // 设置左右文本框
+                $(".weekpicker .date-start").val(getWeekRangeCon(startDateObj));
+                $(".weekpicker .date-start").attr("startdate", startDateObj.startDay).attr("con", getWeekRangeCon(startDateObj));
+                $(".weekpicker .date-end").val(getWeekRangeCon(endDateObj));
+                $(".weekpicker .date-end").attr("enddate", endDateObj.endDay).attr("con", getWeekRangeCon(endDateObj));
+
+                // 需要重新渲染左右周列表
+                var leftYM = {};
+                var rightYM = {};
+//                console.log(startDateObj.startDay+"=====startDateObj.startDay");
+//                var startDateObj_startDay = new Date(startDateObj.startDay);
+                var startDateObj_startDay = new Date(Date.parse((startDateObj.startDay).replace(/-/g, "/")))
+                if (startDateObj_startDay.getMonth() == weekNowDate.getMonth()) {
+                    // 如果起始时间与目前的当月相同，则渲染本月与上月的周列表
+                    rightYM = {
+                        year: startDateObj_startDay.getFullYear(),
+                        month: weekDate.fillZero(startDateObj_startDay.getMonth() + 1)
+                    };
+                    // 上月的年月
+                    leftYM = weekDate.getPrevMonth(rightYM.year, rightYM.month);
+                }
+                else {
+                    // 如果起始时间与目前的当月不同，则渲染起始时间的月与下月的周列表
+                    leftYM = {
+                        year: startDateObj_startDay.getFullYear(),
+                        month: weekDate.fillZero(startDateObj_startDay.getMonth() + 1)
+                    };
+                    // 下月的年月
+                    rightYM = weekDate.getNextMonth(leftYM.year, leftYM.month);
+                }
+//                debugger
+                // 设置周列表
+                setDateListPlate(leftYM.year, leftYM.month, "left");
+                setDateListPlate(rightYM.year, rightYM.month, "right");
 
                 // 判断是否隐藏左右箭头按钮
                 setPrevNextBtnShow();
@@ -442,8 +473,11 @@
                 var htmlArr = [];
                 // 生成日期弹出框
                 htmlArr.push('<div class="weekpicker" id="' + id + '_weekpicker">');
+                // 添加两个小三角
+                htmlArr.push('<span class="triangle-outer"></span>');
+                htmlArr.push('<span class="triangle-inner"></span>');
                 // <!--范围列表部分-->;
-                htmlArr.push('<div class="ranges">');
+                htmlArr.push('<div class="weekpicker-ranges">');
                 htmlArr.push('<ul class="ranges-items">');
                 htmlArr.push('<li class="ranges-item" data-range-key="thisweek">本周</li>');
                 htmlArr.push('<li class="ranges-item" data-range-key="lastweek">上周</li>');
@@ -537,7 +571,7 @@
                     11: "十一",
                     12: "十二"
                 };
-                month = parseInt(month);
+                month = parseFloat(month);
                 return monthChinese[month] + '月 ' + year;
             }
 
@@ -575,24 +609,29 @@
             var endDateObj = null;
             if (rangeKey == "thisweek") {
                 // 根据当前时间，获取本周的最后一天时间
-                endDateObj = weekDate.getWeekNumByDay(nowDate);
-                startDateObj = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(endDateObj.endDay, 6)));
+                endDateObj = weekDate.getWeekNumByDay(weekNowDate);
+                startDateObj = weekDate.getWeekNumByDay(weekDate.getBeforeDate(endDateObj.endDay, 6));
             }
             else if (rangeKey == "lastweek") {
                 // 根据当前时间获取本周最后一天时间，在获取上周最后一天时间
-                var lastDate = weekDate.getWeekNumByDay(nowDate).endDay;
-                endDateObj = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(lastDate, 7)));
-                startDateObj = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(endDateObj.endDay, 6)));
+                var lastDate = weekDate.getWeekNumByDay(weekNowDate).endDay;
+                endDateObj = weekDate.getWeekNumByDay(weekDate.getBeforeDate(lastDate, 7));
+                startDateObj = weekDate.getWeekNumByDay(weekDate.getBeforeDate(endDateObj.endDay, 6));
             }
             else if (rangeKey == "last4week") {
                 // 根据当前时间，获取本周的最后一天时间
-                endDateObj = weekDate.getWeekNumByDay(nowDate);
-                startDateObj = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(endDateObj.endDay, 27)));
+                endDateObj = weekDate.getWeekNumByDay(weekNowDate);
+                startDateObj = weekDate.getWeekNumByDay(weekDate.getBeforeDate(endDateObj.endDay, 27));
             }
             else if (rangeKey == "last8week") {
                 // 根据当前时间，获取本周的最后一天时间
-                endDateObj = weekDate.getWeekNumByDay(nowDate);
-                startDateObj = weekDate.getWeekNumByDay(new Date(weekDate.getBeforeDate(endDateObj.endDay, 55)));
+                endDateObj = weekDate.getWeekNumByDay(weekNowDate);
+                startDateObj = weekDate.getWeekNumByDay(weekDate.getBeforeDate(endDateObj.endDay, 55));
+            }
+            else if (rangeKey == "custom") {
+                // 根据 options.startDate 与 options.endDate 获取自定义周的起始时间与结束时间对象
+                startDateObj = weekDate.getWeekNumByDay(new Date(Date.parse(options.startDate.replace(/-/g, "/"))));
+                endDateObj = weekDate.getWeekNumByDay(new Date(Date.parse(options.endDate.replace(/-/g, "/"))));
             }
 
             return {
