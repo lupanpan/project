@@ -13,8 +13,14 @@ class ListContacts extends Component {
         query: ''
     }
 
+    // 搜索控件的受阻控件，input修改时更改值
     updateQuery = (query) => {
         this.setState({query: query.trim()})
+    }
+
+    // 清空搜索内容
+    clearQuery = () => {
+        this.setState({query: ''})
     }
 
     render() {
@@ -42,6 +48,13 @@ class ListContacts extends Component {
                         onChange={(event) => this.updateQuery(event.target.value)}
                     />
                 </div>
+
+                {showingContacts.length !== contacts.length && (
+                    <div className='showing-contacts'>
+                        <span>Now Showing {showingContacts.length} of {contacts.length} total</span>
+                        <button onClick={this.clearQuery}>Show all</button>
+                    </div>
+                )}
 
                 <ol className='contact-list'>
                     {showingContacts.map((contacts) => (
